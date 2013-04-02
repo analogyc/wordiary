@@ -1,15 +1,35 @@
 package net.analogyc.wordiary;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
+	private ListView mainListView;
+	private ArrayAdapter<String> listAdapter;  
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        mainListView = (ListView) findViewById(R.id.listView1);
+        
+        String[] days = new String[] { "Today", "Yesterday", "2 days ago", "3 days ago", 
+                "29/03/2013", "28/03/2013", "27/03/2013", "26/03/2013"}; 
+        
+        ArrayList<String> daysList = new ArrayList<String>();  
+        daysList.addAll(Arrays.asList(days)); 
+        
+        listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, daysList);
+        
+        mainListView.setAdapter(listAdapter);
     }
 
 

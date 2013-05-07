@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
         
         mainListView.setAdapter(listAdapter);
         
-        final Button button = (Button) findViewById(R.id.button1);
+       /* final Button button = (Button) findViewById(R.id.newEntryButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	String message = "adasdas";
@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
             	intent.putExtra("m", message);
             	startActivity(intent);
             }
-        });
+        });*/
     }
 
 

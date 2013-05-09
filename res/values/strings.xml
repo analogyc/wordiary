@@ -6,5 +6,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_day">Day</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="button_takePhoto">Scatta una foto</string>
+    <string name="button_newEntry">Aggiungi</string>
+    <string name="title_activity_entry">EntryActivity</string>
 
 </resources>

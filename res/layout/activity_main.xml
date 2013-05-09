@@ -28,7 +28,7 @@
         android:layout_below="@+id/entryText"
         android:layout_marginTop="26dp"
         android:onClick="onTakePhotoClicked"
-        android:text="Scatta foto" />
+        android:text="@string/button_takePhoto" />
 
     <Button
         android:id="@+id/newEntryButton"
@@ -38,6 +38,27 @@
         android:layout_alignBottom="@+id/takePhotoButton"
         android:layout_alignLeft="@+id/entryText"
         android:onClick="onNewEntryButtonClicked"
-        android:text="Aggiungi" />
+        android:text="@string/button_newEntry" />
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/newEntryButton"
+        android:layout_alignRight="@+id/takePhotoButton"
+        android:layout_below="@+id/newEntryButton"
+        android:layout_marginTop="30dp" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/button1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/takePhotoButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="onEntryClicked"
+        android:text="Prova Entry" />
 
 </RelativeLayout>

@@ -8,4 +8,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
+    <EditText
+        android:id="@+id/entryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/takePhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/entryText"
+        android:layout_below="@+id/entryText"
+        android:layout_marginTop="26dp"
+        android:onClick="onTakePhotoClicked"
+        android:text="Scatta foto" />
+
+    <Button
+        android:id="@+id/newEntryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/takePhotoButton"
+        android:layout_alignBottom="@+id/takePhotoButton"
+        android:layout_alignLeft="@+id/entryText"
+        android:onClick="onNewEntryButtonClicked"
+        android:text="Aggiungi" />
+
 </RelativeLayout>

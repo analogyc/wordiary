@@ -11,19 +11,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
 	private ListView mainListView;
-	private ArrayAdapter<String> listAdapter;  
+	private ArrayAdapter<String> listAdapter; 
+	
+	//view links
+	private Button entryButton;
+	private EditText entryText;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        mainListView = (ListView) findViewById(R.id.listView1);
+        /*mainListView = (ListView) findViewById(R.id.listView1);
         
         String[] days = new String[] { "Today", "Yesterday", "2 days ago", "3 days ago", 
                 "29/03/2013", "28/03/2013", "27/03/2013", "26/03/2013"}; 
@@ -34,16 +39,12 @@ public class MainActivity extends Activity {
         listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, daysList);
         
         mainListView.setAdapter(listAdapter);
+        */
         
-       /* final Button button = (Button) findViewById(R.id.newEntryButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	String message = "adasdas";
-            	Intent intent = new Intent(MainActivity.this, DayActivity.class);
-            	intent.putExtra("m", message);
-            	startActivity(intent);
-            }
-        });*/
+        //get the the corresponding link for each view object
+        entryButton = (Button) findViewById(R.id.newEntryButton);
+        entryText = (EditText) findViewById(R.id.entryText);
+
     }
 
 
@@ -65,5 +66,22 @@ public class MainActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    
+    //method used when "newEntryButton" button is clicked
+    public void onNewEntryButtonClicked(View view){
+    	String message = entryText.getText().toString();
+    	Intent intent = new Intent(MainActivity.this, DayActivity.class);
+    	intent.putExtra("entryText", message);
+    	startActivity(intent);
+    }
+    
+    //method used when "takePhoto" button is clicked
+    public void onTakePhotoClicked(View view){
+    	
+    	//start the activity to take a photo
+    	
+    }
+    
+    
     
 }

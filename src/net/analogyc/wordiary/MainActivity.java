@@ -1,58 +1,54 @@
 package net.analogyc.wordiary;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import net.analogyc.wordiary.models.DataBaseHelper;
+import net.analogyc.wordiary.models.EntryAdapter;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
-	private ArrayAdapter<String> listAdapter; 
 	
 	//view links
 	private Button entryButton;
 	private EditText entryText;
 	private ListView entryList;
 	
+	DataBaseHelper dataBaseHelper;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        //get the the corresponding link for each view object
+        entryButton = (Button) findViewById(R.id.newEntryButton);
+        entryText = (EditText) findViewById(R.id.entryText);
         entryList = (ListView) findViewById(R.id.listView1);
         
-        String[] days = new String[] { "Today", "Yesterday", "2 days ago", "3 days ago", 
-                "29/03/2013", "28/03/2013", "27/03/2013", "26/03/2013"}; 
+        //show the entries stored in the db
+      	dataBaseHelper = new DataBaseHelper(this);
+      	Cursor c = dataBaseHelper.getAllEntries();
+      	startManagingCursor(c);
+      	entryList.setAdapter(new EntryAdapter(this, c));
         
-        ArrayList<String> daysList = new ArrayList<String>();  
-        daysList.addAll(Arrays.asList(days)); 
-        
-        listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, daysList);
-        
+                
         entryList.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int pos, long row) {
                     // Remembers the selected Index
-                    onEntryClicked((int)row);
+                    onEntryClicked(pos);
             }
         });
-        
-        entryList.setAdapter(listAdapter);
-        
-        
-        //get the the corresponding link for each view object
-        entryButton = (Button) findViewById(R.id.newEntryButton);
-        entryText = (EditText) findViewById(R.id.entryText);
 
     }
 
@@ -78,12 +74,16 @@ public class MainActivity extends Activity {
     
     //method used when "newEntryButton" button is clicked
     public void onNewEntryButtonClicked(View view){
-    	/*
     	String message = entryText.getText().toString();
-    	Intent intent = new Intent(MainActivity.this, DayActivity.class);
-    	intent.putExtra("entryText", message);
-    	startActivity(intent);
-    	*/
+    	if(message != ""){
+    		dataBaseHelper.addEntry(message, 0);
+    		
+    		Cursor c = dataBaseHelper.getAllEntries();
+    		startManagingCursor(c);
+    		entryList.setAdapter(new EntryAdapter(this, c));
+    		entryText.setText("");
+        	entryText.clearFocus();
+    	}
     }
     
     
@@ -97,9 +97,15 @@ public class MainActivity extends Activity {
     
     
     //method used when user clicks on a entry
-    public void onEntryClicked(int entryId){
-    	Intent intent = new Intent(MainActivity.this, EntryActivity.class);
-    	intent.putExtra("entryId", entryId);
+    public void onEntryClicked(int entryId){    	
+    	// get the id for the selected entry
+        Cursor c = dataBaseHelper.getAllEntries();
+        c.moveToPosition(entryId);
+        int id = c.getInt(0);
+        
+        //open Entry Activity
+        Intent intent = new Intent(MainActivity.this, EntryActivity.class);
+    	intent.putExtra("entryId", id);
     	startActivity(intent);
     }
     

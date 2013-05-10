@@ -2,14 +2,25 @@ package net.analogyc.wordiary;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.widget.TextView;
 
 public class EntryActivity extends Activity {
+	private int entryId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_entry);
+		
+		Intent intent = getIntent();
+		
+		//normally entryId can't be -1
+		entryId = intent.getIntExtra("entryId", -1);
+		
+		TextView tv = (TextView) findViewById(R.id.textView1);
+		tv.setText(""+entryId);
 	}
 
 	@Override

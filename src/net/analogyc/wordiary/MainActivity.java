@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,19 +17,19 @@ import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
-	private ListView mainListView;
 	private ArrayAdapter<String> listAdapter; 
 	
 	//view links
 	private Button entryButton;
 	private EditText entryText;
+	private ListView entryList;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        mainListView = (ListView) findViewById(R.id.listView1);
+        entryList = (ListView) findViewById(R.id.listView1);
         
         String[] days = new String[] { "Today", "Yesterday", "2 days ago", "3 days ago", 
                 "29/03/2013", "28/03/2013", "27/03/2013", "26/03/2013"}; 
@@ -38,7 +39,15 @@ public class MainActivity extends Activity {
         
         listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, daysList);
         
-        mainListView.setAdapter(listAdapter);
+        entryList.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int pos, long row) {
+                    // Remembers the selected Index
+                    onEntryClicked((int)row);
+            }
+        });
+        
+        entryList.setAdapter(listAdapter);
         
         
         //get the the corresponding link for each view object
@@ -88,11 +97,9 @@ public class MainActivity extends Activity {
     
     
     //method used when user clicks on a entry
-    public void onEntryClicked(View view){
-    	
-    	//-- get entry id or timestamp to identify the clicked entry 
+    public void onEntryClicked(int entryId){
     	Intent intent = new Intent(MainActivity.this, EntryActivity.class);
-    	//intent.putExtra("entryId", ----);
+    	intent.putExtra("entryId", entryId);
     	startActivity(intent);
     }
     

@@ -9,5 +9,10 @@
     <string name="button_takePhoto">Scatta una foto</string>
     <string name="button_newEntry">Aggiungi</string>
     <string name="title_activity_entry">EntryActivity</string>
+    <string name="dialog_new_entry">New Entry</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="signin">Sign in</string>
+     
 
 </resources>

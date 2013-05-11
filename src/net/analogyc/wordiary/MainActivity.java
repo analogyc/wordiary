@@ -5,8 +5,12 @@ import net.analogyc.wordiary.models.EntryAdapter;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,8 +18,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity 
+implements NewEntryDialogFragment.NewEntryDialogListener{
+
+ 
 
 	
 	//view links
@@ -74,7 +82,7 @@ public class MainActivity extends Activity {
     
     //method used when "newEntryButton" button is clicked
     public void onNewEntryButtonClicked(View view){
-    	String message = entryText.getText().toString();
+    	/*String message = entryText.getText().toString();
     	if(message != ""){
     		dataBaseHelper.addEntry(message, 0);
     		
@@ -83,7 +91,10 @@ public class MainActivity extends Activity {
     		entryList.setAdapter(new EntryAdapter(this, c));
     		entryText.setText("");
         	entryText.clearFocus();
-    	}
+    	}*/
+    	
+    	NewEntryDialogFragment newFragment = new NewEntryDialogFragment();
+    	newFragment.show(getSupportFragmentManager(), "entry");
     }
     
     
@@ -108,6 +119,29 @@ public class MainActivity extends Activity {
     	intent.putExtra("entryId", id);
     	startActivity(intent);
     }
+
+
+	@Override
+	public void onDialogPositiveClick(
+			android.support.v4.app.DialogFragment dialog) {
+		// TODO Auto-generated method stub
+		Context context = getApplicationContext();
+		CharSequence text = "Hello toast!";
+		int duration = Toast.LENGTH_SHORT;
+
+		Toast toast = Toast.makeText(context, text, duration);
+		toast.show();
+		
+		
+	}
+
+
+	@Override
+	public void onDialogNegativeClick(
+			android.support.v4.app.DialogFragment dialog) {
+		// TODO Auto-generated method stub
+		
+	}
     
     
     

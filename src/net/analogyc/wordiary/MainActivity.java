@@ -1,11 +1,12 @@
 package net.analogyc.wordiary;
 
 import net.analogyc.wordiary.models.DataBaseHelper;
+import android.support.v4.app.DialogFragment;
 import net.analogyc.wordiary.models.EntryAdapter;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.DialogFragment;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -122,18 +123,42 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 
 
 	@Override
-	public void onDialogPositiveClick(
-			android.support.v4.app.DialogFragment dialog) {
+	public void onDialogPositiveClick(DialogFragment dialog) {
 		// TODO Auto-generated method stub
 		Context context = getApplicationContext();
-		CharSequence text = "Hello toast!";
+		CharSequence text = "Message saved";
 		int duration = Toast.LENGTH_SHORT;
 
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
 		
 		
+		
+		    
+		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
+        String message=edit.getText().toString();
+        
+		if(message != ""){
+			dataBaseHelper.addEntry(message, 0);
+			
+			Cursor c = dataBaseHelper.getAllEntries();
+			startManagingCursor(c);
+			entryList.setAdapter(new EntryAdapter(this, c));
+			entryText.setText("");
+	    	entryText.clearFocus();
+		}
+			else{
+		Context context1 = getApplicationContext();
+		CharSequence text1 = "Message not saved";
+		int duration1 = Toast.LENGTH_SHORT;
+
+		Toast toast1 = Toast.makeText(context1, text1, duration1);
+		toast1.show();
 	}
+		
+		
+	}	
+	
 
 
 	@Override

@@ -5,13 +5,12 @@ import android.support.v4.app.DialogFragment;
 import net.analogyc.wordiary.models.EntryAdapter;
 
 import android.os.Bundle;
-import android.app.Activity;
+import android.provider.MediaStore;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,9 +26,9 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
  
 
 	
+	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	//view links
 	private Button entryButton;
-	private EditText entryText;
 	private ListView entryList;
 	
 	DataBaseHelper dataBaseHelper;
@@ -41,7 +40,6 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
         
         //get the the corresponding link for each view object
         entryButton = (Button) findViewById(R.id.newEntryButton);
-        entryText = (EditText) findViewById(R.id.entryText);
         entryList = (ListView) findViewById(R.id.listView1);
         
         //show the entries stored in the db
@@ -58,7 +56,6 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
                     onEntryClicked(pos);
             }
         });
-
     }
 
 
@@ -101,12 +98,25 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
     
     //method used when "takePhoto" button is clicked
     public void onTakePhotoClicked(View view){
-    	/*
-    	Intent intent = new Intent(MainActivity.this, TakePhotoActivity.class);
-    	startActivity(intent);
-    	*/	
+    	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    	startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    	
     }
     
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Image captured and saved to fileUri specified in the Intent
+                Toast.makeText(this, "Image saved to:\n" +
+                         data.getData(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                // User cancelled the image capture
+            } else {
+                // Image capture failed, advise user
+            }
+        }
+    }
     
     //method used when user clicks on a entry
     public void onEntryClicked(int entryId){    	
@@ -131,9 +141,6 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
-		
-		
-		
 		    
 		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
         String message=edit.getText().toString();
@@ -144,17 +151,14 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 			Cursor c = dataBaseHelper.getAllEntries();
 			startManagingCursor(c);
 			entryList.setAdapter(new EntryAdapter(this, c));
-			entryText.setText("");
-	    	entryText.clearFocus();
+		} else {
+			Context context1 = getApplicationContext();
+			CharSequence text1 = "Message not saved";
+			int duration1 = Toast.LENGTH_SHORT;
+	
+			Toast toast1 = Toast.makeText(context1, text1, duration1);
+			toast1.show();
 		}
-			else{
-		Context context1 = getApplicationContext();
-		CharSequence text1 = "Message not saved";
-		int duration1 = Toast.LENGTH_SHORT;
-
-		Toast toast1 = Toast.makeText(context1, text1, duration1);
-		toast1.show();
-	}
 		
 		
 	}	
@@ -162,8 +166,7 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 
 
 	@Override
-	public void onDialogNegativeClick(
-			android.support.v4.app.DialogFragment dialog) {
+	public void onDialogNegativeClick(DialogFragment dialog) {
 		// TODO Auto-generated method stub
 		
 	}

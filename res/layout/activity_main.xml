@@ -8,47 +8,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <EditText
-        android:id="@+id/entryText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id="@+id/takePhotoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/entryText"
-        android:layout_below="@+id/entryText"
-        android:layout_marginTop="26dp"
-        android:onClick="onTakePhotoClicked"
-        android:text="@string/button_takePhoto" />
-
-    <Button
-        android:id="@+id/newEntryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/takePhotoButton"
-        android:layout_alignBottom="@+id/takePhotoButton"
-        android:layout_alignLeft="@+id/entryText"
-        android:onClick="onNewEntryButtonClicked"
-        android:text="@string/button_newEntry" />
-
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/newEntryButton"
         android:layout_alignRight="@+id/takePhotoButton"
-        android:layout_below="@+id/newEntryButton"
-        android:layout_marginTop="30dp" >
+        android:layout_below="@+id/newEntryButton" >
 
     </ListView>
+
+    <Button
+        android:id="@+id/newEntryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:onClick="onNewEntryButtonClicked"
+        android:text="@string/button_newEntry" />
+
+    <Button
+        android:id="@+id/takePhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="onTakePhotoClicked"
+        android:text="@string/button_takePhoto" />
 
 </RelativeLayout>

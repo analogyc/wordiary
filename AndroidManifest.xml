@@ -8,6 +8,10 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	
     <application
         android:allowBackup="true"
         android:enabled="true"
@@ -35,6 +39,6 @@
             android:name="net.analogyc.wordiary.EntryActivity"
             android:label="@string/title_activity_entry" >
         </activity>
+        
     </application>
-
 </manifest>

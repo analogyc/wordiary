@@ -1,9 +1,11 @@
 package net.analogyc.wordiary;
 
 import net.analogyc.wordiary.models.DataBaseHelper;
+import net.analogyc.wordiary.models.Photo;
 import android.support.v4.app.DialogFragment;
 import net.analogyc.wordiary.models.EntryAdapter;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
@@ -98,9 +100,9 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
     
     //method used when "takePhoto" button is clicked
     public void onTakePhotoClicked(View view){
-    	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);    	
+    	intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(Photo.getOutputMediaFile(1)));
     	startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-    	
     }
     
     @Override

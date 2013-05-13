@@ -165,6 +165,11 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 		
 	}	
 	
+	public void moods(View view){
+		Intent intent = new Intent(this, MoodsActivity.class);
+    	startActivity(intent);
+	}
+	
 
 
 	@Override

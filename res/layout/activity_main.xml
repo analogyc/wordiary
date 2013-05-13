@@ -35,4 +35,14 @@
         android:onClick="onTakePhotoClicked"
         android:text="@string/button_takePhoto" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/newEntryButton"
+        android:layout_alignBottom="@+id/newEntryButton"
+        android:layout_toRightOf="@+id/newEntryButton"
+        android:onClick="moods"
+        android:text="Button" />
+
 </RelativeLayout>

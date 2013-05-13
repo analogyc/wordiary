@@ -13,6 +13,6 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="signin">Go</string>
-     
+    <string name="title_activity_mood">MoodActivity</string>
 
 </resources>

@@ -7,11 +7,15 @@ import java.util.Locale;
 
 import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.DataBaseHelper;
+import net.analogyc.wordiary.models.EntryAdapter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class EntryActivity extends Activity {
@@ -32,12 +36,14 @@ public class EntryActivity extends Activity {
 		messageText = (TextView) findViewById(R.id.messageText);
 		dateText = (TextView) findViewById(R.id.dateText);
 		
+		dataBase = new DBAdapter(this);
+		dataBase.open();
+		
 		setView();
 		
 	}
 	
 	private void setView(){
-		dataBase = new DBAdapter(this);
   		Cursor c = dataBase.getEntryById(entryId);
   		if (!(c.moveToFirst())){
   			//error! wrong ID, but it won't happen
@@ -64,6 +70,20 @@ public class EntryActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.entry, menu);
 		return true;
+	}
+	
+	
+	@Override
+	protected void onPause(){
+		super.onPause();
+		dataBase.close();
+	}
+	
+	@Override
+	protected void onResume(){
+		super.onResume();
+		dataBase = new DBAdapter(this);
+		dataBase.open();
 	}
 
 }

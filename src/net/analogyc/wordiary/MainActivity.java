@@ -49,6 +49,7 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
         
         //show the entries stored in the db
         dataBase = new DBAdapter(this);
+        dataBase.open();
       	entries = dataBase.getAllEntries();
       	startManagingCursor(entries);
       	entryList.setAdapter(new EntryAdapter(this, entries));
@@ -115,6 +116,8 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
             if (resultCode == RESULT_OK) {
                 // Image captured and saved to fileUri specified in the Intent
                 Toast.makeText(this, "Image saved to:\n" + imageUri, Toast.LENGTH_LONG).show();
+                dataBase.addPhoto(imageUri.toString());
+                imageUri = null;
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
             } else {
@@ -201,7 +204,6 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 	
 	@Override
 	protected void onPause(){
-		new RuntimeException("pause!!");
 		super.onPause();
 		dataBase.close();
 		entries.close();
@@ -209,9 +211,9 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 	
 	@Override
 	protected void onResume(){
-		new RuntimeException("resume!!");
 		super.onResume();
 		dataBase = new DBAdapter(this);
+		dataBase.open();
       	entries = dataBase.getAllEntries();
       	startManagingCursor(entries);
       	entryList.setAdapter(new EntryAdapter(this, entries));

@@ -6,26 +6,40 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 public class DBAdapter {
-	DataBaseHelper db;
+	
+	private DataBaseHelper dbHelper;
+	private SQLiteDatabase database;
 	
 	public DBAdapter(Context contex){
-		if(db == null){
-			db = new DataBaseHelper(contex);
+		dbHelper = new DataBaseHelper(contex);
+	}
+	
+	
+	//open new writable database if it doesn't exist
+	public void open(){
+		if (database == null){
+			database = dbHelper.getWritableDatabase();
 		}
+	}
+	
+	//**Close the database
+	public void close() {
+	    dbHelper.close();
 	}
 	
 	//get all the entries in the db 
 	public Cursor getAllEntries(){
 		String query = "SELECT * FROM " + Entry.TABLE_NAME + " ORDER BY "+Entry.COLUMN_NAME_CREATED+ " DESC";
-		return db.getReadableDatabase().rawQuery(query, null);
+		return database.rawQuery(query, null);
 	}
 	
 	//get all the entries in the db 
 	public Cursor getEntryById(int id){
 		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE "+ Entry._ID+ " = "+ id;
-		return db.getReadableDatabase().rawQuery(query, null);
+		return database.rawQuery(query, null);
 	}
 	
 	
@@ -42,13 +56,26 @@ public class DBAdapter {
 				Entry.COLUMN_NAME_CREATED + 
 				") VALUES ('"+
 				text +  "' , " +
-				mood+  " , '" +
-				sdf.format(now) +  "' )" ;
-		 db.getReadableDatabase().execSQL(query);
+				mood+  " , " +
+				sdf.format(now) +  " )" ;
+		database.execSQL(query);
 		 
 	}
 	
-	public void close(){
-		db.close();
+	//add new photo
+	public void addPhoto( String filename){
+		//create the current timestamp
+		Date now = new Date(System.currentTimeMillis());
+		String DATE_FORMAT = "yyyyMMddHHmmss";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ITALY);
+		//insert the entry
+		String query = "INSERT INTO " + Day.TABLE_NAME + " ( "+
+				Day.COLUMN_NAME_FILENAME + " , " +
+				Day.COLUMN_NAME_CREATED + 
+				") VALUES ('"+
+				filename +  "' , " +
+				sdf.format(now) +  " )" ;
+		database.execSQL(query);
+		 
 	}
 }

@@ -32,9 +32,10 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 	//view links
 	private Button entryButton;
 	private ListView entryList;
-	private Uri fileUri;
+	private Uri imageUri;
 	
 	DataBaseHelper dataBaseHelper;
+	Cursor entries;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +48,9 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
         
         //show the entries stored in the db
       	dataBaseHelper = new DataBaseHelper(this);
-      	Cursor c = dataBaseHelper.getAllEntries();
-      	startManagingCursor(c);
-      	entryList.setAdapter(new EntryAdapter(this, c));
+      	entries = dataBaseHelper.getAllEntries();
+      	startManagingCursor(entries);
+      	entryList.setAdapter(new EntryAdapter(this, entries));
         
                 
         entryList.setOnItemClickListener(new ListView.OnItemClickListener() {
@@ -102,8 +103,8 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
     //method used when "takePhoto" button is clicked
     public void onTakePhotoClicked(View view){
     	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);    	
-    	fileUri = Uri.fromFile(Photo.getOutputMediaFile(1));
-    	intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+    	imageUri = Uri.fromFile(Photo.getOutputMediaFile(1));
+    	intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
     	startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
     
@@ -112,7 +113,7 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // Image captured and saved to fileUri specified in the Intent
-                Toast.makeText(this, "Image saved to:\n" + fileUri, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Image saved to:\n" + imageUri, Toast.LENGTH_LONG).show();
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
             } else {
@@ -132,6 +133,8 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
         Intent intent = new Intent(MainActivity.this, EntryActivity.class);
     	intent.putExtra("entryId", id);
     	startActivity(intent);
+    	
+    	c.close();
     }
 
 
@@ -177,6 +180,37 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 	public void onDialogNegativeClick(DialogFragment dialog) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		if( imageUri != null){
+			outState.putString("cameraImageUri", imageUri.toString());
+		}
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState){
+		super.onRestoreInstanceState(savedInstanceState);
+		if(savedInstanceState.containsKey("cameraImageUri")){
+			imageUri = Uri.parse(savedInstanceState.getString("cameraImageUri"));
+		}
+	}
+	
+	@Override
+	protected void onPause(){
+		super.onPause();
+		dataBaseHelper.close();
+		entries.close();
+	}
+	
+	@Override
+	protected void onResume(){
+		super.onResume();
+		dataBaseHelper = new DataBaseHelper(this);
+      	entries = dataBaseHelper.getAllEntries();
+      	startManagingCursor(entries);
 	}
     
     

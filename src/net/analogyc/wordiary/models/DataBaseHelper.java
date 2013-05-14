@@ -44,37 +44,4 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// NOT USED
 	}
-	
-	
-	//get all the entries in the db 
-	public Cursor getAllEntries(){
-		String query = "SELECT * FROM " + Entry.TABLE_NAME + " ORDER BY "+Entry.COLUMN_NAME_CREATED+ " DESC";
-		return getReadableDatabase().rawQuery(query, null);
-	}
-	
-	//get all the entries in the db 
-	public Cursor getEntryById(int id){
-		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE "+ Entry._ID+ " = "+ id;
-		return getReadableDatabase().rawQuery(query, null);
-	}
-	
-	
-	//add new entry
-	public void addEntry( String text, int mood){
-		//create the current timestamp
-		Date now = new Date(System.currentTimeMillis());
-		String DATE_FORMAT = "yyyyMMddHHmmss";
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ITALY);
-		//insert the entry
-		String query = "INSERT INTO " + Entry.TABLE_NAME + " ( "+
-				Entry.COLUMN_NAME_MESSAGE + " , " +
-				Entry.COLUMN_NAME_MOOD + " , " +
-				Entry.COLUMN_NAME_CREATED + 
-				") VALUES ('"+
-				text +  "' , " +
-				mood+  " , '" +
-				sdf.format(now) +  "' )" ;
-		 getReadableDatabase().execSQL(query);
-		 
-	}
 }

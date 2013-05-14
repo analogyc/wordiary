@@ -1,5 +1,6 @@
 package net.analogyc.wordiary;
 
+import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.DataBaseHelper;
 import net.analogyc.wordiary.models.Photo;
 import android.support.v4.app.DialogFragment;
@@ -34,7 +35,7 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 	private ListView entryList;
 	private Uri imageUri;
 	
-	DataBaseHelper dataBaseHelper;
+	DBAdapter dataBase;
 	Cursor entries;
 	
     @Override
@@ -47,8 +48,8 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
         entryList = (ListView) findViewById(R.id.listView1);
         
         //show the entries stored in the db
-      	dataBaseHelper = new DataBaseHelper(this);
-      	entries = dataBaseHelper.getAllEntries();
+        dataBase = new DBAdapter(this);
+      	entries = dataBase.getAllEntries();
       	startManagingCursor(entries);
       	entryList.setAdapter(new EntryAdapter(this, entries));
         
@@ -125,7 +126,7 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
     //method used when user clicks on a entry
     public void onEntryClicked(int entryId){    	
     	// get the id for the selected entry
-        Cursor c = dataBaseHelper.getAllEntries();
+        Cursor c = dataBase.getAllEntries();
         c.moveToPosition(entryId);
         int id = c.getInt(0);
         
@@ -152,9 +153,9 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
         String message=edit.getText().toString();
         
 		if(message != ""){
-			dataBaseHelper.addEntry(message, 0);
+			dataBase.addEntry(message, 0);
 			
-			Cursor c = dataBaseHelper.getAllEntries();
+			Cursor c = dataBase.getAllEntries();
 			startManagingCursor(c);
 			entryList.setAdapter(new EntryAdapter(this, c));
 		} else {
@@ -200,18 +201,39 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 	
 	@Override
 	protected void onPause(){
+		new RuntimeException("pause!!");
 		super.onPause();
-		dataBaseHelper.close();
+		dataBase.close();
 		entries.close();
 	}
 	
 	@Override
 	protected void onResume(){
+		new RuntimeException("resume!!");
+		super.onResume();
+		dataBase = new DBAdapter(this);
+      	entries = dataBase.getAllEntries();
+      	startManagingCursor(entries);
+      	entryList.setAdapter(new EntryAdapter(this, entries));
+        
+        
+        entryList.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int pos, long row) {
+                    // Remembers the selected Index
+                    onEntryClicked(pos);
+            }
+        });
+	}
+	
+	/*protected void onResumeFragments(){
+		new RuntimeException("resume frag!!");
 		super.onResume();
 		dataBaseHelper = new DataBaseHelper(this);
       	entries = dataBaseHelper.getAllEntries();
       	startManagingCursor(entries);
-	}
+      	
+	}*/
     
     
     

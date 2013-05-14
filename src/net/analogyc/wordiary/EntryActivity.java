@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.DataBaseHelper;
 import android.os.Bundle;
 import android.app.Activity;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 
 public class EntryActivity extends Activity {
 	private int entryId;
-	private DataBaseHelper dataBaseHelper;
+	private DBAdapter dataBase;
 	private TextView messageText, dateText;
 
 	@Override
@@ -36,8 +37,8 @@ public class EntryActivity extends Activity {
 	}
 	
 	private void setView(){
-		dataBaseHelper = new DataBaseHelper(this);
-  		Cursor c = dataBaseHelper.getEntryById(entryId);
+		dataBase = new DBAdapter(this);
+  		Cursor c = dataBase.getEntryById(entryId);
   		if (!(c.moveToFirst())){
   			//error! wrong ID, but it won't happen
   		}

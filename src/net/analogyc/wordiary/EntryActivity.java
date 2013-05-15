@@ -8,6 +8,7 @@ import java.util.Locale;
 import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.DataBaseHelper;
 import net.analogyc.wordiary.models.EntryAdapter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -61,7 +62,7 @@ public class EntryActivity extends Activity {
 			//won't happen if we use only dataBaseHelper.addEntry(...)
 		}  
 		
-		
+		c.close();
   		//in the future we will get an image and a mood in the same way		
 	}
 
@@ -74,16 +75,35 @@ public class EntryActivity extends Activity {
 	
 	
 	@Override
+	protected void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("entryId", entryId);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState){
+		super.onRestoreInstanceState(savedInstanceState);
+		if(savedInstanceState.containsKey("entryId")){
+			entryId = savedInstanceState.getInt("entryId");
+		}
+	}
+	
+	
+	@Override
 	protected void onPause(){
 		super.onPause();
 		dataBase.close();
+		dataBase = null;
 	}
 	
 	@Override
 	protected void onResume(){
 		super.onResume();
-		dataBase = new DBAdapter(this);
-		dataBase.open();
+		if (dataBase == null){
+			dataBase = new DBAdapter(this);
+			dataBase.open();
+		}
+		setView();
 	}
 
 }

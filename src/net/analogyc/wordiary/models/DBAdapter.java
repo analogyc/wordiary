@@ -28,6 +28,7 @@ public class DBAdapter {
 	//**Close the database
 	public void close() {
 	    dbHelper.close();
+	    database.close();
 	}
 	
 	//get all the entries in the db 
@@ -78,4 +79,10 @@ public class DBAdapter {
 		database.execSQL(query);
 		 
 	}
+	
+	//get all the entries in the db 
+		public Cursor getAllDays(){
+			String query = "SELECT * FROM " + Day.TABLE_NAME + " ORDER BY "+Day.COLUMN_NAME_CREATED+ " DESC";
+			return database.rawQuery(query, null);
+		}
 }

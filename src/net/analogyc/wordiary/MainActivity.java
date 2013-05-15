@@ -1,7 +1,6 @@
 package net.analogyc.wordiary;
 
 import net.analogyc.wordiary.models.DBAdapter;
-import net.analogyc.wordiary.models.DataBaseHelper;
 import net.analogyc.wordiary.models.Photo;
 import android.support.v4.app.DialogFragment;
 import net.analogyc.wordiary.models.EntryAdapter;
@@ -18,25 +17,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity 
-implements NewEntryDialogFragment.NewEntryDialogListener{
+public class MainActivity extends FragmentActivity implements NewEntryDialogFragment.NewEntryDialogListener{
 
  
-
-	
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	//view links
-	private Button entryButton;
 	private ListView entryList;
-	private Uri imageUri;
 	
-	DBAdapter dataBase;
-	Cursor entries;
+	private Uri imageUri;
+	private DBAdapter dataBase;
+	private EntryAdapter entryAdapter;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,24 +38,14 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
         setContentView(R.layout.activity_main);
         
         //get the the corresponding link for each view object
-        entryButton = (Button) findViewById(R.id.newEntryButton);
         entryList = (ListView) findViewById(R.id.listView1);
         
-        //show the entries stored in the db
+        //open database connection
         dataBase = new DBAdapter(this);
         dataBase.open();
-      	entries = dataBase.getAllEntries();
-      	startManagingCursor(entries);
-      	entryList.setAdapter(new EntryAdapter(this, entries));
         
-                
-        entryList.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> a, View v, int pos, long row) {
-                    // Remembers the selected Index
-                    onEntryClicked(pos);
-            }
-        });
+        showEntries();
+      	
     }
 
 
@@ -116,7 +100,7 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
             if (resultCode == RESULT_OK) {
                 // Image captured and saved to fileUri specified in the Intent
                 Toast.makeText(this, "Image saved to:\n" + imageUri, Toast.LENGTH_LONG).show();
-                dataBase.addPhoto(imageUri.toString());
+                dataBase.addPhoto(imageUri.getPath());
                 imageUri = null;
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
@@ -158,9 +142,7 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 		if(message != ""){
 			dataBase.addEntry(message, 0);
 			
-			Cursor c = dataBase.getAllEntries();
-			startManagingCursor(c);
-			entryList.setAdapter(new EntryAdapter(this, c));
+			showEntries(); 
 		} else {
 			Context context1 = getApplicationContext();
 			CharSequence text1 = "Message not saved";
@@ -206,37 +188,34 @@ implements NewEntryDialogFragment.NewEntryDialogListener{
 	protected void onPause(){
 		super.onPause();
 		dataBase.close();
-		entries.close();
+		dataBase = null;
+		entryAdapter.getCursor().close();
+		entryAdapter = null;
 	}
 	
 	@Override
 	protected void onResume(){
 		super.onResume();
-		dataBase = new DBAdapter(this);
-		dataBase.open();
-      	entries = dataBase.getAllEntries();
+		if(dataBase == null){
+			dataBase = new DBAdapter(this);
+			dataBase.open();
+		}
+      	//this will set entryAdapter
+		showEntries();
+	}
+	
+	
+    private void showEntries(){
+    	Cursor entries = dataBase.getAllEntries();
       	startManagingCursor(entries);
-      	entryList.setAdapter(new EntryAdapter(this, entries));
-        
-        
+      	entryAdapter = new EntryAdapter(this, entries);
+      	entryList.setAdapter(entryAdapter);
+                
         entryList.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
             public void onItemClick(AdapterView<?> a, View v, int pos, long row) {
-                    // Remembers the selected Index
                     onEntryClicked(pos);
             }
         });
-	}
-	
-	/*protected void onResumeFragments(){
-		new RuntimeException("resume frag!!");
-		super.onResume();
-		dataBaseHelper = new DataBaseHelper(this);
-      	entries = dataBaseHelper.getAllEntries();
-      	startManagingCursor(entries);
-      	
-	}*/
-    
-    
+    }
     
 }

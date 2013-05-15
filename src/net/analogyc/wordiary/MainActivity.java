@@ -11,10 +11,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -53,6 +57,8 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+    
+
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -117,29 +123,25 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		// TODO Auto-generated method stub
 		Context context = getApplicationContext();
-		CharSequence text = "Message saved";
+		CharSequence text;
 		int duration = Toast.LENGTH_SHORT;
-
-		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();
 		    
 		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
         String message=edit.getText().toString();
         
 		if(message != ""){
-			dataBase.addEntry(message, 0);
+			text = "Message saved";
 			
+			dataBase.addEntry(message, 0);
 			showEntries(); 
+			
 		} else {
-			Context context1 = getApplicationContext();
-			CharSequence text1 = "Message not saved";
-			int duration1 = Toast.LENGTH_SHORT;
-	
-			Toast toast1 = Toast.makeText(context1, text1, duration1);
-			toast1.show();
+			text = "Message not saved";
+			
 		}
 		
-		
+		Toast toast1 = Toast.makeText(context, text, duration);
+		toast1.show();
 	}	
 	
 	public void moods(View view){
@@ -190,7 +192,33 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
       	//this will set entryAdapter
 		showEntries();
 	}
+		
 	
+    @Override  
+    public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {  
+    	super.onCreateContextMenu(menu, v, menuInfo);  
+    	menu.setHeaderTitle("Entry Menu");  
+    	menu.add(0, v.getId(), 0, "Share");  
+    	menu.add(0, v.getId(), 0, "Delete");  
+    } 
+    
+	@Override  
+    public boolean onContextItemSelected(MenuItem item) {
+		Context context = getApplicationContext();
+		int duration = Toast.LENGTH_SHORT;
+		
+		//get the id of the selected entry
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+		int number=(int)entryAdapter.getItemId(info.position);
+		if(item.getTitle()=="Delete"){
+			//delete the entry
+			dataBase.deleteEntry(number);
+			showEntries();
+			Toast toast1 = Toast.makeText(context, "Message deleted", duration);
+			toast1.show();
+        } 
+		return true;
+    } 
 	
     private void showEntries(){
     	Cursor entries = dataBase.getAllEntries();
@@ -203,6 +231,8 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
                     onEntryClicked(pos);
             }
         });
+        
+        registerForContextMenu( entryList );
     }
     
 }

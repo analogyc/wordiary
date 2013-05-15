@@ -78,13 +78,24 @@ public class DBAdapter {
 				Entry.COLUMN_NAME_MESSAGE + " , " +
 				Entry.COLUMN_NAME_MOOD + " , " +
 				Entry.COLUMN_NAME_CREATED + 
-				") VALUES ('"+
-				text +  "' , " +
-				mood+  " , " +
-				sdf.format(now) +  " )" ;
-		database.execSQL(query);
-		 
+				") VALUES ( ?,?,? )" ;
+		database.execSQL(query, new Object[] {text,mood,sdf.format(now)});
 	}
+	
+	/**
+	 * Delete a entry
+	 * 
+	 * @param id the message id
+	 * 
+	 */
+	public void deleteEntry( int id){
+		//delete the entry
+		String query = "DELETE FROM " + Entry.TABLE_NAME + " WHERE "+ Entry._ID+ " = "+ id;
+		database.execSQL(query);
+	}
+	
+	
+	
 	
 	/**
 	 * Add a new photo

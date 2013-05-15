@@ -26,8 +26,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			Entry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
 			Entry.COLUMN_NAME_DAY_ID + " INTEGER," +
 			Entry.COLUMN_NAME_MESSAGE + " TEXT," +
-			Entry.COLUMN_NAME_MOOD + " INTEGER," +
-			Entry.COLUMN_NAME_CREATED + " INTEGER" +
+			Entry.COLUMN_NAME_MOOD + " TEXT," +
+			Entry.COLUMN_NAME_CREATED + " TEXT" +
 			");"
 		);
 		
@@ -35,7 +35,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			"CREATE TABLE " + Day.TABLE_NAME + " (" +
 			Day._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
 			Day.COLUMN_NAME_FILENAME + " TEXT," +
-			Day.COLUMN_NAME_CREATED + " INTEGER" +
+			Day.COLUMN_NAME_CREATED + " TEXT" +
 			");"
 		);
 	}

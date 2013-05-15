@@ -4,11 +4,9 @@ import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.Photo;
 import android.support.v4.app.DialogFragment;
 import net.analogyc.wordiary.models.EntryAdapter;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -70,17 +68,6 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
     
     //method used when "newEntryButton" button is clicked
     public void onNewEntryButtonClicked(View view){
-    	/*String message = entryText.getText().toString();
-    	if(message != ""){
-    		dataBaseHelper.addEntry(message, 0);
-    		
-    		Cursor c = dataBaseHelper.getAllEntries();
-    		startManagingCursor(c);
-    		entryList.setAdapter(new EntryAdapter(this, c));
-    		entryText.setText("");
-        	entryText.clearFocus();
-    	}*/
-    	
     	NewEntryDialogFragment newFragment = new NewEntryDialogFragment();
     	newFragment.show(getSupportFragmentManager(), "entry");
     }

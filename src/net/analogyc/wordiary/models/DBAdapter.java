@@ -13,38 +13,61 @@ public class DBAdapter {
 	private DataBaseHelper dbHelper;
 	private SQLiteDatabase database;
 	
+	/**
+	 * Constructor
+	 * 
+	 * You must call open() on this object to use other methods
+	 * */
 	public DBAdapter(Context contex){
 		dbHelper = new DataBaseHelper(contex);
 	}
 	
 	
-	//open new writable database if it doesn't exist
+	/**
+	 * Open a new writable database
+	 * */
 	public void open(){
 		if (database == null){
 			database = dbHelper.getWritableDatabase();
 		}
 	}
 	
-	//**Close the database
+	/**
+	 * Close databaseHelper
+	 * */
 	public void close() {
 	    dbHelper.close();
 	    database.close();
 	}
 	
-	//get all the entries in the db 
+	/**
+	 * Get all the entries in the db 
+	 * 
+	 * @return Cursor that contains all entries ordered by date
+	 */
 	public Cursor getAllEntries(){
 		String query = "SELECT * FROM " + Entry.TABLE_NAME + " ORDER BY "+Entry.COLUMN_NAME_CREATED+ " DESC";
 		return database.rawQuery(query, null);
 	}
 	
-	//get all the entries in the db 
+	/**
+	 * Get the selected entry 
+	 * 
+	 * @param id entry's id
+	 * @return a Cursor that contains the selected entry, or null
+	 */
 	public Cursor getEntryById(int id){
 		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE "+ Entry._ID+ " = "+ id;
 		return database.rawQuery(query, null);
 	}
 	
 	
-	//add new entry
+	/**
+	 * Add a new entry
+	 * 
+	 * @param text the message of the entry
+	 * @param mood the correspondent mood
+	 */
 	public void addEntry( String text, int mood){
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
@@ -63,7 +86,11 @@ public class DBAdapter {
 		 
 	}
 	
-	//add new photo
+	/**
+	 * Add a new photo
+	 * 
+	 * @param filename the path of the photo
+	 */
 	public void addPhoto( String filename){
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
@@ -80,7 +107,11 @@ public class DBAdapter {
 		 
 	}
 	
-	//get all the entries in the db 
+	/**
+	 * Get all the days ordered by date (DESC) 
+	 * 
+	 * @return Cursor containing the days
+	 */
 		public Cursor getAllDays(){
 			String query = "SELECT * FROM " + Day.TABLE_NAME + " ORDER BY "+Day.COLUMN_NAME_CREATED+ " DESC";
 			return database.rawQuery(query, null);

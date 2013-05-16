@@ -1,10 +1,18 @@
 package net.analogyc.wordiary;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+import android.widget.ImageButton;
 import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.DataBaseHelper;
 import net.analogyc.wordiary.models.EntryAdapter;
@@ -23,6 +31,7 @@ public class EntryActivity extends Activity {
 	private int entryId;
 	private DBAdapter dataBase;
 	private TextView messageText, dateText;
+    private ImageButton photoButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +45,7 @@ public class EntryActivity extends Activity {
 		
 		messageText = (TextView) findViewById(R.id.messageText);
 		dateText = (TextView) findViewById(R.id.dateText);
+        photoButton = (ImageButton) findViewById(R.id.photoButton);
 		
 		dataBase = new DBAdapter(this);
 		dataBase.open();
@@ -45,16 +55,16 @@ public class EntryActivity extends Activity {
 	}
 	
 	private void setView(){
-  		Cursor c = dataBase.getEntryById(entryId);
-  		if (!(c.moveToFirst())){
+  		Cursor c_entry = dataBase.getEntryById(entryId);
+  		if (! c_entry.moveToFirst()) {
   			//error! wrong ID, but it won't happen
   		}
-  		String message = c.getString(2);
+  		String message = c_entry.getString(2);
   		messageText.setText(message);
   		
-  		String d_tmp = c.getString(4);
-  		SimpleDateFormat format_in= new SimpleDateFormat("yyyyMMddHHmmss",Locale.ITALY);
-  		SimpleDateFormat format_out= new SimpleDateFormat("HH:mm:ss dd/MM/yyyy",Locale.ITALY);
+  		String d_tmp = c_entry.getString(4);
+  		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss",Locale.ITALY);
+  		SimpleDateFormat format_out = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy",Locale.ITALY);
 		try {
 			Date date = format_in.parse(d_tmp);
 			dateText.setText(format_out.format(date)); //probably a better method to do this exists
@@ -62,7 +72,26 @@ public class EntryActivity extends Activity {
 			//won't happen if we use only dataBaseHelper.addEntry(...)
 		}  
 		
-		c.close();
+        Cursor c_photo = dataBase.getPhotoByDay(d_tmp.substring(0, 8));
+
+        Bitmap image;
+        InputStream image_stream;
+        try {
+            if (! c_photo.moveToFirst()) {
+                image_stream = getAssets().open("default-avatar.jpg");
+            } else {
+                image_stream = new FileInputStream(new File(c_photo.getString(1)));
+            }
+
+            image = BitmapFactory.decodeStream(image_stream);
+            image = Bitmap.createScaledBitmap(image, 128, 128, false);
+            photoButton.setImageBitmap(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+		c_entry.close();
+        c_photo.close();
   		//in the future we will get an image and a mood in the same way		
 	}
 

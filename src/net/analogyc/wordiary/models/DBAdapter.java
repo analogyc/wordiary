@@ -115,8 +115,25 @@ public class DBAdapter {
 				filename +  "' , " +
 				sdf.format(now) +  " )" ;
 		database.execSQL(query);
-		 
+
 	}
+
+    /**
+     * Get a photo by inserting the
+     *
+     * @param day Day in format yyyyMMdd
+     *
+     * @return The database row, one or none
+     */
+    public Cursor getPhotoByDay(String day) {
+        String query =
+                "SELECT * " +
+                "FROM "+ Day.TABLE_NAME + " " +
+                "WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + day + "%'";
+
+        return database.rawQuery(query, null);
+    }
+
 	
 	/**
 	 * Get all the days ordered by date (DESC) 

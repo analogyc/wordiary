@@ -22,9 +22,13 @@
         android:id="@+id/messageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/dateText"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="74dp"
-        android:text="TextView" />
+        android:layout_marginTop="46dp"
+        android:text="TextView"
+        android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/photoButton" android:layout_alignParentTop="true" android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/messageText"/>
 
 </RelativeLayout>

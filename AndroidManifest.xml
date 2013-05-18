@@ -47,6 +47,10 @@
             android:name="net.analogyc.wordiary.MoodsActivity"
             android:label="@string/title_activity_mood" >
         </activity>
+         <activity
+            android:name="net.analogyc.wordiary.UserPreferences"
+            android:label="@string/preferences" >
+        </activity>
     </application>
 
 </manifest>

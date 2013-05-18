@@ -61,7 +61,7 @@ public class NewEntryDialogFragment extends DialogFragment {
 		    // Pass null as the parent view because its going in the dialog layout
 		    builder.setView(inflater.inflate(R.layout.dialog_custom, null))
 		    // Add action buttons
-		           .setPositiveButton(R.string.signin, new DialogInterface.OnClickListener() {
+		           .setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
 		               @Override
 		               public void onClick(DialogInterface dialog, int id) {
 		 

@@ -65,7 +65,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_settings:
-            	Intent intent = new Intent(this, SettingsActivity.class);
+            	Intent intent = new Intent(this, UserPreferences.class);
             	startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);

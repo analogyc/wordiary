@@ -6,6 +6,7 @@ import android.support.v4.app.DialogFragment;
 import net.analogyc.wordiary.models.EntryAdapter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +39,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         
         //get the the corresponding link for each view object
         entryList = (ListView) findViewById(R.id.listView1);

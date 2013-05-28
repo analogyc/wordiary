@@ -43,13 +43,6 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
         
         //get the the corresponding link for each view object
         entryList = (ListView) findViewById(R.id.listView1);
-        
-        //open database connection
-        dataBase = new DBAdapter(this);
-        dataBase.open();
-        
-        showEntries();
-      	
     }
 
 
@@ -181,16 +174,18 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 		dataBase.close();
 		dataBase = null;
 		entryAdapter.getCursor().close();
+        stopManagingCursor(entryAdapter.getCursor());
 		entryAdapter = null;
 	}
 	
 	@Override
 	protected void onResume(){
 		super.onResume();
-		if(dataBase == null){
+
+		//if(dataBase == null){
 			dataBase = new DBAdapter(this);
-			dataBase.open();
-		}
+		    dataBase.open();
+		//}
       	//this will set entryAdapter
 		showEntries();
 	}

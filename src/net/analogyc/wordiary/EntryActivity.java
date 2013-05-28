@@ -46,12 +46,6 @@ public class EntryActivity extends Activity {
 		messageText = (TextView) findViewById(R.id.messageText);
 		dateText = (TextView) findViewById(R.id.dateText);
         photoButton = (ImageButton) findViewById(R.id.photoButton);
-		
-		dataBase = new DBAdapter(this);
-		dataBase.open();
-		
-		setView();
-		
 	}
 	
 	private void setView(){
@@ -128,10 +122,10 @@ public class EntryActivity extends Activity {
 	@Override
 	protected void onResume(){
 		super.onResume();
-		if (dataBase == null){
-			dataBase = new DBAdapter(this);
-			dataBase.open();
-		}
+
+        dataBase = new DBAdapter(this);
+        dataBase.open();
+
 		setView();
 	}
 

@@ -77,7 +77,7 @@ public class DBAdapter {
 		String query = "INSERT INTO " + Entry.TABLE_NAME + " ( "+
 				Entry.COLUMN_NAME_MESSAGE + " , " +
 				Entry.COLUMN_NAME_MOOD + " , " +
-				Entry.COLUMN_NAME_CREATED + 
+				Entry.COLUMN_NAME_CREATED +
 				") VALUES ( ?,?,? )" ;
 		database.execSQL(query, new Object[] {text,mood,sdf.format(now)});
 	}
@@ -140,8 +140,8 @@ public class DBAdapter {
 	 * 
 	 * @return Cursor containing the days
 	 */
-		public Cursor getAllDays(){
-			String query = "SELECT * FROM " + Day.TABLE_NAME + " ORDER BY "+Day.COLUMN_NAME_CREATED+ " DESC";
-			return database.rawQuery(query, null);
-		}
+    public Cursor getAllDays(){
+        String query = "SELECT * FROM " + Day.TABLE_NAME + " ORDER BY "+Day.COLUMN_NAME_CREATED+ " DESC";
+        return database.rawQuery(query, null);
+    }
 }

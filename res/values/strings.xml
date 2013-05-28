@@ -16,5 +16,7 @@
     <string name="title_activity_mood">MoodActivity</string>
     <string name="pref_font_size">Font size for entries</string>
     <string name="preferences">Preferences</string>
+    <string name="grace_period">Set editing grace period</string>
+    <string name="typeface">Font type for entries</string>
 
 </resources>

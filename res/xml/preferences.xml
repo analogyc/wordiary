@@ -8,5 +8,18 @@
         android:entries="@array/fontSize"
         android:entryValues="@array/fontSizeValues"
         android:defaultValue="20sp" />
+ 	<EditTextPreference
+ 	    android:key="grace_period"
+ 	    android:dialogTitle="@string/grace_period"
+ 	    android:defaultValue="24"
+ 	    android:title="@string/grace_period"
+ 	    android:inputType="number"/>
+ 	<ListPreference
+ 	    android:title="@string/typeface"
+ 	    android:dialogTitle="@string/typeface"
+ 	    android:defaultValue="Droid Sans"
+ 	    android:entries="@array/typeface"
+ 	    android:entryValues="@array/typefaceValues"/>
+   
 
 </PreferenceScreen>

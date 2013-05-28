@@ -38,6 +38,7 @@ public class DBAdapter {
 	public void close() {
 	    dbHelper.close();
 	    database.close();
+	    database = null;
 	}
 	
 	/**

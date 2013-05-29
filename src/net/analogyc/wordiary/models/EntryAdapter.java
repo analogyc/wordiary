@@ -1,5 +1,6 @@
 package net.analogyc.wordiary.models;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,6 +10,7 @@ import net.analogyc.wordiary.R;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,9 +35,10 @@ public class EntryAdapter extends CursorAdapter{
 	@Override
 	public void bindView(View view, Context context, Cursor cursor)
 	{
+
+		Drawable image = Drawable.createFromPath(cursor.getString(cursor.getColumnIndex(Day.COLUMN_NAME_FILENAME)));
 		
-		//((ImageView) view.findViewById(R.id.image)).setImageDrawable(drawable)(
-		//		cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_MESSAGE)));
+		((ImageView) view.findViewById(R.id.image)).setImageDrawable(image);
 		
 		((TextView) view.findViewById(R.id.message)).setText(
 			cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_MESSAGE)));

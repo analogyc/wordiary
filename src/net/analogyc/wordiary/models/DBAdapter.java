@@ -7,6 +7,7 @@ import java.util.Locale;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DBAdapter {
 	
@@ -57,7 +58,15 @@ public class DBAdapter {
 	 * @return Cursor that contains all entries ordered by date
 	 */
 	public Cursor getAllEntriesWithImage(){
-		String query = "SELECT * FROM " + Entry.TABLE_NAME + " ORDER BY "+Entry.COLUMN_NAME_CREATED+ " DESC";
+		String query = "SELECT " + Day.TABLE_NAME + "." +  Day.COLUMN_NAME_FILENAME + ", "+
+							Entry.TABLE_NAME + "." +  Entry.COLUMN_NAME_MESSAGE + ", "+
+							Entry.TABLE_NAME + "." +  Entry._ID + ", "+
+							Entry.TABLE_NAME + "." +  Entry.COLUMN_NAME_CREATED +
+						" FROM " + Entry.TABLE_NAME + " LEFT OUTER JOIN " + Day.TABLE_NAME + 
+							" ON " + Entry.TABLE_NAME + "."+ Entry.COLUMN_NAME_DAY_ID +
+								" = " +
+							Day.TABLE_NAME + "." +  Day._ID + 
+						" ORDER BY "+Entry.TABLE_NAME + "." +  Entry.COLUMN_NAME_CREATED + " DESC";
 		return database.rawQuery(query, null);
 	}
 	
@@ -84,13 +93,31 @@ public class DBAdapter {
 		Date now = new Date(System.currentTimeMillis());
 		String DATE_FORMAT = "yyyyMMddHHmmss";
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ITALY);
+		String query =
+                "SELECT * " +
+                "FROM "+ Day.TABLE_NAME + " " +
+                "WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + sdf.format(now).substring(0, 8) + "%'";
+		
+		Log.wtf(null, sdf.format(now).substring(0, 7));
+		Cursor c = database.rawQuery(query, null);
+		
+		int photo;
+		if(c.getCount() == 0){
+			addPhoto("");
+			c = database.rawQuery(query, null);
+		}
+		c.moveToFirst();
+		photo = c.getInt(0);
+
+		
 		//insert the entry
-		String query = "INSERT INTO " + Entry.TABLE_NAME + " ( "+
+		query = "INSERT INTO " + Entry.TABLE_NAME + " ( "+
 				Entry.COLUMN_NAME_MESSAGE + " , " +
 				Entry.COLUMN_NAME_MOOD + " , " +
+				Entry.COLUMN_NAME_DAY_ID + " , " + 
 				Entry.COLUMN_NAME_CREATED +
-				") VALUES ( ?,?,? )" ;
-		database.execSQL(query, new Object[] {text,mood,sdf.format(now)});
+				") VALUES ( ?,?,?,? )" ;
+		database.execSQL(query, new Object[] {text,mood,photo,sdf.format(now)});
 	}
 	
 	/**

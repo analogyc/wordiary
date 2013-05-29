@@ -225,7 +225,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
     } 
 	
     private void showEntries(){
-    	Cursor entries = dataBase.getAllEntries();
+    	Cursor entries = dataBase.getAllEntriesWithImage();
       	//startManagingCursor(entries);
       	entryAdapter = new EntryAdapter(this, entries);
       	entryList.setAdapter(entryAdapter);

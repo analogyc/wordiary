@@ -71,10 +71,13 @@ public class EntryActivity extends Activity {
         Bitmap image;
         InputStream image_stream;
         try {
-            if (! c_photo.moveToFirst()) {
+        	c_photo.moveToFirst();
+        	String filename = c_photo.getString(1);
+        	
+            if (filename.equals("")) {
                 image_stream = getAssets().open("default-avatar.jpg");
             } else {
-                image_stream = new FileInputStream(new File(c_photo.getString(1)));
+                image_stream = new FileInputStream(new File(filename));
             }
 
             image = BitmapFactory.decodeStream(image_stream);

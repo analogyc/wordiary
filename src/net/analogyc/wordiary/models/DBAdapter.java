@@ -52,6 +52,16 @@ public class DBAdapter {
 	}
 	
 	/**
+	 * Get all the entries in the db 
+	 * 
+	 * @return Cursor that contains all entries ordered by date
+	 */
+	public Cursor getAllEntriesWithImage(){
+		String query = "SELECT * FROM " + Entry.TABLE_NAME + " ORDER BY "+Entry.COLUMN_NAME_CREATED+ " DESC";
+		return database.rawQuery(query, null);
+	}
+	
+	/**
 	 * Get the selected entry 
 	 * 
 	 * @param id entry's id

@@ -8,9 +8,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MoodsActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <GridView
+        android:id="@+id/moodGrid"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:numColumns="auto_fit" >
+    </GridView>
 
 </RelativeLayout>

@@ -1,56 +1,45 @@
 package net.analogyc.wordiary;
 
-import java.io.IOException;
-import java.util.List;
-
+import net.analogyc.wordiary.models.ImageAdapter;
 import android.os.Bundle;
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.view.Menu;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
+import android.widget.Toast;
 
 public class MoodsActivity extends Activity {
-	private String[] moods;
-	private final String PATH = "smiles";
-
+	//the number of the available moods
+	private int nMoods = 5;
+	private String[] moods = new String[nMoods];
+	
+	
+	GridView gridView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mood);
-		
-		try {
-			moods = getAssets().list(PATH);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+ 
+		//fill the array that contains the name of the mood
+		for (int i= 1; i<= nMoods; i++){
+			moods[i-1] = "mood" + i;
 		}
 		
-		LinearLayout mylayout = new LinearLayout(this);
-		Bitmap image;
-		ImageButton ibutton;
-		for (int i = 0; i< moods.length; i++){
-			try {
-				image =BitmapFactory.decodeStream((getAssets().open(PATH + "/" + moods[i])));
-				image = Bitmap.createScaledBitmap(image, 32, 32, false);
-				ibutton = new ImageButton(this);
-				ibutton.setImageBitmap(image);
-				mylayout.addView(ibutton);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		//get and set the gridview that will show the moods on the screen
+		gridView = (GridView) findViewById(R.id.moodGrid);
+		gridView.setAdapter(new ImageAdapter(this, moods));
+ 
+		gridView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View v,int position, long id) {
+				//only for debugging purpose
+				Toast.makeText(getApplicationContext(),moods[position], Toast.LENGTH_SHORT).show();
+ 
 			}
-		}
-		setContentView(mylayout);
+		});
 		
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.mood, menu);
-		return true;
 	}
 
 }
+

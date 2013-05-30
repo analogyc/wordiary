@@ -1,6 +1,5 @@
 package net.analogyc.wordiary.models;
 
-import android.provider.BaseColumns;
 
 public class Entry {
 

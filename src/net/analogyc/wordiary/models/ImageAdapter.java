@@ -13,9 +13,9 @@ public class ImageAdapter extends BaseAdapter {
 	private Context context;
 	private final String[] moods;
  
-	public ImageAdapter(Context context, String[] mobileValues) {
+	public ImageAdapter(Context context, String[] moods) {
 		this.context = context;
-		this.moods = mobileValues;
+		this.moods = moods;
 	}
  
 	public View getView(int position, View convertView, ViewGroup parent) {

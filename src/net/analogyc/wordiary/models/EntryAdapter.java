@@ -1,6 +1,6 @@
 package net.analogyc.wordiary.models;
 
-import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,8 +35,19 @@ public class EntryAdapter extends CursorAdapter{
 	@Override
 	public void bindView(View view, Context context, Cursor cursor)
 	{
-
-		Drawable image = Drawable.createFromPath(cursor.getString(cursor.getColumnIndex(Day.COLUMN_NAME_FILENAME)));
+		String path = cursor.getString(cursor.getColumnIndex(Day.COLUMN_NAME_FILENAME));
+		Drawable image = null;
+		if (path != null){
+			image = Drawable.createFromPath(path);
+		}
+		else{
+			try {
+				image = Drawable.createFromStream(context.getAssets().open("default-avatar.jpg"), null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		((ImageView) view.findViewById(R.id.image)).setImageDrawable(image);
 		

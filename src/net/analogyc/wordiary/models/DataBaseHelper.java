@@ -1,11 +1,7 @@
 package net.analogyc.wordiary.models;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 

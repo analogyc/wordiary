@@ -7,7 +7,6 @@ import java.util.Locale;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 public class DBAdapter {
 	
@@ -24,10 +23,9 @@ public class DBAdapter {
 	}
 	
 	
-	/**
-	 * Open a new writable database
-	 * */
-	public void open(){
+
+	// Open a new writable database
+	private void open(){
 		if (database == null){
 			database = dbHelper.getWritableDatabase();
 		}
@@ -35,9 +33,8 @@ public class DBAdapter {
 	
 	/**
 	 * Close databaseHelper
-	 * */
+	 * */	
 	public void close() {
-	    dbHelper.close();
 	    database.close();
 	    database = null;
 	}
@@ -48,6 +45,7 @@ public class DBAdapter {
 	 * @return Cursor that contains all entries ordered by date
 	 */
 	public Cursor getAllEntries(){
+		open();
 		String query = "SELECT * FROM " + Entry.TABLE_NAME + " ORDER BY "+Entry.COLUMN_NAME_CREATED+ " DESC";
 		return database.rawQuery(query, null);
 	}
@@ -58,6 +56,7 @@ public class DBAdapter {
 	 * @return Cursor that contains all entries ordered by date
 	 */
 	public Cursor getAllEntriesWithImage(){
+		open();
 		String query = "SELECT " + Day.TABLE_NAME + "." +  Day.COLUMN_NAME_FILENAME + ", "+
 							Entry.TABLE_NAME + "." +  Entry.COLUMN_NAME_MESSAGE + ", "+
 							Entry.TABLE_NAME + "." +  Entry._ID + ", "+
@@ -77,6 +76,7 @@ public class DBAdapter {
 	 * @return a Cursor that contains the selected entry, or null
 	 */
 	public Cursor getEntryById(int id){
+		open();
 		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE "+ Entry._ID+ " = "+ id;
 		return database.rawQuery(query, null);
 	}
@@ -89,27 +89,25 @@ public class DBAdapter {
 	 * @param mood the correspondent mood
 	 */
 	public void addEntry( String text, int mood){
+		open();
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
 		String DATE_FORMAT = "yyyyMMddHHmmss";
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ITALY);
 		String query =
                 "SELECT * " +
-                "FROM "+ Day.TABLE_NAME + " " +
-                "WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + sdf.format(now).substring(0, 8) + "%'";
+                "FROM "+ Day.TABLE_NAME +
+                " WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + sdf.format(now).substring(0, 8) + "%'";
 		
-		Log.wtf(null, sdf.format(now).substring(0, 7));
 		Cursor c = database.rawQuery(query, null);
-		
 		int photo;
-		if(c.getCount() == 0){
-			addPhoto("");
-			c = database.rawQuery(query, null);
+		if(c.moveToFirst()){
+			photo = c.getInt(0);
 		}
-		c.moveToFirst();
-		photo = c.getInt(0);
-
-		
+		else{
+			photo = -1;
+		}
+		c.close();
 		//insert the entry
 		query = "INSERT INTO " + Entry.TABLE_NAME + " ( "+
 				Entry.COLUMN_NAME_MESSAGE + " , " +
@@ -127,6 +125,7 @@ public class DBAdapter {
 	 * 
 	 */
 	public void deleteEntry( int id){
+		open();
 		//delete the entry
 		String query = "DELETE FROM " + Entry.TABLE_NAME + " WHERE "+ Entry._ID+ " = "+ id;
 		database.execSQL(query);
@@ -141,19 +140,45 @@ public class DBAdapter {
 	 * @param filename the path of the photo
 	 */
 	public void addPhoto( String filename){
+		open();
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
 		String DATE_FORMAT = "yyyyMMddHHmmss";
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ITALY);
+		String date = sdf.format(now);
 		//insert the entry
 		String query = "INSERT INTO " + Day.TABLE_NAME + " ( "+
 				Day.COLUMN_NAME_FILENAME + " , " +
 				Day.COLUMN_NAME_CREATED + 
 				") VALUES ('"+
 				filename +  "' , " +
-				sdf.format(now) +  " )" ;
+				date +  " )" ;
+		
 		database.execSQL(query);
+		
+		//get the id of the day
+		query =
+                "SELECT * " +
+                " FROM "+ Day.TABLE_NAME +
+                " WHERE " + Day.COLUMN_NAME_CREATED + " = '" + date + "'";
+		
+		Cursor c = database.rawQuery(query, null);
+		int id;
+		if(c.moveToFirst()){
+			id = c.getInt(0);
+		}
+		else{
+			id = -1;
+		}
+		c.close();
 
+
+		//update every entries
+		query ="UPDATE " + Entry.TABLE_NAME +
+				" SET " + Entry.COLUMN_NAME_DAY_ID + "  = " + id +
+				" WHERE " + Entry.COLUMN_NAME_CREATED + " LIKE '" + date.substring(0, 8) + "%'";
+		
+		database.execSQL(query);
 	}
 
     /**
@@ -164,6 +189,7 @@ public class DBAdapter {
      * @return The database row, one or none
      */
     public Cursor getPhotoByDay(String day) {
+    	open();
         String query =
                 "SELECT * " +
                 "FROM "+ Day.TABLE_NAME + " " +
@@ -179,7 +205,20 @@ public class DBAdapter {
 	 * @return Cursor containing the days
 	 */
     public Cursor getAllDays(){
+    	open();
         String query = "SELECT * FROM " + Day.TABLE_NAME + " ORDER BY "+Day.COLUMN_NAME_CREATED+ " DESC";
         return database.rawQuery(query, null);
     }
+    
+	/**
+	 * Get the selected entry 
+	 * 
+	 * @param id entry's id
+	 * @return a Cursor that contains the selected entry, or null
+	 */
+	public Cursor getDayById(int id){
+		open();
+		String query = "SELECT * FROM " + Day.TABLE_NAME + " WHERE "+ Day._ID+ " = "+ id;
+		return database.rawQuery(query, null);
+	}
 }

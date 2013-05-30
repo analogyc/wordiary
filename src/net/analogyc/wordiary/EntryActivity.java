@@ -11,20 +11,13 @@ import java.util.Locale;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.widget.ImageButton;
 import net.analogyc.wordiary.models.DBAdapter;
-import net.analogyc.wordiary.models.DataBaseHelper;
-import net.analogyc.wordiary.models.EntryAdapter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.view.Menu;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class EntryActivity extends Activity {
@@ -42,6 +35,8 @@ public class EntryActivity extends Activity {
 		
 		//normally entryId can't be -1
 		entryId = intent.getIntExtra("entryId", -1);
+		
+        dataBase = new DBAdapter(this);
 		
 		messageText = (TextView) findViewById(R.id.messageText);
 		dateText = (TextView) findViewById(R.id.dateText);
@@ -65,19 +60,17 @@ public class EntryActivity extends Activity {
 		} catch (ParseException e) {
 			//won't happen if we use only dataBaseHelper.addEntry(...)
 		}  
-		
-        Cursor c_photo = dataBase.getPhotoByDay(d_tmp.substring(0, 8));
-
+		int dayId = c_entry.getInt(1);
         Bitmap image;
         InputStream image_stream;
         try {
-        	c_photo.moveToFirst();
-        	String filename = c_photo.getString(1);
-        	
-            if (filename.equals("")) {
+            if (dayId == -1) {
                 image_stream = getAssets().open("default-avatar.jpg");
             } else {
-                image_stream = new FileInputStream(new File(filename));
+            	Cursor c_photo = dataBase.getDayById(dayId);
+            	c_photo.moveToFirst();
+                image_stream = new FileInputStream(new File(c_photo.getString(1)));
+                c_photo.close();
             }
 
             image = BitmapFactory.decodeStream(image_stream);
@@ -88,7 +81,6 @@ public class EntryActivity extends Activity {
         }
 
 		c_entry.close();
-        c_photo.close();
   		//in the future we will get an image and a mood in the same way		
 	}
 
@@ -125,10 +117,6 @@ public class EntryActivity extends Activity {
 	@Override
 	protected void onResume(){
 		super.onResume();
-
-        dataBase = new DBAdapter(this);
-        dataBase.open();
-
 		setView();
 	}
 

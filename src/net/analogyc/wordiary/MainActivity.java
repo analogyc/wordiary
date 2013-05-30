@@ -12,14 +12,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -43,11 +41,8 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
         
         //get the the corresponding link for each view object
         entryList = (ListView) findViewById(R.id.listView1);
-        
-        //
+
         dataBase = new DBAdapter(this);
-        dataBase.open();
-	    showEntries();
     }
 
 
@@ -91,10 +86,9 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+            	dataBase.addPhoto(imageUri.getPath());
                 // Image captured and saved to fileUri specified in the Intent
                 Toast.makeText(this, "Image saved to:\n" + imageUri, Toast.LENGTH_LONG).show();
-                dataBase.addPhoto(imageUri.getPath());
-                imageUri = null;
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
             } else {
@@ -175,26 +169,15 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 	
 	@Override
 	protected void onPause(){
-		
 		dataBase.close();
-		//dataBase = null;
 		entryAdapter.getCursor().close();
-        //stopManagingCursor(entryAdapter.getCursor());
-		//entryAdapter = null;
 		super.onPause();
 	}
 	
 	@Override
 	protected void onResume(){
-		
-
-		if(dataBase != null){
-			//dataBase = new DBAdapter(this);
-		    dataBase.open();
-		}
-      	//this will set entryAdapter
-		showEntries();
 		super.onResume();
+		showEntries();		
 	}
 		
 	

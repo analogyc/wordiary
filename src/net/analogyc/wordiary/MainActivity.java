@@ -1,5 +1,7 @@
 package net.analogyc.wordiary;
 
+import android.graphics.Typeface;
+import android.widget.*;
 import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.Photo;
 import android.support.v4.app.DialogFragment;
@@ -17,10 +19,6 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements NewEntryDialogFragment.NewEntryDialogListener{
 
@@ -41,6 +39,10 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
         
         //get the the corresponding link for each view object
         entryList = (ListView) findViewById(R.id.listView1);
+
+		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+		((Button) findViewById(R.id.takePhotoButton)).setTypeface(fontawsm);
+		((Button) findViewById(R.id.newEntryButton)).setTypeface(fontawsm);
 
         dataBase = new DBAdapter(this);
     }

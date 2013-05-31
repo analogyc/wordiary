@@ -44,7 +44,8 @@ public class EntryAdapter extends CursorAdapter{
 		String path = cursor.getString(cursor.getColumnIndex(Day.COLUMN_NAME_FILENAME));
 		Drawable image = null;
 		if (path != null){
-			// credits to http://stackoverflow.com/a/6909144/644504 for the solution to "center crop" resize
+			// credits to http://stackoverflow.com/a/6909144/644504
+			// for the solution to "center crop" resize
 			Bitmap bmp = BitmapFactory.decodeFile(path);
 			if (bmp.getWidth() >= bmp.getHeight()) {
 				bmp = Bitmap.createBitmap(
@@ -89,7 +90,6 @@ public class EntryAdapter extends CursorAdapter{
 		} catch (ParseException e) {
 			//won't happen if we use only dataBaseHelper.addEntry(...)
 		}  
-		
 	}
 
 }

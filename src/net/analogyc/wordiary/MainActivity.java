@@ -142,15 +142,8 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 		Intent intent = new Intent(this, MoodsActivity.class);
     	startActivity(intent);
 	}
-	
 
 
-	@Override
-	public void onDialogNegativeClick(DialogFragment dialog) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	@Override
 	protected void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);

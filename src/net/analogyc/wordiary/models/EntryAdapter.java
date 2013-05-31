@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 public class EntryAdapter extends CursorAdapter {
 
+	private final int THUMBNAIL_SIZE = 256;
+
 	private LruCache<String, Bitmap> mMemoryCache;
 
 	public EntryAdapter(Context context, Cursor c) {
@@ -72,10 +74,27 @@ public class EntryAdapter extends CursorAdapter {
 				return image;
 			}
 
+			// get the image width and height without loading it in memory
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inJustDecodeBounds = true;
+			Bitmap bmp = BitmapFactory.decodeFile(path, options);
+			int height = options.outHeight;
+			int width = options.outWidth;
+
+			// reduce the amount of data allocated in memory with higher inSampleSize
+			options = new BitmapFactory.Options();
+			options.inSampleSize = 1;
+			if (height > THUMBNAIL_SIZE || width > THUMBNAIL_SIZE) {
+				final int heightRatio = Math.round((float) height / (float) THUMBNAIL_SIZE);
+				final int widthRatio = Math.round((float) width / (float) THUMBNAIL_SIZE);
+				options.inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+			}
+			bmp = BitmapFactory.decodeFile(path, options);
+
+			// center crop so it's square and pretty
+			Bitmap bmp_crop;
 			// credits to http://stackoverflow.com/a/6909144/644504
 			// for the solution to "center crop" resize
-			Bitmap bmp = BitmapFactory.decodeFile(path);
-			Bitmap bmp_crop;
 			if (bmp.getWidth() >= bmp.getHeight()) {
 				bmp_crop = Bitmap.createBitmap(
 					bmp,
@@ -95,7 +114,7 @@ public class EntryAdapter extends CursorAdapter {
 			}
 
 			// set it low, but high enough to work with xxhdpi screens
-			return Bitmap.createScaledBitmap(bmp_crop, 256, 256, true);
+			return bmp_crop;
 		}
 
 		@Override

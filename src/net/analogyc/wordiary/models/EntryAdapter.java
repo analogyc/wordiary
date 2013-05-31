@@ -7,13 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.support.v4.util.LruCache;
-import android.util.Log;
 import net.analogyc.wordiary.R;
 
 import android.content.Context;
@@ -34,7 +31,7 @@ public class EntryAdapter extends CursorAdapter {
 		super(context, c);
 
 		final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-		final int cacheSize = maxMemory / 2;
+		final int cacheSize = maxMemory / 4;
 
 		mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
 			@Override
@@ -69,6 +66,12 @@ public class EntryAdapter extends CursorAdapter {
 		// Resize image in background.
 		@Override
 		protected Bitmap doInBackground(Integer... params) {
+			Bitmap image = getBitmapFromMemCache("models.EntryAdapter.thumbnails." + path);
+
+			if (image != null) {
+				return image;
+			}
+
 			// credits to http://stackoverflow.com/a/6909144/644504
 			// for the solution to "center crop" resize
 			Bitmap bmp = BitmapFactory.decodeFile(path);
@@ -118,21 +121,12 @@ public class EntryAdapter extends CursorAdapter {
 		ImageView imageView = (ImageView) view.findViewById(R.id.image);
 		Bitmap image = null;
 
-		if (path != null) {
-			image = getBitmapFromMemCache("models.EntryAdapter.thumbnails." + path);
-			if (image != null) {
-				imageView.setImageBitmap(image);
-			}
-		}
-
 		// set a default picture if an image wasn't already set from cache
-		if (image == null) {
-			try {
-				image = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
-				imageView.setImageBitmap(image);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			image = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
+			imageView.setImageBitmap(image);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		// run the image loading task now

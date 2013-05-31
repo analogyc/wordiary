@@ -1,11 +1,17 @@
 package net.analogyc.wordiary.models;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import net.analogyc.wordiary.R;
 
 import android.content.Context;
@@ -38,7 +44,28 @@ public class EntryAdapter extends CursorAdapter{
 		String path = cursor.getString(cursor.getColumnIndex(Day.COLUMN_NAME_FILENAME));
 		Drawable image = null;
 		if (path != null){
-			image = Drawable.createFromPath(path);
+			// credits to http://stackoverflow.com/a/6909144/644504 for the solution to "center crop" resize
+			Bitmap bmp = BitmapFactory.decodeFile(path);
+			if (bmp.getWidth() >= bmp.getHeight()) {
+				bmp = Bitmap.createBitmap(
+						bmp,
+						bmp.getWidth()/2 - bmp.getHeight()/2,
+						0,
+						bmp.getHeight(),
+						bmp.getHeight()
+				);
+			} else {
+				bmp = Bitmap.createBitmap(
+						bmp,
+						0,
+						bmp.getHeight()/2 - bmp.getWidth()/2,
+						bmp.getWidth(),
+						bmp.getWidth()
+				);
+			}
+
+			Bitmap bmp_resized = Bitmap.createScaledBitmap(bmp, 512, 512, true);
+			image = new BitmapDrawable(Resources.getSystem(), bmp_resized);
 		}
 		else{
 			try {

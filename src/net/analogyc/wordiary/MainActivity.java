@@ -43,6 +43,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
 		((Button) findViewById(R.id.takePhotoButton)).setTypeface(fontawsm);
 		((Button) findViewById(R.id.newEntryButton)).setTypeface(fontawsm);
+		((Button) findViewById(R.id.newMoodButton)).setTypeface(fontawsm);
 
         dataBase = new DBAdapter(this);
     }

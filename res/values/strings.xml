@@ -7,7 +7,8 @@
     <string name="title_activity_day">Day</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="button_takePhoto">&#xf030;</string>
-    <string name="button_newEntry">&#xf040;</string>
+    <string name="button_newEntry">&#xf10e;</string>
+	<string name="button_newMood">&#xf118;</string>
     <string name="title_activity_entry">EntryActivity</string>
     <string name="dialog_new_entry">New Entry</string>
     <string name="confirm">Confirm</string>

@@ -27,7 +27,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffd72b09-4c06-4b33-9073-23b479146ed4" name="Default" comment="Adding query for fetching picture for a day, used in EntryActivity. EntryActivity still needs graphical reordering.&#10;Adding Android Studio support files.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryAdapter.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryAdapter.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/values-v14/styles.xml" afterPath="$PROJECT_DIR$/res/values-v14/styles.xml" />
     </list>
     <ignored path="wordiary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -104,61 +104,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="activity_main.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/activity_main.xml">
-          <provider selected="true" editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state line="39" column="44" selection-start="1339" selection-end="1339" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImageAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/ImageAdapter.java">
+      <file leaf-file-name="PreferencesActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/PreferencesActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="18" selection-start="728" selection-end="728" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DayActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/DayActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="13" selection-start="158" selection-end="158" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EntryActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/EntryActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="10" selection-start="951" selection-end="951" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EntryAdapter.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="40" selection-start="2413" selection-end="2413" vertical-scroll-proportion="0.2997416">
+            <state line="46" column="13" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.6329527">
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#660#1230#0" expanded="true" />
+                <element signature="e#1224#1225#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="39" selection-start="1748" selection-end="1748" vertical-scroll-proportion="0.0">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -256,10 +209,6 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -271,15 +220,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
+              <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -329,6 +270,7 @@
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="options.lastSelected" value="preferences.sourceCode.Java" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -344,6 +286,7 @@
       <recent name="$PROJECT_DIR$/assets" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/res" />
       <recent name="$PROJECT_DIR$/assets/fonts" />
       <recent name="$PROJECT_DIR$/res/original-drawables" />
     </key>
@@ -515,7 +458,7 @@
       <workItem from="1370015028597" duration="14000" />
       <workItem from="1370015234453" duration="1491000" />
       <workItem from="1370017188545" duration="8883000" />
-      <workItem from="1370027298726" duration="7551000" />
+      <workItem from="1370027298726" duration="8702000" />
     </task>
     <task id="LOCAL-00001" summary="Adding query for fetching picture for a day, used in EntryActivity. EntryActivity still needs graphical reordering.&#10;Adding Android Studio support files.">
       <created>1368743480698</created>
@@ -525,11 +468,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47596000" />
+    <option name="totallyTimeSpent" value="48747000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1280" height="774" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36061588" sideWeight="0.67431194" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27633712" sideWeight="0.67431194" order="3" side_tool="false" content_ui="tabs" />
@@ -547,8 +490,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2893031" sideWeight="0.67431194" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32568806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2893031" sideWeight="0.5489297" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32568806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -645,16 +588,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.idea/.name">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/codeStyleSettings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/DBAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="68" selection-start="577" selection-end="577" vertical-scroll-proportion="0.0">
@@ -737,13 +670,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/EntryActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="10" selection-start="951" selection-end="951" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/default-avatar.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -758,9 +684,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="40" selection-start="2413" selection-end="2413" vertical-scroll-proportion="0.2997416">
+        <state line="22" column="31" selection-start="621" selection-end="652" vertical-scroll-proportion="0.55">
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/EntryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="10" selection-start="951" selection-end="951" vertical-scroll-proportion="0.40734825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/device-2013-05-31-232905.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/PreferencesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="13" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.6329527">
+          <folding>
+            <element signature="e#660#1230#0" expanded="true" />
+            <element signature="e#1224#1225#0" expanded="true" />
           </folding>
         </state>
       </provider>

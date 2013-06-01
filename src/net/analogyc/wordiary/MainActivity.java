@@ -2,10 +2,11 @@ package net.analogyc.wordiary;
 
 import android.graphics.Typeface;
 import android.widget.*;
+import android.widget.ExpandableListView.OnChildClickListener;
 import net.analogyc.wordiary.models.DBAdapter;
+import net.analogyc.wordiary.models.EntryListAdapter;
 import net.analogyc.wordiary.models.Photo;
 import android.support.v4.app.DialogFragment;
-import net.analogyc.wordiary.models.EntryAdapter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -25,11 +27,11 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
  
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	//view links
-	private ListView entryList;
+	private ExpandableListView entryList;
 	
 	private Uri imageUri;
 	private DBAdapter dataBase;
-	private EntryAdapter entryAdapter;
+	private EntryListAdapter entryAdapter;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         
         //get the the corresponding link for each view object
-        entryList = (ListView) findViewById(R.id.listView1);
+        entryList = (ExpandableListView) findViewById(R.id.entries);
 
 		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
 		((Button) findViewById(R.id.takePhotoButton)).setTypeface(fontawsm);
@@ -102,17 +104,11 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
     
     //method used when user clicks on a entry
     public void onEntryClicked(int entryId){    	
-    	// get the id for the selected entry
-        Cursor c = dataBase.getAllEntries();
-        c.moveToPosition(entryId);
-        int id = c.getInt(0);
-        
+         
         //open Entry Activity
         Intent intent = new Intent(MainActivity.this, EntryActivity.class);
-    	intent.putExtra("entryId", id);
+    	intent.putExtra("entryId", entryId);
     	startActivity(intent);
-    	
-    	c.close();
     }
 
 
@@ -166,7 +162,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 	@Override
 	protected void onPause(){
 		dataBase.close();
-		entryAdapter.getCursor().close();
+		//entryAdapter.getCursor().close();
 		super.onPause();
 	}
 	
@@ -176,7 +172,11 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 		showEntries();		
 	}
 		
-	
+	/*
+	 
+	 THIS CODE NEEDS TO BE REPLACED WITH A FRAGMENT DIALOG
+	  
+	  
     @Override  
     public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {  
     	super.onCreateContextMenu(menu, v, menuInfo);  
@@ -185,8 +185,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
     	menu.add(0, v.getId(), 0, "Delete");  
     } 
     
-	@Override  
-    public boolean onContextItemSelected(MenuItem item) {
+   public boolean onContextItemSelected(MenuItem item) {
 		Context context = getApplicationContext();
 		int duration = Toast.LENGTH_SHORT;
 		
@@ -201,21 +200,20 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 			toast1.show();
         } 
 		return true;
-    } 
+    } */
 	
     private void showEntries(){
-    	Cursor entries = dataBase.getAllEntriesWithImage();
-      	//startManagingCursor(entries);
-      	entryAdapter = new EntryAdapter(this, entries);
+      	entryAdapter = new EntryListAdapter(this);
       	entryList.setAdapter(entryAdapter);
                 
-        entryList.setOnItemClickListener(new ListView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> a, View v, int pos, long row) {
-                    onEntryClicked(pos);
-            }
+        entryList.setOnChildClickListener(new OnChildClickListener() {
+ 			@Override
+			public boolean onChildClick(ExpandableListView arg0, View arg1,
+					int arg2, int arg3, long arg4) {
+				onEntryClicked((int)arg4);
+				return false;
+			}
         });
-        
-        registerForContextMenu( entryList );
     }
     
 }

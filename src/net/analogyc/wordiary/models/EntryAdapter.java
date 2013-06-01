@@ -1,3 +1,6 @@
+/*
+	THIS CLASS CAN BE DELETED(but it contains useful code)
+
 package net.analogyc.wordiary.models;
 
 import java.io.IOException;
@@ -40,7 +43,7 @@ public class EntryAdapter extends CursorAdapter {
 			protected int sizeOf(String key, Bitmap bitmap) {
 				// The cache size will be measured in kilobytes rather than
 				// number of items.
-				return bitmap.getByteCount() / 1024;
+				return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
 			}
 		};
 	}
@@ -148,7 +151,6 @@ public class EntryAdapter extends CursorAdapter {
 			e.printStackTrace();
 		}
 
-		// run the image loading task now
 		if (path != null) {
 			BitmapDrawableWorkerTask task = new BitmapDrawableWorkerTask(imageView, path);
 			task.execute();
@@ -167,4 +169,4 @@ public class EntryAdapter extends CursorAdapter {
 		}
 	}
 
-}
+}*/

@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.graphics.BitmapFactory;
-import android.support.v4.app.FragmentManager;
 import net.analogyc.wordiary.R;
 
 import android.content.Context;
@@ -28,9 +27,9 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	private ArrayList<String[]> days = new ArrayList<String[]>();
 	private BitmapWorker bitmapWorker;
 
-	public EntryListAdapter(Context context, FragmentManager fm) {
+	public EntryListAdapter(Context context, BitmapWorker bitmapWorker) {
 		this.context = context;
-		this.bitmapWorker = BitmapWorker.findOrCreateBitmapWorker(fm);
+		this.bitmapWorker = bitmapWorker;
 		DBAdapter database = new DBAdapter(context);
 		Cursor day = database.getAllDays();
 		String[] info;
@@ -136,7 +135,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 				.setTargetHeight(256)
 				.setTargetWidth(256)
 				.setCenterCrop(true)
-				.setHighQuality(false)
+				.setHighQuality(true)
 				.execute();
 		}
 		

@@ -3,16 +3,19 @@ package net.analogyc.wordiary.models;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.LruCache;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
 
 public class BitmapWorker extends Fragment {
 
-	private static final String TAG = "BitmapWorkerFragment";
+	private static final String TAG = "BitmapWorker";
 	private LruCache<String, Bitmap> mMemoryCache;
 
 	protected BitmapWorker() {
@@ -28,14 +31,25 @@ public class BitmapWorker extends Fragment {
 				return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
 			}
 		};
+		Log.wtf("tag", getTag());
 	}
 
 	public static BitmapWorker findOrCreateBitmapWorker(FragmentManager fm) {
 		BitmapWorker fragment = (BitmapWorker) fm.findFragmentByTag(TAG);
 		if (fragment == null) {
+			FragmentTransaction ft = fm.beginTransaction();
 			fragment = new BitmapWorker();
+			ft.add(fragment, TAG);
+			ft.commit();
 		}
+
 		return fragment;
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
 	}
 
 	public BitmapWorkerTaskBuilder newTask(ImageView imageView, String path) {

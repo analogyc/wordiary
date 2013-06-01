@@ -36,10 +36,6 @@
             android:label="@string/title_activity_day" >
         </activity>
         <activity
-            android:name="net.analogyc.wordiary.SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
-        <activity
             android:name="net.analogyc.wordiary.EntryActivity"
             android:label="@string/title_activity_entry" >
         </activity>

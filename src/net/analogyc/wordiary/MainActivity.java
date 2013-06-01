@@ -3,6 +3,7 @@ package net.analogyc.wordiary;
 import android.graphics.Typeface;
 import android.widget.*;
 import android.widget.ExpandableListView.OnChildClickListener;
+import net.analogyc.wordiary.models.BitmapWorker;
 import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.EntryListAdapter;
 import net.analogyc.wordiary.models.Photo;
@@ -13,14 +14,12 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends FragmentActivity implements NewEntryDialogFragment.NewEntryDialogListener{
+public class MainActivity extends FragmentActivity implements NewEntryDialogFragment.NewEntryDialogListener {
 
  
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -30,6 +29,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 	private Uri imageUri;
 	private DBAdapter dataBase;
 	private EntryListAdapter entryAdapter;
+	private BitmapWorker bitmapWorker;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 		((Button) findViewById(R.id.newEntryButton)).setTypeface(fontawsm);
 		((Button) findViewById(R.id.newMoodButton)).setTypeface(fontawsm);
 
+		bitmapWorker = BitmapWorker.findOrCreateBitmapWorker(getSupportFragmentManager());
         dataBase = new DBAdapter(this);
     }
 
@@ -201,7 +202,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
     } */
 	
     private void showEntries(){
-      	entryAdapter = new EntryListAdapter(this, getSupportFragmentManager());
+      	entryAdapter = new EntryListAdapter(this, bitmapWorker);
       	entryList.setAdapter(entryAdapter);
                 
         entryList.setOnChildClickListener(new OnChildClickListener() {

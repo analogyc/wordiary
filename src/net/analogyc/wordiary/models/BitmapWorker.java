@@ -72,8 +72,8 @@ public class BitmapWorker extends Fragment {
 
 		protected ImageView imageView;
 		protected String path;
-		protected int targetWidth = 256;
-		protected int targetHeight = 256;
+		protected int targetWidth = 0;
+		protected int targetHeight = 0;
 		protected boolean centerCrop = false;
 		protected boolean highQuality = true;
 
@@ -156,7 +156,7 @@ public class BitmapWorker extends Fragment {
 			Bitmap bmp;
 
 			// just use lower inSampleSize
-			if (!highQuality) {
+			if (targetWidth != 0 && !highQuality) {
 				// get the image width and height without loading it in memory
 				BitmapFactory.Options options = new BitmapFactory.Options();
 				options.inJustDecodeBounds = true;
@@ -201,7 +201,7 @@ public class BitmapWorker extends Fragment {
 				}
 			}
 
-			if (highQuality) {
+			if (targetWidth != 0 && highQuality) {
 				bmp = Bitmap.createScaledBitmap(bmp, targetWidth, targetHeight, true);
 			}
 

@@ -122,21 +122,24 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		Bitmap image;
 		ImageView imageView = (ImageView) view.findViewById(R.id.dayImage);
 
-		// set a default picture if an image wasn't already set from cache
-		try {
-			image = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
-			imageView.setImageBitmap(image);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// avoid rebuilding if the imageView is already set
+		if (imageView.getDrawable() == null) {
+			// set a default picture if an image wasn't already set from cache
+			try {
+				image = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
+				imageView.setImageBitmap(image);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-		if (!info[0].equals("")) {
-			bitmapWorker.createTask(imageView, info[1])
-				.setTargetHeight(256)
-				.setTargetWidth(256)
-				.setCenterCrop(true)
-				.setHighQuality(true)
-				.execute();
+			if (!info[0].equals("")) {
+				bitmapWorker.createTask(imageView, info[1])
+					.setTargetHeight(256)
+					.setTargetWidth(256)
+					.setCenterCrop(true)
+					.setHighQuality(false)
+					.execute();
+			}
 		}
 		
 		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);

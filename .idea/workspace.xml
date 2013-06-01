@@ -27,11 +27,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffd72b09-4c06-4b33-9073-23b479146ed4" name="Default" comment="Adding query for fetching picture for a day, used in EntryActivity. EntryActivity still needs graphical reordering.&#10;Adding Android Studio support files.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/BitmapWorker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryAdapter.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryAdapter.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryAdapter.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/BitmapWorker.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/BitmapWorker.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryListAdapter.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryListAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/MainActivity.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="wordiary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -123,19 +121,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EntryListAdapter.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="EntryListAdapter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryListAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="0" selection-start="987" selection-end="987" vertical-scroll-proportion="-1.9119086">
+            <state line="15" column="31" selection-start="426" selection-end="426" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BitmapWorker.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="BitmapWorker.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/BitmapWorker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="12" selection-start="943" selection-end="943" vertical-scroll-proportion="0.0">
+            <state line="2" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.047923323">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -172,8 +170,8 @@
         <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryAdapter.java" />
         <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/models/BitmapDrawableWorker.java" />
         <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/MainActivity.java" />
-        <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryListAdapter.java" />
         <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/models/BitmapWorker.java" />
+        <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryListAdapter.java" />
       </list>
     </option>
   </component>
@@ -469,7 +467,7 @@
       <workItem from="1370015234453" duration="1491000" />
       <workItem from="1370017188545" duration="8883000" />
       <workItem from="1370027298726" duration="8702000" />
-      <workItem from="1370072596465" duration="5905000" />
+      <workItem from="1370072596465" duration="5994000" />
     </task>
     <task id="LOCAL-00001" summary="Adding query for fetching picture for a day, used in EntryActivity. EntryActivity still needs graphical reordering.&#10;Adding Android Studio support files.">
       <created>1368743480698</created>
@@ -479,7 +477,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54652000" />
+    <option name="totallyTimeSpent" value="54741000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1280" height="774" extended-state="6" />
@@ -671,13 +669,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="766" selection-end="766" vertical-scroll-proportion="0.08945687">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/PreferencesActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="46" column="13" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.6574225">
@@ -694,19 +685,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/BitmapWorker.java">
+    <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="12" selection-start="943" selection-end="943" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="15" column="31" selection-start="426" selection-end="426" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryListAdapter.java">
+    <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/BitmapWorker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="987" selection-end="987" vertical-scroll-proportion="-1.9119086">
-          <folding />
+        <state line="2" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.047923323">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

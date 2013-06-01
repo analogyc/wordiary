@@ -7,6 +7,7 @@ import java.util.Locale;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DBAdapter {
 
@@ -38,8 +39,10 @@ public class DBAdapter {
 	 * Close databaseHelper
 	 */
 	public void close() {
-		database.close();
-		database = null;
+		if (database != null) {
+			database.close();
+			database = null;
+		}
 	}
 
 	/**
@@ -78,6 +81,20 @@ public class DBAdapter {
 	 */
 	public Cursor getEntryById(int id) {
 		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry._ID + " = " + id;
+		return getConnection().rawQuery(query, null);
+	}
+	
+	/**
+	 * Get the selected entry
+	 *
+	 * @param id entry's id
+	 * @return a Cursor that contains the selected entry, or null
+	 */
+	public Cursor getEntryByDay(int id) {
+		String query = "SELECT * FROM " + Entry.TABLE_NAME +
+						" WHERE " + Entry.COLUMN_NAME_DAY_ID + " = " + id +
+						" ORDER BY "+ Entry._ID+" DESC";
+		Log.w(null,query);
 		return getConnection().rawQuery(query, null);
 	}
 
@@ -195,7 +212,7 @@ public class DBAdapter {
 	 * @return Cursor containing the days
 	 */
 	public Cursor getAllDays() {
-		String query = "SELECT * FROM " + Day.TABLE_NAME + " ORDER BY " + Day.COLUMN_NAME_CREATED + " DESC";
+		String query = "SELECT * FROM " + Day.TABLE_NAME + " ORDER BY " + Day._ID + " DESC";
 		return getConnection().rawQuery(query, null);
 	}
 
@@ -209,4 +226,6 @@ public class DBAdapter {
 		String query = "SELECT * FROM " + Day.TABLE_NAME + " WHERE " + Day._ID + " = " + id;
 		return getConnection().rawQuery(query, null);
 	}
+	
+	
 }

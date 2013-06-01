@@ -6,24 +6,17 @@
     android:padding="5dip" >
 
     <TextView
-        android:id="@+id/message"
+        android:id="@+id/entryMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/button1"
         android:text="message"
         android:textColor="#040404"
         android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="sans" />
-    
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/message"
-        android:layout_below="@+id/message"
-        android:paddingTop="8dp"
-        android:text="date"
-        android:textColor="#343434"
-        android:textSize="15dip" />
+
 
 </RelativeLayout>  

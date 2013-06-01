@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.View;
 import android.widget.ImageButton;
 import net.analogyc.wordiary.models.DBAdapter;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 
 public class EntryActivity extends Activity {
 	private int entryId;
+	private int dayId;
 	private DBAdapter dataBase;
 	private TextView messageText, dateText;
     private ImageButton photoButton;
@@ -61,6 +63,7 @@ public class EntryActivity extends Activity {
 			//won't happen if we use only dataBaseHelper.addEntry(...)
 		}  
 		int dayId = c_entry.getInt(1);
+		this.dayId = dayId;
         Bitmap image;
         InputStream image_stream;
         try {
@@ -82,6 +85,12 @@ public class EntryActivity extends Activity {
 
 		c_entry.close();
   		//in the future we will get an image and a mood in the same way		
+	}
+
+	public void onPhotoButtonClicked(View view) {
+		Intent intent = new Intent(this, ImageActivity.class);
+		intent.putExtra("dayId", dayId);
+		startActivity(intent);
 	}
 
 	@Override
@@ -109,9 +118,8 @@ public class EntryActivity extends Activity {
 	
 	@Override
 	protected void onPause(){
-		super.onPause();
 		dataBase.close();
-		dataBase = null;
+		super.onPause();
 	}
 	
 	@Override

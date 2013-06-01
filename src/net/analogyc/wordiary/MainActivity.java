@@ -145,7 +145,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 	@Override
 	protected void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
-		if( imageUri != null){
+		if(imageUri != null){
 			outState.putString("cameraImageUri", imageUri.toString());
 		}
 	}

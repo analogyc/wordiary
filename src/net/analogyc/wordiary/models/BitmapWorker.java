@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.LruCache;
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
@@ -31,7 +30,6 @@ public class BitmapWorker extends Fragment {
 				return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
 			}
 		};
-		Log.wtf("tag", getTag());
 	}
 
 	public static BitmapWorker findOrCreateBitmapWorker(FragmentManager fm) {

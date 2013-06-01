@@ -1,11 +1,14 @@
 package net.analogyc.wordiary.models;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import android.graphics.BitmapFactory;
+import android.support.v4.app.FragmentManager;
 import net.analogyc.wordiary.R;
 
 import android.content.Context;
@@ -24,10 +27,12 @@ import android.widget.TextView;
 public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	private Context context;
-	private ArrayList<String[]> days= new ArrayList<String[]>();
+	private ArrayList<String[]> days = new ArrayList<String[]>();
+	private BitmapWorker bitmapWorker;
 
-	public EntryListAdapter(Context context) {
+	public EntryListAdapter(Context context, FragmentManager fm) {
 		this.context = context;
+		this.bitmapWorker = BitmapWorker.findOrCreateBitmapWorker(fm);
 		DBAdapter database = new DBAdapter(context);
 		Cursor day = database.getAllDays();
 		String[] info;
@@ -117,12 +122,25 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			view = inf.inflate(R.layout.day_style, null);
 		}
 
+		Bitmap image;
+		ImageView imageView = (ImageView) view.findViewById(R.id.dayImage);
+
+		// set a default picture if an image wasn't already set from cache
+		try {
+			image = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
+			imageView.setImageBitmap(image);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		if (!info[0].equals("")) {
-			Drawable image = Drawable.createFromPath(info[1]);
-			((ImageView)view.findViewById(R.id.dayImage)).setImageDrawable(image);
+			bitmapWorker.createTask(imageView, info[1])
+				.setTargetHeight(256)
+				.setTargetWidth(256)
+				.setCenterCrop(true)
+				.setHighQuality(false)
+				.execute();
 		}
-		
 		
 		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);
 		SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.ITALY);

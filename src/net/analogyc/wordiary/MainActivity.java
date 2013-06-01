@@ -15,9 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -203,7 +201,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
     } */
 	
     private void showEntries(){
-      	entryAdapter = new EntryListAdapter(this);
+      	entryAdapter = new EntryListAdapter(this, getSupportFragmentManager());
       	entryList.setAdapter(entryAdapter);
                 
         entryList.setOnChildClickListener(new OnChildClickListener() {

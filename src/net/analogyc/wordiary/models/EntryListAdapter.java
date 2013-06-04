@@ -132,7 +132,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 				e.printStackTrace();
 			}
 
-			if (!info[0].equals("")) {
+			if (!info[1].equals("")) {
 				bitmapWorker.createTask(imageView, info[1])
 					.setTargetHeight(256)
 					.setTargetWidth(256)

@@ -74,7 +74,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
     //method used when "newEntryButton" button is clicked
     public void onNewEntryButtonClicked(View view){
     	NewEntryDialogFragment newFragment = new NewEntryDialogFragment();
-    	newFragment.show(getSupportFragmentManager(), "entry");
+    	newFragment.show(getSupportFragmentManager(), "newEntry");
     }
     
     
@@ -201,6 +201,11 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
         } 
 		return true;
     } */
+
+	public void entryClick(View view){
+		EditEntryDialogFragment editFragment = new EditEntryDialogFragment();
+		editFragment.show(getSupportFragmentManager(), "editEntry");
+	}
 	
 	private void showEntries(){
 		entryAdapter = new EntryListAdapter(this, bitmapWorker);

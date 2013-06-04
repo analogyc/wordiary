@@ -11,8 +11,11 @@ import java.util.Locale;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 import net.analogyc.wordiary.models.DBAdapter;
 import android.os.Bundle;
 import android.app.Activity;
@@ -20,13 +23,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.view.Menu;
 import android.widget.TextView;
+import net.analogyc.wordiary.models.Photo;
 
 public class EntryActivity extends Activity {
+	private final int MOOD_RESULT_CODE = 100;
 	private int entryId;
 	private int dayId;
 	private DBAdapter dataBase;
 	private TextView messageText, dateText;
     private ImageButton photoButton;
+	private String moodId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +40,40 @@ public class EntryActivity extends Activity {
 		setContentView(R.layout.activity_entry);
 		
 		Intent intent = getIntent();
-		
+
+		dataBase = new DBAdapter(this);
+
 		//normally entryId can't be -1
-		entryId = intent.getIntExtra("entryId", -1);
-		
-        dataBase = new DBAdapter(this);
-		
+		entryId = intent.getIntExtra("entryId", entryId);
+
+
+		if(moodId != null){
+		}
+
 		messageText = (TextView) findViewById(R.id.messageText);
 		dateText = (TextView) findViewById(R.id.dateText);
         photoButton = (ImageButton) findViewById(R.id.photoButton);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == MOOD_RESULT_CODE) {
+			if (resultCode == RESULT_OK) {
+				String moodId = data.getStringExtra("moodId");
+				dataBase.updateMood(entryId, moodId);
+
+			} else if (resultCode == RESULT_CANCELED) {
+				// User cancelled the image capture
+			} else {
+				// Image capture failed, advise user
+			}
+		}
 	}
 	
 	private void setView(){
   		Cursor c_entry = dataBase.getEntryById(entryId);
   		if (! c_entry.moveToFirst()) {
+			 throw new RuntimeException("Wrong entry id");
   			//error! wrong ID, but it won't happen
   		}
   		String message = c_entry.getString(2);
@@ -91,6 +117,12 @@ public class EntryActivity extends Activity {
 		Intent intent = new Intent(this, ImageActivity.class);
 		intent.putExtra("dayId", dayId);
 		startActivity(intent);
+	}
+
+	public void onMoodButtonClicked(View view){
+		Intent intent = new Intent(this, MoodsActivity.class);
+		intent.putExtra("entryId", entryId);
+		startActivityForResult(intent, MOOD_RESULT_CODE);
 	}
 
 	@Override

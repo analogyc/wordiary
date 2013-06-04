@@ -18,14 +18,5 @@
         android:textStyle="bold"
         android:typeface="sans" />
 
-	<Button
-		android:id="@+id/entryButton"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignTop="@+id/entryMessage"
-		android:layout_alignParentRight="true"
-		android:text="opt"
-		android:onClick="entryClick"/>
-
 
 </RelativeLayout>  

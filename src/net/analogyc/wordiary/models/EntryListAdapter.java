@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.graphics.BitmapFactory;
+import android.widget.*;
+import net.analogyc.wordiary.MainActivity;
 import net.analogyc.wordiary.R;
 
 import android.content.Context;
@@ -16,9 +18,6 @@ import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 
 public class EntryListAdapter extends BaseExpandableListAdapter {
@@ -75,13 +74,27 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) {
-		String[] info = (String[]) getChild(groupPosition, childPosition);
+		final String[] info = (String[]) getChild(groupPosition, childPosition);
 		if (view == null) {
 			LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = infalInflater.inflate(R.layout.entry_style, null);
 		}
 		((TextView) view.findViewById(R.id.entryMessage)).setText(info[1]);
 
+		view.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View view) {
+				((MainActivity)context).onEntryLongClicked (Integer.parseInt(info[0]));
+				return false;
+			}
+		});
+
+		view.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				((MainActivity)context).onEntryClicked (Integer.parseInt(info[0]));
+			}
+		});
 		return view;
 	}
 

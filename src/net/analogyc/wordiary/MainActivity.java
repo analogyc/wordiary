@@ -202,7 +202,7 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 		return true;
     } */
 
-	public void entryClick(View view){
+	public void onEntryLongClicked(int id){
 		EditEntryDialogFragment editFragment = new EditEntryDialogFragment();
 		editFragment.show(getSupportFragmentManager(), "editEntry");
 	}
@@ -211,14 +211,6 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 		entryAdapter = new EntryListAdapter(this, bitmapWorker);
 		entryList.setAdapter(entryAdapter);
 
-		entryList.setOnChildClickListener(new OnChildClickListener() {
-			@Override
-			public boolean onChildClick(ExpandableListView arg0, View arg1,
-					int arg2, int arg3, long arg4) {
-				onEntryClicked((int)arg4);
-				return false;
-			}
-	 });
    }
     
 }

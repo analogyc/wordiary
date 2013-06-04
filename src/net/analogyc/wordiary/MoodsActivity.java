@@ -1,6 +1,7 @@
 package net.analogyc.wordiary;
 
-import net.analogyc.wordiary.models.ImageAdapter;
+import android.content.Intent;
+import net.analogyc.wordiary.models.MoodsAdapter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
@@ -29,13 +30,14 @@ public class MoodsActivity extends Activity {
 		
 		//get and set the gridview that will show the moods on the screen
 		gridView = (GridView) findViewById(R.id.moodGrid);
-		gridView.setAdapter(new ImageAdapter(this, moods));
+		gridView.setAdapter(new MoodsAdapter(this, moods));
  
 		gridView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v,int position, long id) {
-				//only for debugging purpose
-				Toast.makeText(getApplicationContext(),moods[position], Toast.LENGTH_SHORT).show();
- 
+			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+				Intent intent = new Intent();
+				intent.putExtra("moodId", moods[position]);
+				setResult(Activity.RESULT_OK,intent);
+				finish();
 			}
 		});
 		

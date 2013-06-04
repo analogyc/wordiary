@@ -224,6 +224,11 @@ public class DBAdapter {
 		String query = "SELECT * FROM " + Day.TABLE_NAME + " WHERE " + Day._ID + " = " + id;
 		return getConnection().rawQuery(query, null);
 	}
-	
-	
+
+
+	public void updateMood(int entryId, String moodId) {
+		String query = "UPDATE " + Entry.TABLE_NAME +
+			" SET "+ Entry.COLUMN_NAME_MOOD +" =  ? WHERE " + Entry._ID + " = ?";
+		getConnection().execSQL(query, new Object[]{moodId,entryId});
+	}
 }

@@ -120,7 +120,14 @@ public class DBAdapter {
 		if (c.moveToFirst()) {
 			photo = c.getInt(0);
 		} else {
-			photo = -1;
+			addPhoto("");
+			query =
+				"SELECT * " +
+					"FROM " + Day.TABLE_NAME +
+					" WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + sdf.format(now).substring(0, 8) + "%'";
+
+			photo = getConnection().rawQuery(query, null).getInt(0);
+
 		}
 		c.close();
 		//insert the entry
@@ -156,38 +163,29 @@ public class DBAdapter {
 		String DATE_FORMAT = "yyyyMMddHHmmss";
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ITALY);
 		String date = sdf.format(now);
-		//insert the entry
-		String query = "INSERT INTO " + Day.TABLE_NAME + " ( " +
-				Day.COLUMN_NAME_FILENAME + " , " +
-				Day.COLUMN_NAME_CREATED +
-				") VALUES ('" +
-				filename + "' , " +
-				date + " )";
-
-		getConnection().execSQL(query);
 
 		//get the id of the day
-		query =
-				"SELECT * " +
-						" FROM " + Day.TABLE_NAME +
-						" WHERE " + Day.COLUMN_NAME_CREATED + " = '" + date + "'";
+		String query =
+			"SELECT * " +
+				" FROM " + Day.TABLE_NAME +
+				" WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + date.substring(0, 8) + "%'";
 
 		Cursor c = getConnection().rawQuery(query, null);
-		int id;
-		if (c.moveToFirst()) {
-			id = c.getInt(0);
+
+		if(c.getCount() > 0) {
+			c.moveToFirst();
+			query = "UPDATE " + Day.TABLE_NAME + " " +
+				"SET " + Day.COLUMN_NAME_FILENAME + " = ?" +
+				"WHERE " + Day._ID + " = ?";
+			getConnection().execSQL(query, new Object[] {filename, c.getInt(0)});
 		} else {
-			id = -1;
+			//insert the entry
+			query = "INSERT INTO " + Day.TABLE_NAME + " ( " +
+				Day.COLUMN_NAME_FILENAME + " , " +
+				Day.COLUMN_NAME_CREATED +
+				") VALUES (?, ?)";
+			getConnection().execSQL(query, new Object[] {filename, date});
 		}
-		c.close();
-
-
-		//update every entries
-		query = "UPDATE " + Entry.TABLE_NAME +
-				" SET " + Entry.COLUMN_NAME_DAY_ID + "  = " + id +
-				" WHERE " + Entry.COLUMN_NAME_CREATED + " LIKE '" + date.substring(0, 8) + "%'";
-
-		getConnection().execSQL(query);
 	}
 
 	/**

@@ -64,6 +64,10 @@ public class BitmapWorker extends Fragment {
 		return mMemoryCache.get(key);
 	}
 
+	public void clearBitmapFromMemCache(String path) {
+		mMemoryCache.remove("models.EntryAdapter.thumbnails." + path);
+	}
+
 	public BitmapWorkerTaskBuilder createTask(ImageView imageView, String path) {
 		return new BitmapWorkerTaskBuilder(imageView, path);
 	}

@@ -93,7 +93,8 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
             	dataBase.addPhoto(imageUri.getPath());
                 // Image captured and saved to fileUri specified in the Intent
                 Toast.makeText(this, "Image saved to:\n" + imageUri, Toast.LENGTH_LONG).show();
-            } else if (resultCode == RESULT_CANCELED) {
+				bitmapWorker.clearBitmapFromMemCache(imageUri.getPath());
+			} else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
             } else {
                 // Image capture failed, advise user
@@ -201,18 +202,18 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
 		return true;
     } */
 	
-    private void showEntries(){
-      	entryAdapter = new EntryListAdapter(this, bitmapWorker);
-      	entryList.setAdapter(entryAdapter);
-                
-        entryList.setOnChildClickListener(new OnChildClickListener() {
- 			@Override
+	private void showEntries(){
+		entryAdapter = new EntryListAdapter(this, bitmapWorker);
+		entryList.setAdapter(entryAdapter);
+
+		entryList.setOnChildClickListener(new OnChildClickListener() {
+			@Override
 			public boolean onChildClick(ExpandableListView arg0, View arg1,
 					int arg2, int arg3, long arg4) {
 				onEntryClicked((int)arg4);
 				return false;
 			}
-        });
-    }
+	 });
+   }
     
 }

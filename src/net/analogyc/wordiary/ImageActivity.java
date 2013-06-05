@@ -5,9 +5,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Menu;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 import net.analogyc.wordiary.models.DBAdapter;
 
 import java.io.File;
@@ -19,6 +24,7 @@ public class ImageActivity extends Activity {
 	private int dayId;
 	private DBAdapter dataBase;
 	private ImageView imageView;
+	private GestureDetector gestureDetector;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,6 +34,14 @@ public class ImageActivity extends Activity {
 		dayId = intent.getIntExtra("dayId", -1);
 
 		dataBase = new DBAdapter(this);
+
+		gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+			@Override
+			public boolean onDoubleTap(MotionEvent e) {
+				Toast.makeText(ImageActivity.this, "double tap", Toast.LENGTH_SHORT).show();
+				return true;
+			}
+		});
 
 		imageView = (ImageView) findViewById(R.id.fullImageView);
 	}
@@ -53,18 +67,33 @@ public class ImageActivity extends Activity {
 
 				if (image.getWidth() > image.getHeight()) {
 					targetWidth = 1600;
-					targetHeight = (int) ((float) image.getWidth() / 1600 * (float)image.getHeight());
+					targetHeight = image.getWidth() / 1600 * image.getHeight();
 				} else {
 					targetHeight = 1600;
-					targetWidth = (int) ((float)image.getHeight() / 1600 * (float)image.getWidth());
+					targetWidth = image.getHeight() / 1600 * image.getWidth();
 				}
 				image = Bitmap.createScaledBitmap(image, targetWidth, targetHeight, false);
 			}
+
+			imageView.setOnTouchListener(new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View view, MotionEvent motionEvent) {
+					if (!gestureDetector.onTouchEvent(motionEvent)) {
+						return view.onTouchEvent(motionEvent);
+					}
+					return true;
+				}
+			});
 
 			imageView.setImageBitmap(image);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent ev) {
+		return true;
 	}
 
 	@Override

@@ -27,46 +27,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffd72b09-4c06-4b33-9073-23b479146ed4" name="Default" comment="Adding query for fetching picture for a day, used in EntryActivity. EntryActivity still needs graphical reordering.&#10;Adding Android Studio support files.">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/ImageAdapter.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/MoodsAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-hdpi/mood1.png" afterPath="$PROJECT_DIR$/res/drawable-hdpi/mood1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-ldpi/mood1.png" afterPath="$PROJECT_DIR$/res/drawable-ldpi/mood1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-mdpi/mood1.png" afterPath="$PROJECT_DIR$/res/drawable-mdpi/mood1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/mood1.png" afterPath="$PROJECT_DIR$/res/drawable-xhdpi/mood1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/mood1.png" afterPath="$PROJECT_DIR$/res/drawable-xxhdpi/mood1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-hdpi/mood2.png" afterPath="$PROJECT_DIR$/res/drawable-hdpi/mood2.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-ldpi/mood2.png" afterPath="$PROJECT_DIR$/res/drawable-ldpi/mood2.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-mdpi/mood2.png" afterPath="$PROJECT_DIR$/res/drawable-mdpi/mood2.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/mood2.png" afterPath="$PROJECT_DIR$/res/drawable-xhdpi/mood2.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/mood2.png" afterPath="$PROJECT_DIR$/res/drawable-xxhdpi/mood2.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-hdpi/mood3.png" afterPath="$PROJECT_DIR$/res/drawable-hdpi/mood3.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-ldpi/mood3.png" afterPath="$PROJECT_DIR$/res/drawable-ldpi/mood3.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-mdpi/mood3.png" afterPath="$PROJECT_DIR$/res/drawable-mdpi/mood3.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/mood3.png" afterPath="$PROJECT_DIR$/res/drawable-xhdpi/mood3.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/mood3.png" afterPath="$PROJECT_DIR$/res/drawable-xxhdpi/mood3.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-hdpi/mood4.png" afterPath="$PROJECT_DIR$/res/drawable-hdpi/mood4.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-ldpi/mood4.png" afterPath="$PROJECT_DIR$/res/drawable-ldpi/mood4.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-mdpi/mood4.png" afterPath="$PROJECT_DIR$/res/drawable-mdpi/mood4.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/mood4.png" afterPath="$PROJECT_DIR$/res/drawable-xhdpi/mood4.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/mood4.png" afterPath="$PROJECT_DIR$/res/drawable-xxhdpi/mood4.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-hdpi/mood5.png" afterPath="$PROJECT_DIR$/res/drawable-hdpi/mood5.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-ldpi/mood5.png" afterPath="$PROJECT_DIR$/res/drawable-ldpi/mood5.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-mdpi/mood5.png" afterPath="$PROJECT_DIR$/res/drawable-mdpi/mood5.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/mood5.png" afterPath="$PROJECT_DIR$/res/drawable-xhdpi/mood5.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/mood5.png" afterPath="$PROJECT_DIR$/res/drawable-xxhdpi/mood5.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/DBAdapter.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/DBAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/EntryActivity.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/EntryActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryListAdapter.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryListAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/MainActivity.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/MoodsActivity.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/MoodsActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/activity_entry.xml" afterPath="$PROJECT_DIR$/res/layout/activity_entry.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/dialog_custom.xml" afterPath="$PROJECT_DIR$/res/layout/dialog_custom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/entry_style.xml" afterPath="$PROJECT_DIR$/res/layout/entry_style.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/analogyc/wordiary/ImageActivity.java" afterPath="$PROJECT_DIR$/src/net/analogyc/wordiary/ImageActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="wordiary.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370340168005" ignored="false" />
+    <file path="/Dummy.txt" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370444207663" ignored="false" />
     <file path="/DBAdapter.java" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370351461214" ignored="false" />
     <file path="/EntryActivity.java" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370353923012" ignored="false" />
     <file path="/fragment.java" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370349202104" ignored="false" />
@@ -83,7 +49,7 @@
     <file path="/BitmapDrawableWorker.java" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370082569299" ignored="false" />
     <file path="/BitmapWorker.java" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370337155789" ignored="false" />
     <file path="/activity_main.xml" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370345503487" ignored="false" />
-    <file path="/ImageActivity.java" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370089629460" ignored="false" />
+    <file path="/ImageActivity.java" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370444467749" ignored="false" />
     <file path="/activity_entry.xml" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370350855698" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370347293273" ignored="false" />
     <file path="/entry_style.xml" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370338473448" ignored="false" />
@@ -91,6 +57,7 @@
     <file path="/MoodsActivity.java" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370353588717" ignored="false" />
     <file path="/dialog_edit_entry.xml" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370340684498" ignored="false" />
     <file path="/flatbutton.xml" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370346036689" ignored="false" />
+    <file path="/activity_image.xml" changelist="ffd72b09-4c06-4b33-9073-23b479146ed4" time="1370441704145" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,64 +118,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/MainActivity.java">
+      <file leaf-file-name="ImageActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/ImageActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="4" selection-start="3185" selection-end="3865" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MoodsActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/MoodsActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="59" selection-start="971" selection-end="971" vertical-scroll-proportion="0.0">
+            <state line="117" column="5" selection-start="3257" selection-end="3257" vertical-scroll-proportion="2.3722045">
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#1052#1266#0" expanded="true" />
+                <element signature="e#1261#1262#0" expanded="true" />
+                <element signature="e#2261#2504#0" expanded="true" />
+                <element signature="e#2498#2499#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EntryActivity.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/EntryActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="48" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.1373802">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Instrumentation.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/android/app/Instrumentation.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="112" column="16" selection-start="5963" selection-end="5963" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DBAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/DBAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="228" column="56" selection-start="6161" selection-end="6161" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_entry.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/activity_entry.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="31" selection-start="1451" selection-end="1451" vertical-scroll-proportion="-8.222222">
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
+      <file leaf-file-name="activity_image.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/activity_image.xml">
+          <provider selected="true" editor-type-id="android-designer">
             <state />
+          </provider>
+          <provider editor-type-id="text-editor">
+            <state line="8" column="14" selection-start="238" selection-end="247" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -230,8 +162,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/models/BitmapWorker.java" />
-        <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/NewEntryDialogFragment.java" />
         <option value="$PROJECT_DIR$/res/layout/dialog_edit_entry.xml" />
         <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/EditEntryDialogFragment.java" />
         <option value="$PROJECT_DIR$/res/drawable-mdpi/flatbutton.xml" />
@@ -246,6 +176,8 @@
         <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/models/DBAdapter.java" />
         <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/MoodsActivity.java" />
         <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/EntryActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/activity_image.xml" />
+        <option value="$PROJECT_DIR$/src/net/analogyc/wordiary/ImageActivity.java" />
       </list>
     </option>
   </component>
@@ -366,78 +298,6 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xml" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values-v14" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values-sw600dp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -454,42 +314,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable-mdpi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordiary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable-hdpi" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -721,7 +545,9 @@
       <workItem from="1370017188545" duration="8883000" />
       <workItem from="1370027298726" duration="8702000" />
       <workItem from="1370072596465" duration="18675000" />
-      <workItem from="1370327144897" duration="18287000" />
+      <workItem from="1370327144897" duration="18294000" />
+      <workItem from="1370439820802" duration="3048000" />
+      <workItem from="1370444200509" duration="2130000" />
     </task>
     <task id="LOCAL-00001" summary="Adding query for fetching picture for a day, used in EntryActivity. EntryActivity still needs graphical reordering.&#10;Adding Android Studio support files.">
       <created>1368743480698</created>
@@ -731,16 +557,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85709000" />
+    <option name="totallyTimeSpent" value="90894000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1280" height="774" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17990276" sideWeight="0.32874617" order="2" side_tool="true" content_ui="tabs" x="622" y="82" width="675" height="934" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26337114" sideWeight="0.675841" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874617" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5856269" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6980728" sideWeight="0.3006483" order="11" side_tool="true" content_ui="tabs" />
@@ -753,9 +576,12 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.273906" sideWeight="0.675841" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32415903" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.273906" sideWeight="0.42201835" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32262996" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.273906" sideWeight="0.70642203" order="2" side_tool="true" content_ui="tabs" x="622" y="82" width="675" height="934" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26337114" sideWeight="0.675841" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -825,35 +651,24 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="17" selection-start="803" selection-end="803" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="12" selection-start="679" selection-end="679" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="19" column="12" selection-start="679" selection-end="679" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values-v14/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/entry_style.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="0" selection-start="708" selection-end="708" vertical-scroll-proportion="-9.888889">
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/EntryListAdapter.java">
@@ -877,69 +692,55 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/activity_mood.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/activity_main.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="61" column="40" selection-start="2014" selection-end="2014" vertical-scroll-proportion="-4.3333335">
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/activity_image.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/dialog_custom.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/activity_entry.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="31" selection-start="1451" selection-end="1451" vertical-scroll-proportion="-8.222222">
-          <folding />
-        </state>
-      </provider>
       <provider editor-type-id="android-designer">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="31" selection-start="1451" selection-end="1451" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/models/DBAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="228" column="56" selection-start="6161" selection-end="6161" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/android/app/Instrumentation.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="16" selection-start="5963" selection-end="5963" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="112" column="16" selection-start="5963" selection-end="5963" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/MainActivity.java">
@@ -952,16 +753,36 @@
     <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/MoodsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="32" column="59" selection-start="971" selection-end="971" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/EntryActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="48" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.1373802">
+        <state line="86" column="79" selection-start="2569" selection-end="2569" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/activity_image.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="8" column="14" selection-start="238" selection-end="247" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/analogyc/wordiary/ImageActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="117" column="5" selection-start="3257" selection-end="3257" vertical-scroll-proportion="2.3722045">
+          <folding>
+            <element signature="e#1052#1266#0" expanded="true" />
+            <element signature="e#1261#1262#0" expanded="true" />
+            <element signature="e#2261#2504#0" expanded="true" />
+            <element signature="e#2498#2499#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

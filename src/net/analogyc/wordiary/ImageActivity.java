@@ -1,5 +1,6 @@
 package net.analogyc.wordiary;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -7,10 +8,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 import net.analogyc.wordiary.models.DBAdapter;
@@ -25,20 +31,45 @@ public class ImageActivity extends Activity {
 	private DBAdapter dataBase;
 	private ImageView imageView;
 	private GestureDetector gestureDetector;
+	private float scale = 1.f;
+	private float relativeX;
+	private float relativeY;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image);
 
-		Intent intent = getIntent();
-		dayId = intent.getIntExtra("dayId", -1);
+		if (dayId == 0) {
+			Intent intent = getIntent();
+			dayId = intent.getIntExtra("dayId", -1);
+		}
 
 		dataBase = new DBAdapter(this);
 
 		gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
 			@Override
+			public boolean onDown(MotionEvent e) {
+				return true;
+			}
+
+			@Override
 			public boolean onDoubleTap(MotionEvent e) {
-				Toast.makeText(ImageActivity.this, "double tap", Toast.LENGTH_SHORT).show();
+				Animation scaleAnimation = new ScaleAnimation(scale, scale * 1.5f, scale, scale * 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+				float tempRelativeX = (relativeX + e.getX() - (imageView.getWidth() / 2)) * 1.5f;
+				float tempRelativeY = (relativeY + e.getY() - (imageView.getHeight() / 2)) * 1.5f;
+				TranslateAnimation transAnimation = new TranslateAnimation(-relativeX, -tempRelativeX, -relativeY, -tempRelativeY);
+				relativeX = tempRelativeX;
+				relativeY = tempRelativeY;
+
+				AnimationSet set = new AnimationSet(true);
+				set.addAnimation(scaleAnimation);
+				set.addAnimation(transAnimation);
+				set.setFillAfter(true);
+				set.setDuration(250);
+
+				imageView.startAnimation(set);
+				scale = scale * 1.5f;
 				return true;
 			}
 		});
@@ -65,35 +96,54 @@ public class ImageActivity extends Activity {
 			if (image.getWidth() > 1600 || image.getHeight() > 1600) {
 				int targetWidth, targetHeight;
 
+				// width : height = x : 1600
 				if (image.getWidth() > image.getHeight()) {
 					targetWidth = 1600;
-					targetHeight = image.getWidth() / 1600 * image.getHeight();
+					targetHeight = 1600 * image.getHeight() / image.getWidth();
 				} else {
 					targetHeight = 1600;
-					targetWidth = image.getHeight() / 1600 * image.getWidth();
+					targetWidth = 1600 * image.getWidth() / image.getHeight();
 				}
+
 				image = Bitmap.createScaledBitmap(image, targetWidth, targetHeight, false);
 			}
 
 			imageView.setOnTouchListener(new View.OnTouchListener() {
 				@Override
 				public boolean onTouch(View view, MotionEvent motionEvent) {
-					if (!gestureDetector.onTouchEvent(motionEvent)) {
-						return view.onTouchEvent(motionEvent);
-					}
-					return true;
+					return gestureDetector.onTouchEvent(motionEvent);
 				}
 			});
 
 			imageView.setImageBitmap(image);
+			Animation scaleAnimation = new ScaleAnimation(scale, scale, scale, scale, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+			TranslateAnimation transAnimation = new TranslateAnimation(0, -relativeX, 0, -relativeY);
+			AnimationSet set = new AnimationSet(true);
+			set.addAnimation(scaleAnimation);
+			set.addAnimation(transAnimation);
+			set.setFillAfter(true);
+			set.setDuration(0);
+
+			imageView.startAnimation(set);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent ev) {
-		return true;
+	public void onBackPressed() {
+		if (scale != 1.0f) {
+			Animation scaleAnimation = new ScaleAnimation(scale, 1.0f, scale, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+			scaleAnimation.setFillAfter(true);
+			scaleAnimation.setDuration(250);
+			imageView.startAnimation(scaleAnimation);
+			scale = 1.0f;
+			relativeX = 0;
+			relativeY = 0;
+		} else {
+			super.onBackPressed();
+		}
 	}
 
 	@Override
@@ -107,6 +157,7 @@ public class ImageActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
 		outState.putInt("dayId", dayId);
+		outState.putFloat("scale", scale);
 	}
 
 	@Override
@@ -114,6 +165,7 @@ public class ImageActivity extends Activity {
 		super.onRestoreInstanceState(savedInstanceState);
 		if(savedInstanceState.containsKey("dayId")){
 			dayId = savedInstanceState.getInt("dayId");
+			scale = savedInstanceState.getFloat("scale");
 		}
 	}
 

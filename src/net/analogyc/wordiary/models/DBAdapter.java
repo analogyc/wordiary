@@ -126,7 +126,9 @@ public class DBAdapter {
 					"FROM " + Day.TABLE_NAME +
 					" WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + sdf.format(now).substring(0, 8) + "%'";
 
-			photo = getConnection().rawQuery(query, null).getInt(0);
+			c = getConnection().rawQuery(query, null);
+			c.moveToFirst();
+			photo = c.getInt(0);
 
 		}
 		c.close();

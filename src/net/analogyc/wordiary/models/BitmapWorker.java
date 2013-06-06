@@ -72,7 +72,7 @@ public class BitmapWorker extends Fragment {
 		return new BitmapWorkerTaskBuilder(imageView, path);
 	}
 
-	protected class BitmapWorkerTaskBuilder {
+	public class BitmapWorkerTaskBuilder {
 
 		protected ImageView imageView;
 		protected String path;

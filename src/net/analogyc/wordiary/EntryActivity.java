@@ -15,7 +15,9 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
+import net.analogyc.wordiary.models.BitmapWorker;
 import net.analogyc.wordiary.models.DBAdapter;
 import android.os.Bundle;
 import android.app.Activity;
@@ -30,7 +32,7 @@ public class EntryActivity extends BaseActivity {
 	private int entryId;
 	private int dayId;
 	private TextView messageText, dateText;
-    private ImageButton photoButton;
+    private ImageView photoButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class EntryActivity extends BaseActivity {
 
 		messageText = (TextView) findViewById(R.id.messageText);
 		dateText = (TextView) findViewById(R.id.dateText);
-        photoButton = (ImageButton) findViewById(R.id.photoButton);
+        photoButton = (ImageView) findViewById(R.id.photoButton);
 	}
 
 	@Override
@@ -88,16 +90,20 @@ public class EntryActivity extends BaseActivity {
         try {
             if (dayId == -1) {
                 image_stream = getAssets().open("default-avatar.jpg");
+				image = BitmapFactory.decodeStream(image_stream);
+				image = Bitmap.createScaledBitmap(image, 256, 256, false);
+				photoButton.setImageBitmap(image);
             } else {
             	Cursor c_photo = dataBase.getDayById(dayId);
             	c_photo.moveToFirst();
-                image_stream = new FileInputStream(new File(c_photo.getString(1)));
-                c_photo.close();
+				bitmapWorker.createTask(photoButton, c_photo.getString(1))
+					.setTargetHeight(photoButton.getWidth())
+					.setTargetWidth(photoButton.getWidth())
+					.setHighQuality(true)
+					.setCenterCrop(true)
+					.execute();
+				c_photo.close();
             }
-
-            image = BitmapFactory.decodeStream(image_stream);
-            image = Bitmap.createScaledBitmap(image, 128, 128, false);
-            photoButton.setImageBitmap(image);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,7 +3,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				tools:context=".EntryActivity"
-				android:background="#dddddd">
+				android:background="#eeeeee">
 
 	<net.analogyc.wordiary.HeaderView
 		android:layout_height="wrap_content"
@@ -11,32 +11,39 @@
 		android:id="@+id/HeaderViewLayout"/>
 
 	<TextView
-		android:id="@+id/dateText"
-		android:layout_width="wrap_content"
+		android:id="@+id/messageText"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
-		android:layout_alignParentLeft="true"
-		android:layout_marginBottom="194dp"
-		android:layout_marginLeft="98dp"
-		android:text="TextView"/>
+		android:layout_marginTop="10dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_below="@+id/HeaderViewLayout"
+		android:textSize="25dp" />
 
 	<TextView
-		android:id="@+id/messageText"
-		android:layout_width="wrap_content"
+		android:id="@+id/dateText"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="46dp"
-		android:text="TextView"
-		android:layout_alignParentTop="true"
-		android:layout_alignParentLeft="true"/>
+		android:layout_below="@+id/messageText"
+		android:layout_marginTop="10dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_marginBottom="15dp"
+		android:textSize="12dp"
+		android:textColor="#555555" />
 
-	<ImageButton
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+	<ImageView
 		android:id="@+id/photoButton"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
 		android:onClick="onPhotoButtonClicked"
-		android:layout_alignParentTop="true"
-		android:layout_alignParentRight="true"
-		android:layout_alignBottom="@+id/messageText"/>
+		android:layout_below="@+id/dateText"
+		android:layout_marginTop="10dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_marginBottom="15dp"
+		android:adjustViewBounds="false"
+		android:scaleType="fitCenter" />
 
 	<Button
 		android:layout_width="wrap_content"

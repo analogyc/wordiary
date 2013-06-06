@@ -25,30 +25,21 @@ import android.view.Menu;
 import android.widget.TextView;
 import net.analogyc.wordiary.models.Photo;
 
-public class EntryActivity extends Activity {
-	private final int MOOD_RESULT_CODE = 100;
+public class EntryActivity extends BaseActivity {
+	private final int MOOD_RESULT_CODE = 101;
 	private int entryId;
 	private int dayId;
-	private DBAdapter dataBase;
 	private TextView messageText, dateText;
     private ImageButton photoButton;
-	private String moodId;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_entry);
 		
 		Intent intent = getIntent();
-
-		dataBase = new DBAdapter(this);
-
 		//normally entryId can't be -1
 		entryId = intent.getIntExtra("entryId", entryId);
-
-
-		if(moodId != null){
-		}
 
 		messageText = (TextView) findViewById(R.id.messageText);
 		dateText = (TextView) findViewById(R.id.dateText);
@@ -67,6 +58,8 @@ public class EntryActivity extends Activity {
 			} else {
 				// Image capture failed, advise user
 			}
+		} else {
+			super.onActivityResult(requestCode, resultCode, data);
 		}
 	}
 	
@@ -131,8 +124,7 @@ public class EntryActivity extends Activity {
 		getMenuInflater().inflate(R.menu.entry, menu);
 		return true;
 	}
-	
-	
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
@@ -145,13 +137,6 @@ public class EntryActivity extends Activity {
 		if(savedInstanceState.containsKey("entryId")){
 			entryId = savedInstanceState.getInt("entryId");
 		}
-	}
-	
-	
-	@Override
-	protected void onPause(){
-		dataBase.close();
-		super.onPause();
 	}
 	
 	@Override

@@ -1,52 +1,26 @@
 package net.analogyc.wordiary;
 
-import android.graphics.Typeface;
 import android.widget.*;
-import android.widget.ExpandableListView.OnChildClickListener;
-import net.analogyc.wordiary.models.BitmapWorker;
-import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.EntryListAdapter;
-import net.analogyc.wordiary.models.Photo;
 import android.support.v4.app.DialogFragment;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
-public class MainActivity extends FragmentActivity implements NewEntryDialogFragment.NewEntryDialogListener {
+public class MainActivity extends BaseActivity implements NewEntryDialogFragment.NewEntryDialogListener {
 
- 
-	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	//view links
 	private ExpandableListView entryList;
-	
-	private Uri imageUri;
-	private DBAdapter dataBase;
 	private EntryListAdapter entryAdapter;
-	private BitmapWorker bitmapWorker;
-	
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        
+
         //get the the corresponding link for each view object
         entryList = (ExpandableListView) findViewById(R.id.entries);
-
-		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
-		((Button) findViewById(R.id.takePhotoButton)).setTypeface(fontawsm);
-		((Button) findViewById(R.id.newEntryButton)).setTypeface(fontawsm);
-		((Button) findViewById(R.id.newMoodButton)).setTypeface(fontawsm);
-
-		bitmapWorker = BitmapWorker.findOrCreateBitmapWorker(getSupportFragmentManager());
-        dataBase = new DBAdapter(this);
     }
 
 
@@ -57,54 +31,8 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
         return true;
     }
     
-
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-            	Intent intent = new Intent(this, PreferencesActivity.class);
-            	startActivity(intent);
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-    
-    //method used when "newEntryButton" button is clicked
-    public void onNewEntryButtonClicked(View view){
-    	NewEntryDialogFragment newFragment = new NewEntryDialogFragment();
-    	newFragment.show(getSupportFragmentManager(), "newEntry");
-    }
-    
-    
-    //method used when "takePhoto" button is clicked
-    public void onTakePhotoClicked(View view){
-    	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);    	
-    	imageUri = Uri.fromFile(Photo.getOutputMediaFile(1));
-    	intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-    	startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-    }
-    
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-            	dataBase.addPhoto(imageUri.getPath());
-                // Image captured and saved to fileUri specified in the Intent
-                Toast.makeText(this, "Image saved to:\n" + imageUri, Toast.LENGTH_LONG).show();
-				bitmapWorker.clearBitmapFromMemCache(imageUri.getPath());
-			} else if (resultCode == RESULT_CANCELED) {
-                // User cancelled the image capture
-            } else {
-                // Image capture failed, advise user
-            }
-        }
-    }
-    
     //method used when user clicks on a entry
-    public void onEntryClicked(int entryId){    	
-         
+    public void onEntryClicked(int entryId) {
         //open Entry Activity
         Intent intent = new Intent(MainActivity.this, EntryActivity.class);
     	intent.putExtra("entryId", entryId);
@@ -124,60 +52,39 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
         
 		if(message != ""){
 			text = "Message saved";
-			
 			dataBase.addEntry(message, 0);
 			showEntries(); 
-			
 		} else {
 			text = "Message not saved";
-			
 		}
 		
 		Toast toast1 = Toast.makeText(context, text, duration);
 		toast1.show();
-	}	
-	
-	public void moods(View view){
-		Intent intent = new Intent(this, MoodsActivity.class);
-    	startActivity(intent);
 	}
 
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState){
-		super.onSaveInstanceState(outState);
-		if(imageUri != null){
-			outState.putString("cameraImageUri", imageUri.toString());
-		}
-	}
-	
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState){
-		super.onRestoreInstanceState(savedInstanceState);
-		if(savedInstanceState.containsKey("cameraImageUri")){
-			imageUri = Uri.parse(savedInstanceState.getString("cameraImageUri"));
-		}
-	}
-	
-	@Override
-	protected void onPause(){
-		dataBase.close();
-		//entryAdapter.getCursor().close();
-		super.onPause();
-	}
-	
 	@Override
 	protected void onResume(){
 		super.onResume();
-		showEntries();		
+		showEntries();
 	}
+
+
+	public void onEntryLongClicked(int id){
+		EditEntryDialogFragment editFragment = new EditEntryDialogFragment();
+		editFragment.show(getSupportFragmentManager(), "editEntry");
+	}
+
+
+	private void showEntries(){
+		entryAdapter = new EntryListAdapter(this, bitmapWorker);
+		entryList.setAdapter(entryAdapter);
+	}
+
 		
 	/*
-	 
-	 THIS CODE NEEDS TO BE REPLACED WITH A FRAGMENT DIALOG
+	THIS CODE NEEDS TO BE REPLACED WITH A FRAGMENT DIALOG
 	  
-	  
-    @Override  
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {  
     	super.onCreateContextMenu(menu, v, menuInfo);  
     	menu.setHeaderTitle("Entry Menu");  
@@ -201,16 +108,4 @@ public class MainActivity extends FragmentActivity implements NewEntryDialogFrag
         } 
 		return true;
     } */
-
-	public void onEntryLongClicked(int id){
-		EditEntryDialogFragment editFragment = new EditEntryDialogFragment();
-		editFragment.show(getSupportFragmentManager(), "editEntry");
-	}
-	
-	private void showEntries(){
-		entryAdapter = new EntryListAdapter(this, bitmapWorker);
-		entryList.setAdapter(entryAdapter);
-
-   }
-    
 }

@@ -51,6 +51,7 @@
 			android:name="net.analogyc.wordiary.ImageActivity"
 			android:label="@string/preferences" >
 		</activity>
+		<activity android:name=".BaseActivity"/>
 	</application>
 
 </manifest>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/MainButtonsLayout"
+	android:orientation="horizontal"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_alignParentLeft="true"
+	android:layout_alignParentTop="true"
+	android:layout_alignParentRight="true"
+	android:background="#231f74"
+	android:layout_marginBottom="3dp">
+
+	<Button
+		android:id="@+id/newEntryButton"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="0.50"
+		android:onClick="onNewEntryButtonClicked"
+		android:text="@string/button_newEntry"
+		android:layout_below="@+id/MainButtonsLayout"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentLeft="true"
+		android:textColor="#ffffff"
+		android:background="@drawable/flatbutton"
+		android:paddingTop="10dp"
+		android:paddingBottom="10dp"
+		android:textSize="20dp"/>
+
+	<Button
+		android:id="@+id/takePhotoButton"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="0.25"
+		android:onClick="onTakePhotoClicked"
+		android:text="@string/button_takePhoto"
+		android:layout_alignParentTop="true"
+		android:layout_toLeftOf="@+id/newMoodButton"
+		android:background="@drawable/flatbutton"
+		android:textColor="#ffffff"
+		android:paddingTop="10dp"
+		android:paddingBottom="10dp"
+		android:textSize="20dp"/>
+
+</LinearLayout>

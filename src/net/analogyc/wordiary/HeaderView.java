@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 public class HeaderView extends LinearLayout {
 
 	LayoutInflater inflater;
-	Button takePhotoButton, newEntryButton, openPreferencesButton;
+	Button homeButton, takePhotoButton, newEntryButton, openPreferencesButton;
 
 	public HeaderView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -26,5 +26,10 @@ public class HeaderView extends LinearLayout {
 		takePhotoButton.setTypeface(fontawsm);
 		newEntryButton.setTypeface(fontawsm);
 		openPreferencesButton.setTypeface(fontawsm);
+
+		Typeface zapfino = Typeface.createFromAsset(context.getAssets(), "fonts/zapfino.ttf");
+		homeButton = (Button) findViewById(R.id.homeButton);
+		//homeButton.setTypeface(zapfino);
+
 	}
 }

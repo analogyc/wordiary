@@ -13,18 +13,16 @@
 	<Button
 		android:id="@+id/homeButton"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_weight="0.30"
+		android:layout_height="match_parent"
+		android:layout_weight="0.20"
 		android:onClick="onHomeButtonClicked"
-		android:text="Wordiary"
+		android:text="Wd"
 		android:layout_below="@+id/MainButtonsLayout"
 		android:layout_alignParentRight="true"
 		android:layout_alignParentLeft="true"
 		android:textColor="#ffffff"
 		android:background="@drawable/flatbutton"
-		android:paddingTop="10dp"
-		android:paddingBottom="10dp"
-		android:textSize="20dp"/>
+		android:textSize="17dp"/>
 
 	<Button
 		android:id="@+id/newEntryButton"

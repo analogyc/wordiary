@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 
-public class MainActivity extends BaseActivity implements NewEntryDialogFragment.NewEntryDialogListener {
+public class MainActivity extends BaseActivity {
 
 	//view links
 	private ExpandableListView entryList;
@@ -39,29 +39,6 @@ public class MainActivity extends BaseActivity implements NewEntryDialogFragment
     	startActivity(intent);
     }
 
-
-	@Override
-	public void onDialogPositiveClick(DialogFragment dialog) {
-		// TODO Auto-generated method stub
-		Context context = getApplicationContext();
-		CharSequence text;
-		int duration = Toast.LENGTH_SHORT;
-		    
-		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
-        String message=edit.getText().toString();
-        
-		if(message != ""){
-			text = "Message saved";
-			dataBase.addEntry(message, 0);
-			showEntries(); 
-		} else {
-			text = "Message not saved";
-		}
-		
-		Toast toast1 = Toast.makeText(context, text, duration);
-		toast1.show();
-	}
-
 	@Override
 	protected void onResume(){
 		super.onResume();
@@ -75,7 +52,7 @@ public class MainActivity extends BaseActivity implements NewEntryDialogFragment
 	}
 
 
-	private void showEntries(){
+	protected void showEntries(){
 		entryAdapter = new EntryListAdapter(this, bitmapWorker);
 		entryList.setAdapter(entryAdapter);
 	}

@@ -1,20 +1,23 @@
 package net.analogyc.wordiary;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 import net.analogyc.wordiary.models.BitmapWorker;
 import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.Photo;
 
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends FragmentActivity implements NewEntryDialogFragment.NewEntryDialogListener {
 
 	protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
@@ -40,6 +43,18 @@ public class BaseActivity extends FragmentActivity {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+
+	public void onHomeButtonClicked(View view) {
+		if (!(this instanceof MainActivity)) {
+			Intent intent = new Intent(this, MainActivity.class);
+			startActivity(intent);
+		}
+	}
+
+	public void onOpenPreferencesClicked(View view) {
+		Intent intent = new Intent(this, PreferencesActivity.class);
+		startActivity(intent);
 	}
 
 	//method used when "newEntryButton" button is clicked
@@ -71,6 +86,29 @@ public class BaseActivity extends FragmentActivity {
 				// Image capture failed, advise user
 			}
 		}
+	}
+
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		Context context = getApplicationContext();
+		CharSequence text;
+		int duration = Toast.LENGTH_SHORT;
+
+		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
+		String message = edit.getText().toString();
+
+		if(message != ""){
+			text = "Message saved";
+			dataBase.addEntry(message, 0);
+			if (this instanceof MainActivity) {
+				((MainActivity) this).showEntries();
+			}
+		} else {
+			text = "Message not saved";
+		}
+
+		Toast toast1 = Toast.makeText(context, text, duration);
+		toast1.show();
 	}
 
 	@Override

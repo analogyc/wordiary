@@ -42,16 +42,6 @@ public class EntryActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_entry);
 		
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		preferences.getInt("typeface", 1);
-		switch (preferences.getInt("typeface", 1)) {
-		case 2: Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
-		messageText.setTypeface(typeface);
-			break;
-		case 3: Typeface typeface3 = Typeface.createFromAsset(getAssets(), "fonts/stanhand.ttf");
-		messageText.setTypeface(typeface3);
-			break;
-		}
 		
 		Intent intent = getIntent();
 		//normally entryId can't be -1
@@ -61,9 +51,17 @@ public class EntryActivity extends BaseActivity {
 		dateText = (TextView) findViewById(R.id.dateText);
         photoButton = (ImageView) findViewById(R.id.photoButton);
         
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
-        messageText.setTypeface(typeface);
-        
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		preferences.getString("typeface", "1");
+		int typefaceInt = Integer.parseInt(preferences.getString("typeface", "1"));
+		switch (typefaceInt) {
+		case 2: Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
+		messageText.setTypeface(typeface);
+			break;
+		case 3: Typeface typeface3 = Typeface.createFromAsset(getAssets(), "fonts/stanhand.ttf");
+		messageText.setTypeface(typeface3);
+			break;
+		}
 	}
 
 	@Override

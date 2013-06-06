@@ -15,6 +15,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -42,7 +43,6 @@ public class EntryActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_entry);
 		
-		
 		Intent intent = getIntent();
 		//normally entryId can't be -1
 		entryId = intent.getIntExtra("entryId", entryId);
@@ -52,14 +52,15 @@ public class EntryActivity extends BaseActivity {
         photoButton = (ImageView) findViewById(R.id.photoButton);
         
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		preferences.getString("typeface", "1");
 		int typefaceInt = Integer.parseInt(preferences.getString("typeface", "1"));
 		switch (typefaceInt) {
-		case 2: Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
-		messageText.setTypeface(typeface);
+		case 2:
+			Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
+			messageText.setTypeface(typeface);
 			break;
-		case 3: Typeface typeface3 = Typeface.createFromAsset(getAssets(), "fonts/stanhand.ttf");
-		messageText.setTypeface(typeface3);
+		case 3:
+			Typeface typeface3 = Typeface.createFromAsset(getAssets(), "fonts/stanhand.ttf");
+			messageText.setTypeface(typeface3);
 			break;
 		}
 	}
@@ -104,22 +105,23 @@ public class EntryActivity extends BaseActivity {
         Bitmap image;
         InputStream image_stream;
         try {
-            if (dayId == -1) {
-                image_stream = getAssets().open("default-avatar.jpg");
-				image = BitmapFactory.decodeStream(image_stream);
-				image = Bitmap.createScaledBitmap(image, 256, 256, false);
-				photoButton.setImageBitmap(image);
-            } else {
-            	Cursor c_photo = dataBase.getDayById(dayId);
-            	c_photo.moveToFirst();
-				bitmapWorker.createTask(photoButton, c_photo.getString(1))
-					.setTargetHeight(photoButton.getWidth())
-					.setTargetWidth(photoButton.getWidth())
-					.setHighQuality(true)
-					.setCenterCrop(true)
-					.execute();
-				c_photo.close();
-            }
+            if (dayId != -1) {
+				Cursor c_photo = dataBase.getDayById(dayId);
+				c_photo.moveToFirst();
+				if (!c_photo.getString(1).equals("")) {
+					bitmapWorker.createTask(photoButton, c_photo.getString(1))
+						.setTargetHeight(photoButton.getWidth())
+						.setTargetWidth(photoButton.getWidth())
+						.setHighQuality(true)
+						.setCenterCrop(true)
+						.execute();
+						c_photo.close();
+				} else {
+					image_stream = getAssets().open("default-avatar.jpg");
+					image = BitmapFactory.decodeStream(image_stream);
+					photoButton.setImageBitmap(image);
+				}
+			}
         } catch (IOException e) {
             e.printStackTrace();
         }

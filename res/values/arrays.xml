@@ -11,13 +11,13 @@
         <item name="size3">24sp</item>
     </string-array>
     <string-array name="typeface">
-        <item name="font1">Font1</item>
-        <item name="font2">Font2</item>
-        <item name="font3">Font3</item>
+        <item name="font1">Droid Sans</item>
+        <item name="font2">Anime Ace 2.0</item>
+        <item name="font3">Stan Hand</item>
     </string-array>
      <string-array name="typefaceValues">
-        <item name="font1">Font1</item>
-        <item name="font2">Font2</item>
-        <item name="font3">Font3</item>
+        <item name="font1">1</item>
+        <item name="font2">2</item>
+        <item name="font3">3</item>
     </string-array>
 </resources>

@@ -11,7 +11,9 @@ import java.util.Locale;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageButton;
@@ -22,6 +24,7 @@ import net.analogyc.wordiary.models.DBAdapter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.view.Menu;
 import android.widget.TextView;
@@ -39,6 +42,17 @@ public class EntryActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_entry);
 		
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		preferences.getInt("typeface", 1);
+		switch (preferences.getInt("typeface", 1)) {
+		case 2: Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
+		messageText.setTypeface(typeface);
+			break;
+		case 3: Typeface typeface3 = Typeface.createFromAsset(getAssets(), "fonts/stanhand.ttf");
+		messageText.setTypeface(typeface3);
+			break;
+		}
+		
 		Intent intent = getIntent();
 		//normally entryId can't be -1
 		entryId = intent.getIntExtra("entryId", entryId);
@@ -46,6 +60,10 @@ public class EntryActivity extends BaseActivity {
 		messageText = (TextView) findViewById(R.id.messageText);
 		dateText = (TextView) findViewById(R.id.dateText);
         photoButton = (ImageView) findViewById(R.id.photoButton);
+        
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
+        messageText.setTypeface(typeface);
+        
 	}
 
 	@Override

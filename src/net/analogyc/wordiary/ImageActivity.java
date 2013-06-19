@@ -7,16 +7,16 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.Menu;
-import android.view.MotionEvent;
-import android.view.View;
+import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.Toast;
 import net.analogyc.wordiary.models.DBAdapter;
@@ -30,6 +30,7 @@ public class ImageActivity extends Activity {
 	private int dayId;
 	private DBAdapter dataBase;
 	private ImageView imageView;
+	private WebView imageWebView;
 	private GestureDetector gestureDetector;
 	private float scale = 1.f;
 	private float relativeX;
@@ -45,93 +46,41 @@ public class ImageActivity extends Activity {
 		}
 
 		dataBase = new DBAdapter(this);
-
-		gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-			@Override
-			public boolean onDown(MotionEvent e) {
-				return true;
-			}
-
-			@Override
-			public boolean onDoubleTap(MotionEvent e) {
-				Animation scaleAnimation = new ScaleAnimation(scale, scale * 1.5f, scale, scale * 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-
-				float tempRelativeX = (relativeX + e.getX() - (imageView.getWidth() / 2)) * 1.5f;
-				float tempRelativeY = (relativeY + e.getY() - (imageView.getHeight() / 2)) * 1.5f;
-				TranslateAnimation transAnimation = new TranslateAnimation(-relativeX, -tempRelativeX, -relativeY, -tempRelativeY);
-				relativeX = tempRelativeX;
-				relativeY = tempRelativeY;
-
-				AnimationSet set = new AnimationSet(true);
-				set.addAnimation(scaleAnimation);
-				set.addAnimation(transAnimation);
-				set.setFillAfter(true);
-				set.setDuration(250);
-
-				imageView.startAnimation(set);
-				scale = scale * 1.5f;
-				return true;
-			}
-		});
-
-		imageView = (ImageView) findViewById(R.id.fullImageView);
+		imageWebView = (WebView) findViewById(R.id.imageWebView);
 	}
 
 	public void setView() {
 		InputStream imageStream;
 		Bitmap image;
-		try {
-			if (dayId == -1) {
-				imageStream = getAssets().open("default-avatar.jpg");
-			} else {
-				Cursor c = dataBase.getDayById(dayId);
-				c.moveToFirst();
-				imageStream = new FileInputStream(new File(c.getString(1)));
-				c.close();
-			}
-
-			image = BitmapFactory.decodeStream(imageStream);
-
-			// can't display sizes over 2048x2048 on a Galaxy Nexus... who knows about other Androids
-			if (image.getWidth() > 1600 || image.getHeight() > 1600) {
-				int targetWidth, targetHeight;
-
-				// width : height = x : 1600
-				if (image.getWidth() > image.getHeight()) {
-					targetWidth = 1600;
-					targetHeight = 1600 * image.getHeight() / image.getWidth();
-				} else {
-					targetHeight = 1600;
-					targetWidth = 1600 * image.getWidth() / image.getHeight();
-				}
-
-				image = Bitmap.createScaledBitmap(image, targetWidth, targetHeight, false);
-			}
-
-			imageView.setOnTouchListener(new View.OnTouchListener() {
-				@Override
-				public boolean onTouch(View view, MotionEvent motionEvent) {
-					return gestureDetector.onTouchEvent(motionEvent);
-				}
-			});
-
-			imageView.setImageBitmap(image);
-			Animation scaleAnimation = new ScaleAnimation(scale, scale, scale, scale, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-			TranslateAnimation transAnimation = new TranslateAnimation(0, -relativeX, 0, -relativeY);
-			AnimationSet set = new AnimationSet(true);
-			set.addAnimation(scaleAnimation);
-			set.addAnimation(transAnimation);
-			set.setFillAfter(true);
-			set.setDuration(0);
-
-			imageView.startAnimation(set);
-
-		} catch (IOException e) {
-			e.printStackTrace();
+		String location;
+		if (dayId == -1) {
+			location = "file://android_asset/default-avatar.jpg";
+		} else {
+			Cursor c = dataBase.getDayById(dayId);
+			c.moveToFirst();
+			location = "file://" + c.getString(1);
+			c.close();
 		}
+
+		WebSettings imageWebViewSettings = imageWebView.getSettings();
+		imageWebViewSettings.setAllowFileAccess(true);
+		imageWebViewSettings.setJavaScriptEnabled(true);
+		imageWebViewSettings.setBuiltInZoomControls(true);
+
+		Display display = getWindowManager().getDefaultDisplay();
+		int width = display.getWidth();
+
+		String html =
+			"<html>" +
+			"<head><meta name=\"viewport\" content=\"width=" + (width) + ", initial-scale=0.65, max-scale=15 \" /></head>" +
+			"<body style=\"margin:0; padding:0;\">" +
+				"<center><img width=\"" + (width) + "\" src=\"" + location + "\" /></center>" +
+			"</body>" +
+			"</html>";
+		imageWebView.loadDataWithBaseURL("", html, "text/html", "utf-8", "");
 	}
 
-	@Override
+	/*@Override
 	public void onBackPressed() {
 		if (scale != 1.0f) {
 			Animation scaleAnimation = new ScaleAnimation(scale, 1.0f, scale, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -144,7 +93,7 @@ public class ImageActivity extends Activity {
 		} else {
 			super.onBackPressed();
 		}
-	}
+	}*/
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

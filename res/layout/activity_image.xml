@@ -6,11 +6,9 @@
 			  android:layout_height="match_parent"
 	>
 
-	<ImageView
+	<WebView
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:id="@+id/fullImageView"
-		android:adjustViewBounds="false"
-		android:scaleType="fitCenter"
-		/>
+		android:id="@+id/imageWebView"
+		android:layout_gravity="center"/>
 </LinearLayout>

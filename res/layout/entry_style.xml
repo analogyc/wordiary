@@ -16,7 +16,7 @@
         android:textColor="#040404"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"/>
 
 
 </RelativeLayout>  

@@ -1,12 +1,14 @@
 package net.analogyc.wordiary;
 
 import android.widget.*;
+import android.widget.ExpandableListView.OnChildClickListener;
 import net.analogyc.wordiary.models.EntryListAdapter;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 
 public class MainActivity extends BaseActivity {
 
@@ -55,6 +57,7 @@ public class MainActivity extends BaseActivity {
 	protected void showEntries(){
 		entryAdapter = new EntryListAdapter(this, bitmapWorker);
 		entryList.setAdapter(entryAdapter);
+		
 	}
 
 		

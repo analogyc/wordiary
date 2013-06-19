@@ -15,8 +15,11 @@ import net.analogyc.wordiary.R;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 
 
@@ -25,6 +28,8 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	private Context context;
 	private ArrayList<String[]> days = new ArrayList<String[]>();
 	private BitmapWorker bitmapWorker;
+	private long lastDown;
+	private static long LONG_PRESS_TIME = 1000;
 
 	public EntryListAdapter(Context context, BitmapWorker bitmapWorker) {
 		this.context = context;
@@ -81,20 +86,38 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		}
 		((TextView) view.findViewById(R.id.entryMessage)).setText(info[1]);
 
-		view.setOnLongClickListener(new View.OnLongClickListener() {
+		/*view.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View view) {
 				((MainActivity)context).onEntryLongClicked (Integer.parseInt(info[0]));
-				return false;
+				return true;
 			}
 		});
-
+		
 		view.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				((MainActivity)context).onEntryClicked (Integer.parseInt(info[0]));
 			}
-		});
+		});*/
+		
+		view.setOnTouchListener(new OnTouchListener() {
+		     @Override
+		     public boolean onTouch(View v, MotionEvent event) {
+		        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+		        	entryClicked(true, System.currentTimeMillis(), Integer.parseInt(info[0]));
+		        	v.setBackgroundColor(0xFFFFFFFF);
+		        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+		        	entryClicked(false, System.currentTimeMillis(), Integer.parseInt(info[0]));
+		        }
+		        else if(event.getAction() == MotionEvent.ACTION_MOVE) {
+		        	entryClicked(false, -1, Integer.parseInt(info[0]));
+		        }
+		        return true;
+		     }
+		  });
+		
+		
 		return view;
 	}
 
@@ -177,5 +200,24 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
+	}
+	
+	private void entryClicked(boolean pressDown, long time, int id){
+		if(pressDown){
+			lastDown = time;
+		}
+		else{
+			if(lastDown != -1){
+				if(time >0){
+					if(time-lastDown > LONG_PRESS_TIME){
+						((MainActivity)context).onEntryLongClicked (id);
+					}
+					else{
+						((MainActivity)context).onEntryClicked (id);
+					}
+				}
+				lastDown = -1;
+			}
+		}
 	}
 }

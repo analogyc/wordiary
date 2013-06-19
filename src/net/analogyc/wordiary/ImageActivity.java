@@ -29,9 +29,7 @@ import java.io.InputStream;
 public class ImageActivity extends Activity {
 	private int dayId;
 	private DBAdapter dataBase;
-	private ImageView imageView;
-	private WebView imageWebView;
-	private GestureDetector gestureDetector;
+	private ImageWebView imageWebView;
 	private float scale = 1.f;
 	private float relativeX;
 	private float relativeY;
@@ -46,8 +44,9 @@ public class ImageActivity extends Activity {
 		}
 
 		dataBase = new DBAdapter(this);
-		imageWebView = (WebView) findViewById(R.id.imageWebView);
+		imageWebView = (ImageWebView) findViewById(R.id.imageWebView);
 	}
+
 
 	public void setView() {
 		InputStream imageStream;
@@ -72,7 +71,7 @@ public class ImageActivity extends Activity {
 
 		String html =
 			"<html>" +
-			"<head><meta name=\"viewport\" content=\"width=" + (width) + ", initial-scale=0.65, max-scale=15 \" /></head>" +
+			"<head><meta name=\"viewport\" content=\"width=" + (width) + ", initial-scale=1, max-scale=15 \" /></head>" +
 			"<body style=\"margin:0; padding:0;\">" +
 				"<center><img width=\"" + (width) + "\" src=\"" + location + "\" /></center>" +
 			"</body>" +

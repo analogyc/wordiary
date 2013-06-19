@@ -36,7 +36,7 @@ public class EntryActivity extends BaseActivity {
 	private int entryId;
 	private int dayId;
 	private TextView messageText, dateText;
-    private ImageView photoButton;
+    private ImageView photoButton, moodImage;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class EntryActivity extends BaseActivity {
 		messageText = (TextView) findViewById(R.id.messageText);
 		dateText = (TextView) findViewById(R.id.dateText);
         photoButton = (ImageView) findViewById(R.id.photoButton);
+        moodImage = (ImageView) findViewById(R.id.moodImage);
 	}
 
 	@Override
@@ -93,6 +94,12 @@ public class EntryActivity extends BaseActivity {
   		}
   		String message = c_entry.getString(2);
   		messageText.setText(message);
+  		String mood = c_entry.getString(3);
+  		if( mood != null){
+  			int identifier = getResources().getIdentifier(mood, "drawable", R.class.getPackage().getName());
+			moodImage.setImageResource(identifier);
+  		}
+  		
   		
   		String d_tmp = c_entry.getString(4);
   		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss",Locale.ITALY);

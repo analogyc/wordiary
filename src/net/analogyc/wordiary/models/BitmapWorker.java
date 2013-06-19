@@ -1,6 +1,8 @@
 package net.analogyc.wordiary.models;
 
+import android.content.res.Resources;
 import android.graphics.*;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -75,12 +77,22 @@ public class BitmapWorker extends Fragment {
 
 		protected ImageView imageView;
 		protected String path;
+		protected Bitmap defaultBitmap;
 		protected int targetWidth = 0;
 		protected int targetHeight = 0;
 		protected boolean centerCrop = false;
 		protected boolean highQuality = true;
 		protected int roundedCorner = 0;
 		protected int innerShadow = 0;
+
+		public Bitmap getDefaultBitmap() {
+			return defaultBitmap;
+		}
+
+		public BitmapWorkerTaskBuilder setDefaultBitmap(Bitmap defaultBitmap) {
+			this.defaultBitmap = defaultBitmap;
+			return this;
+		}
 
 		public int getTargetWidth() {
 			return targetWidth;
@@ -142,14 +154,35 @@ public class BitmapWorker extends Fragment {
 		}
 
 		public BitmapWorkerTask execute() {
+			if (imageView.getDrawable() instanceof AsyncDrawable) {
+				BitmapWorkerTask oldTask = ((AsyncDrawable) imageView.getDrawable()).getBitmapWorkerTask();
+				if (oldTask != null) {
+					oldTask.cancel(true);
+				}
+			}
+
 			BitmapWorkerTask task = new BitmapWorkerTask(imageView, path, targetWidth, targetHeight,
 				centerCrop, highQuality, roundedCorner, innerShadow);
+			imageView.setImageDrawable(new AsyncDrawable(getResources(), defaultBitmap, task));
 			task.execute();
 			return task;
 		}
 	}
 
-	protected class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
+	class AsyncDrawable extends BitmapDrawable {
+		private final WeakReference<BitmapWorkerTask> bitmapWorkerTaskReference;
+
+		public AsyncDrawable(Resources res, Bitmap bitmap, BitmapWorkerTask bitmapWorkerTask) {
+			super(res, bitmap);
+			bitmapWorkerTaskReference = new WeakReference<BitmapWorker.BitmapWorkerTask>(bitmapWorkerTask);
+		}
+
+		public BitmapWorkerTask getBitmapWorkerTask() {
+			return bitmapWorkerTaskReference.get();
+		}
+	}
+
+	public class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
 		private final WeakReference<ImageView> imageViewReference;
 		private final String path;
 		private final int targetWidth;
@@ -287,7 +320,7 @@ public class BitmapWorker extends Fragment {
 
 		@Override
 		protected void onPostExecute(Bitmap bitmap) {
-			if (imageViewReference != null && bitmap != null) {
+			if (!isCancelled() && imageViewReference != null && bitmap != null) {
 				addBitmapToMemoryCache("models.EntryAdapter.thumbnails." + path, bitmap);
 				final ImageView imageView = imageViewReference.get();
 				if (imageView != null) {

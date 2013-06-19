@@ -141,18 +141,19 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			try {
 				image = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
 				imageView.setImageBitmap(image);
+
+				if (!info[1].equals("")) {
+					bitmapWorker.createTask(imageView, info[1])
+						.setDefaultBitmap(image)
+						.setTargetHeight(256)
+						.setTargetWidth(256)
+						.setCenterCrop(true)
+						.setHighQuality(false)
+						.setRoundedCorner(15)
+						.execute();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
-
-			if (!info[1].equals("")) {
-				bitmapWorker.createTask(imageView, info[1])
-					.setTargetHeight(256)
-					.setTargetWidth(256)
-					.setCenterCrop(true)
-					.setHighQuality(false)
-					.setRoundedCorner(15)
-					.execute();
 			}
 		}
 		

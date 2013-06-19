@@ -151,6 +151,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 					.setTargetWidth(256)
 					.setCenterCrop(true)
 					.setHighQuality(false)
+					.setRoundedCorner(25)
 					.execute();
 			}
 		}

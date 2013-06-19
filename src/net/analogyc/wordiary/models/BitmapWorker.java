@@ -1,7 +1,6 @@
 package net.analogyc.wordiary.models;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -80,6 +79,7 @@ public class BitmapWorker extends Fragment {
 		protected int targetHeight = 0;
 		protected boolean centerCrop = false;
 		protected boolean highQuality = true;
+		protected int roundedCorner = 0;
 
 		public int getTargetWidth() {
 			return targetWidth;
@@ -117,6 +117,15 @@ public class BitmapWorker extends Fragment {
 			return this;
 		}
 
+		public int getRoundedCorner() {
+			return roundedCorner;
+		}
+
+		public BitmapWorkerTaskBuilder setRoundedCorner(int roundedCorner) {
+			this.roundedCorner = roundedCorner;
+			return this;
+		}
+
 		public BitmapWorkerTaskBuilder(ImageView imageView, String path) {
 			this.imageView = imageView;
 			this.path = path;
@@ -124,7 +133,7 @@ public class BitmapWorker extends Fragment {
 
 		public BitmapWorkerTask execute() {
 			BitmapWorkerTask task = new BitmapWorkerTask(imageView, path, targetWidth, targetHeight,
-				centerCrop, highQuality);
+				centerCrop, highQuality, roundedCorner);
 			task.execute();
 			return task;
 		}
@@ -137,15 +146,17 @@ public class BitmapWorker extends Fragment {
 		private final int targetHeight;
 		private final boolean centerCrop;
 		private final boolean highQuality;
+		private final int roundedCorner;
 
 		public BitmapWorkerTask(ImageView imageView, String path, int targetWidth,
-								int targetHeight, boolean centerCrop, boolean highQuality) {
+								int targetHeight, boolean centerCrop, boolean highQuality, int roundedCorner) {
 			imageViewReference = new WeakReference<ImageView>(imageView);
 			this.path = path;
 			this.targetWidth = targetWidth;
 			this.targetHeight = targetHeight;
 			this.centerCrop = centerCrop;
 			this.highQuality = highQuality;
+			this.roundedCorner = roundedCorner;
 		}
 
 		// Resize image in background.
@@ -209,7 +220,41 @@ public class BitmapWorker extends Fragment {
 				bmp = Bitmap.createScaledBitmap(bmp, targetWidth, targetHeight, true);
 			}
 
+			if (roundedCorner != 0) {
+				bmp = getRoundedCornerBitmap(bmp, roundedCorner);
+			}
+
 			return bmp;
+		}
+
+		/**
+		 * Returns a bitmap with rounded borders
+		 * Credits: http://stackoverflow.com/a/3292810/644504
+		 *
+		 * @param bitmap
+		 * @param pixels
+		 * @return
+		 */
+		public Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
+			Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
+				.getHeight(), Bitmap.Config.ARGB_8888);
+			Canvas canvas = new Canvas(output);
+
+			final int color = 0xff424242;
+			final Paint paint = new Paint();
+			final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+			final RectF rectF = new RectF(rect);
+			final float roundPx = pixels;
+
+			paint.setAntiAlias(true);
+			canvas.drawARGB(0, 0, 0, 0);
+			paint.setColor(color);
+			canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+			paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+			canvas.drawBitmap(bitmap, rect, rect, paint);
+
+			return output;
 		}
 
 		@Override

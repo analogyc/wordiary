@@ -117,6 +117,7 @@ public class EntryActivity extends BaseActivity {
 						.setTargetWidth(photoButton.getWidth())
 						.setHighQuality(true)
 						.setCenterCrop(true)
+						.setRoundedCorner(40)
 						.execute();
 						c_photo.close();
 				} else {

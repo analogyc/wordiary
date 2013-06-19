@@ -50,19 +50,6 @@ public class EntryActivity extends BaseActivity {
 		messageText = (TextView) findViewById(R.id.messageText);
 		dateText = (TextView) findViewById(R.id.dateText);
         photoButton = (ImageView) findViewById(R.id.photoButton);
-        
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		int typefaceInt = Integer.parseInt(preferences.getString("typeface", "1"));
-		switch (typefaceInt) {
-		case 2:
-			Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
-			messageText.setTypeface(typeface);
-			break;
-		case 3:
-			Typeface typeface3 = Typeface.createFromAsset(getAssets(), "fonts/stanhand.ttf");
-			messageText.setTypeface(typeface3);
-			break;
-		}
 	}
 
 	@Override
@@ -83,6 +70,22 @@ public class EntryActivity extends BaseActivity {
 	}
 	
 	private void setView(){
+		// we keep this in onResume because the user might have changed the font in Preferences and come back to Entry
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		int typefaceInt = Integer.parseInt(preferences.getString("typeface", "1"));
+		switch (typefaceInt) {
+			case 2:
+				Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
+				messageText.setTypeface(typeface);
+				break;
+			case 3:
+				Typeface typeface3 = Typeface.createFromAsset(getAssets(), "fonts/stanhand.ttf");
+				messageText.setTypeface(typeface3);
+				break;
+			default:
+				messageText.setTypeface(Typeface.SANS_SERIF);
+		}
+
   		Cursor c_entry = dataBase.getEntryById(entryId);
   		if (! c_entry.moveToFirst()) {
 			 throw new RuntimeException("Wrong entry id");
@@ -127,7 +130,6 @@ public class EntryActivity extends BaseActivity {
         }
 
 		c_entry.close();
-  		//in the future we will get an image and a mood in the same way		
 	}
 
 	public void onPhotoButtonClicked(View view) {

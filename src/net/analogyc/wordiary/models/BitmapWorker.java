@@ -17,7 +17,7 @@ public class BitmapWorker extends Fragment {
 	private static final String TAG = "BitmapWorker";
 	private LruCache<String, Bitmap> mMemoryCache;
 
-	protected BitmapWorker() {
+	public BitmapWorker() {
 
 		final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 		final int cacheSize = maxMemory / 4;
@@ -25,8 +25,8 @@ public class BitmapWorker extends Fragment {
 		mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
 			@Override
 			protected int sizeOf(String key, Bitmap bitmap) {
-				// The cache size will be measured in kilobytes rather than
-				// number of items.
+				// The cache size will be measured in kilobytes rather than number of items.
+				// must do it like this because bitmap.getByteCount was added in API Level 12
 				return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
 			}
 		};

@@ -118,6 +118,7 @@ public class EntryActivity extends BaseActivity {
 						.setHighQuality(true)
 						.setCenterCrop(true)
 						.setRoundedCorner(40)
+						.setInnerShadow(50)
 						.execute();
 						c_photo.close();
 				} else {

@@ -80,6 +80,7 @@ public class BitmapWorker extends Fragment {
 		protected boolean centerCrop = false;
 		protected boolean highQuality = true;
 		protected int roundedCorner = 0;
+		protected int innerShadow = 0;
 
 		public int getTargetWidth() {
 			return targetWidth;
@@ -126,6 +127,15 @@ public class BitmapWorker extends Fragment {
 			return this;
 		}
 
+		public int getInnerShadow() {
+			return innerShadow;
+		}
+
+		public BitmapWorkerTaskBuilder setInnerShadow(int innerShadow) {
+			this.innerShadow = innerShadow;
+			return this;
+		}
+
 		public BitmapWorkerTaskBuilder(ImageView imageView, String path) {
 			this.imageView = imageView;
 			this.path = path;
@@ -133,7 +143,7 @@ public class BitmapWorker extends Fragment {
 
 		public BitmapWorkerTask execute() {
 			BitmapWorkerTask task = new BitmapWorkerTask(imageView, path, targetWidth, targetHeight,
-				centerCrop, highQuality, roundedCorner);
+				centerCrop, highQuality, roundedCorner, innerShadow);
 			task.execute();
 			return task;
 		}
@@ -147,9 +157,10 @@ public class BitmapWorker extends Fragment {
 		private final boolean centerCrop;
 		private final boolean highQuality;
 		private final int roundedCorner;
+		private final int innerShadow;
 
-		public BitmapWorkerTask(ImageView imageView, String path, int targetWidth,
-								int targetHeight, boolean centerCrop, boolean highQuality, int roundedCorner) {
+		public BitmapWorkerTask(ImageView imageView, String path, int targetWidth, int targetHeight,
+								boolean centerCrop, boolean highQuality, int roundedCorner, int innerShadow) {
 			imageViewReference = new WeakReference<ImageView>(imageView);
 			this.path = path;
 			this.targetWidth = targetWidth;
@@ -157,6 +168,7 @@ public class BitmapWorker extends Fragment {
 			this.centerCrop = centerCrop;
 			this.highQuality = highQuality;
 			this.roundedCorner = roundedCorner;
+			this.innerShadow = innerShadow;
 		}
 
 		// Resize image in background.
@@ -220,39 +232,55 @@ public class BitmapWorker extends Fragment {
 				bmp = Bitmap.createScaledBitmap(bmp, targetWidth, targetHeight, true);
 			}
 
-			if (roundedCorner != 0) {
-				bmp = getRoundedCornerBitmap(bmp, roundedCorner);
+			if (roundedCorner != 0 || innerShadow != 0) {
+				bmp = getRoundedCornerAndInnerShadowBitmap(bmp, roundedCorner, innerShadow);
 			}
 
 			return bmp;
 		}
 
 		/**
-		 * Returns a bitmap with rounded borders
-		 * Credits: http://stackoverflow.com/a/3292810/644504
+		 * Applies inner shadow
+		 * Sets background color to black and blurs image borders
+		 * Inspired from: http://stackoverflow.com/a/3292810/644504
 		 *
 		 * @param bitmap
-		 * @param pixels
 		 * @return
 		 */
-		public Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
+		public Bitmap getRoundedCornerAndInnerShadowBitmap(Bitmap bitmap, int roundedPixels, int innerShadowPixels) {
 			Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
 				.getHeight(), Bitmap.Config.ARGB_8888);
 			Canvas canvas = new Canvas(output);
 
-			final int color = 0xff424242;
-			final Paint paint = new Paint();
-			final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-			final RectF rectF = new RectF(rect);
-			final float roundPx = pixels;
+			Paint paint;
+			RectF rectF;
+			Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+			rectF = new RectF(rect);
 
-			paint.setAntiAlias(true);
-			canvas.drawARGB(0, 0, 0, 0);
-			paint.setColor(color);
-			canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+			if (roundedPixels > 0 && innerShadowPixels == 0) {
+				paint = new Paint();
+				paint.setAntiAlias(true);
+				paint.setColor(Color.BLACK);
+				canvas.drawRoundRect(rectF, roundedPixels, roundedPixels, paint);
+				paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+				canvas.drawBitmap(bitmap, rect, rect, paint);
+			}
 
-			paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-			canvas.drawBitmap(bitmap, rect, rect, paint);
+			// we keep it in this function because it must be compatible with rounded corners
+			if (innerShadowPixels > 0) {
+				paint = new Paint();
+				paint.setAntiAlias(true);
+				paint.setColor(0xFF000000);
+				paint.setAlpha(200);
+				canvas.drawRoundRect(rectF, roundedPixels, roundedPixels, paint);
+
+				Shader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+				paint = new Paint();
+				paint.setAntiAlias(true);
+				paint.setMaskFilter(new BlurMaskFilter(innerShadowPixels, BlurMaskFilter.Blur.INNER));
+				paint.setShader(bitmapShader);
+				canvas.drawRoundRect(rectF, roundedPixels, roundedPixels, paint);
+			}
 
 			return output;
 		}

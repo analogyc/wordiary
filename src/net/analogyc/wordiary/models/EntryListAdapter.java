@@ -4,6 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.view.GestureDetectorCompat;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnDoubleTapListener;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,8 +33,6 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	private Context context;
 	private ArrayList<String[]> days = new ArrayList<String[]>();
 	private BitmapWorker bitmapWorker;
-	private long lastDown;
-	private static long LONG_PRESS_TIME = 1000;
 
 	public EntryListAdapter(Context context, BitmapWorker bitmapWorker) {
 		this.context = context;
@@ -79,44 +82,30 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) {
-		final String[] info = (String[]) getChild(groupPosition, childPosition);
+		String[] info = (String[]) getChild(groupPosition, childPosition);
 		if (view == null) {
 			LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = infalInflater.inflate(R.layout.entry_style, null);
 		}
 		((TextView) view.findViewById(R.id.entryMessage)).setText(info[1]);
+		
+		 final GestureDetector gestureDetector = new GestureDetector(context,new GDetector(Integer.parseInt(info[0])));
 
-		/*view.setOnLongClickListener(new View.OnLongClickListener() {
-			@Override
-			public boolean onLongClick(View view) {
-				((MainActivity)context).onEntryLongClicked (Integer.parseInt(info[0]));
-				return true;
-			}
-		});
-		
-		view.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				((MainActivity)context).onEntryClicked (Integer.parseInt(info[0]));
-			}
-		});*/
-		
-		view.setOnTouchListener(new OnTouchListener() {
-		     @Override
-		     public boolean onTouch(View v, MotionEvent event) {
-		        if(event.getAction() == MotionEvent.ACTION_DOWN) {
-		        	entryClicked(true, System.currentTimeMillis(), Integer.parseInt(info[0]));
-		        	v.setBackgroundColor(0xFFFFFFFF);
-		        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-		        	entryClicked(false, System.currentTimeMillis(), Integer.parseInt(info[0]));
-		        }
-		        else if(event.getAction() == MotionEvent.ACTION_MOVE) {
-		        	entryClicked(false, -1, Integer.parseInt(info[0]));
-		        }
-		        return true;
-		     }
-		  });
-		
+		 view.setOnTouchListener(new OnTouchListener() {
+			 @Override
+			 public boolean onTouch(View v, MotionEvent event) {
+				 
+				 if(event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_MOVE || event.getAction() == MotionEvent.ACTION_HOVER_MOVE){
+			        	v.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+				 }
+				 else if(event.getAction() == MotionEvent.ACTION_DOWN){
+				    	v.setBackgroundColor(0xFFFFFFFF);
+				 }
+				 
+				 gestureDetector.onTouchEvent(event);
+				 return true;
+	            }
+	        });
 		
 		return view;
 	}
@@ -202,22 +191,61 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		return true;
 	}
 	
-	private void entryClicked(boolean pressDown, long time, int id){
-		if(pressDown){
-			lastDown = time;
+	private class GDetector extends SimpleOnGestureListener {
+
+		private int id;
+		
+		public GDetector(int id){
+			super();
+			this.id = id;
 		}
-		else{
-			if(lastDown != -1){
-				if(time >0){
-					if(time-lastDown > LONG_PRESS_TIME){
-						((MainActivity)context).onEntryLongClicked (id);
-					}
-					else{
-						((MainActivity)context).onEntryClicked (id);
-					}
-				}
-				lastDown = -1;
-			}
-		}
+		
+		
+	    @Override
+	    public boolean onDown(MotionEvent event) { 
+	        return true;
+	    }
+
+	    @Override
+	    public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+	        return true;
+	    }
+
+	    @Override
+	    public void onLongPress(MotionEvent event) {
+	    	((MainActivity)context).onEntryLongClicked (id);
+	    }
+	    
+	    @Override
+	    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,float distanceY) {
+	        return true;
+	    }
+
+	    @Override
+	    public void onShowPress(MotionEvent event) {
+	    }
+
+	    @Override
+	    public boolean onSingleTapUp(MotionEvent event) {
+	        return true;
+	    }
+
+	    @Override
+	    public boolean onDoubleTap(MotionEvent event) {
+	        return true;
+	    }
+
+	    @Override
+	    public boolean onDoubleTapEvent(MotionEvent event) {
+	        return true;
+	    }
+
+	    @Override
+	    public boolean onSingleTapConfirmed(MotionEvent event) {
+	    	((MainActivity)context).onEntryClicked (id);
+	        return true;
+	    }
 	}
+	
+	
 }

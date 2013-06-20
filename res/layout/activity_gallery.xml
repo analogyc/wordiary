@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:numColumns="3" >
+        android:numColumns="auto_fit">
     </GridView>
 
 </RelativeLayout>

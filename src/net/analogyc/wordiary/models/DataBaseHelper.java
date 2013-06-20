@@ -2,6 +2,7 @@ package net.analogyc.wordiary.models;
 
 
 import android.content.Context;
+import java.util.*;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -40,4 +41,26 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// NOT USED
 	}
+	
+	public void fillWithFake() {
+		
+	}
+	
+	public String randomString(){
+		String[] words = {"aliquam", "Proin", "enim", "venenatis", "at", "mi", "diam", "sed", "Curabitur", 
+				"vestibulum", "adipiscing", "Lorem", "Aenean", "Aliquam", "mi", "rutrum", "Nullam", "Sed",
+				"Phasellus", "convallis", "pulvinar", "pellentesque", "vulputate", "nonummy", "ullamcorper",
+				"Quisque", "mollis", "Morbi", "dignissim", "Suspendisse", "rutrum", "lacus", "sagittis",
+				"parturient", "ornare", "aptent", "senectus", "auctor", "eget", "Duis"};
+		String theWords = "";
+		Random rand = new Random();
+		int random = rand.nextInt(40);
+		
+		for (int i = 0; i < 4; i++){
+		theWords = theWords + " " + words[rand.nextInt(40)];
+		}
+		return theWords;
+	}
+			
+	
 }

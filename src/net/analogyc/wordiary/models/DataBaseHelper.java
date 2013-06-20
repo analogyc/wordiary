@@ -2,9 +2,10 @@ package net.analogyc.wordiary.models;
 
 
 import android.content.Context;
-import java.util.*;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.Random;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 

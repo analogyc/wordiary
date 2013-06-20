@@ -9,6 +9,10 @@
     <string name="button_takePhoto">&#xf030;</string>
     <string name="button_newEntry">&#xf10e;</string>
 	<string name="button_openPreferences">&#xf013;</string>
+	<string name="button_changeMood">&#xf118;</string>
+	<string name="button_editEntry">&#xf044;</string>
+	<string name="button_shareEntry">&#xf045;</string>
+	<string name="button_deleteEntry">&#xf00d;</string>
     <string name="title_activity_entry">EntryActivity</string>
     <string name="dialog_new_entry">New Entry</string>
     <string name="confirm">Confirm</string>

@@ -9,17 +9,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 import net.analogyc.wordiary.models.BitmapWorker;
 import net.analogyc.wordiary.models.DBAdapter;
 import android.os.Bundle;
@@ -27,8 +28,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.view.Menu;
-import android.widget.TextView;
 import net.analogyc.wordiary.models.Photo;
 
 public class EntryActivity extends BaseActivity {
@@ -37,6 +36,7 @@ public class EntryActivity extends BaseActivity {
 	private int dayId;
 	private TextView messageText, dateText;
     private ImageView photoButton, moodImage;
+	private Button setNewMoodButton, editEntryButton, deleteEntryButton, shareEntryButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,11 @@ public class EntryActivity extends BaseActivity {
 		dateText = (TextView) findViewById(R.id.dateText);
         photoButton = (ImageView) findViewById(R.id.photoButton);
         moodImage = (ImageView) findViewById(R.id.moodImage);
+
+		setNewMoodButton = (Button) findViewById(R.id.setNewMoodButton);
+		editEntryButton = (Button) findViewById(R.id.editEntryButton);
+		deleteEntryButton = (Button) findViewById(R.id.deleteEntryButton);
+		shareEntryButton = (Button) findViewById(R.id.shareEntryButton);
 	}
 
 	@Override
@@ -71,6 +76,12 @@ public class EntryActivity extends BaseActivity {
 	}
 	
 	private void setView(){
+		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+		setNewMoodButton.setTypeface(fontawsm);
+		editEntryButton.setTypeface(fontawsm);
+		deleteEntryButton.setTypeface(fontawsm);
+		shareEntryButton.setTypeface(fontawsm);
+
 		// we keep this in onResume because the user might have changed the font in Preferences and come back to Entry
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		int typefaceInt = Integer.parseInt(preferences.getString("typeface", "1"));
@@ -138,8 +149,6 @@ public class EntryActivity extends BaseActivity {
 						.setTargetWidth(photoButton.getWidth())
 						.setHighQuality(true)
 						.setCenterCrop(true)
-						.setRoundedCorner(40)
-						.setInnerShadow(50)
 						.execute();
 						c_photo.close();
 					} catch (IOException e) {
@@ -156,6 +165,14 @@ public class EntryActivity extends BaseActivity {
         }
 
 		c_entry.close();
+
+
+		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		DisplayMetrics dm = new DisplayMetrics();
+		display.getMetrics(dm);
+		photoButton.setMaxWidth(dm.widthPixels);
+		photoButton.setMaxHeight(dm.widthPixels);
+
 	}
 
 	public void onPhotoButtonClicked(View view) {

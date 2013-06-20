@@ -10,56 +10,125 @@
 		android:layout_width="fill_parent"
 		android:id="@+id/HeaderViewLayout"/>
 
-	<TextView
-		android:id="@+id/messageText"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="10dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_below="@+id/HeaderViewLayout"
-		android:textSize="25dp" />
+	<ScrollView
+		android:id="@+id/EntryScrollView"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_below="@+id/HeaderViewLayout">
 
-	<TextView
-		android:id="@+id/dateText"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_below="@+id/messageText"
-		android:layout_marginTop="10dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginBottom="15dp"
-		android:textSize="12dp"
-		android:textColor="#555555" />
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
 
-	<ImageView
-		android:id="@+id/photoButton"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:onClick="onPhotoButtonClicked"
-		android:layout_below="@+id/dateText"
-		android:layout_marginTop="10dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginBottom="15dp"
-		android:adjustViewBounds="false"
-		android:scaleType="fitCenter" />
+			<TextView
+				android:id="@+id/messageText"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_alignParentLeft="true"
+				android:layout_alignParentTop="true"
+				android:layout_alignParentRight="true"
+				android:textSize="25dp" />
 
-	<Button
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="New Mood"
-		android:id="@+id/setNewMoodButton"
-		android:layout_centerVertical="true"
-		android:layout_alignParentRight="true"
-		android:onClick="onMoodButtonClicked"/>
+			<ImageView
+				android:id="@+id/moodImage"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true"
+				android:layout_alignParentRight="true"
+				android:layout_below="@+id/messageText"/>
 
-	<ImageView
-	    android:id="@+id/moodImage"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentBottom="true"
-	    android:layout_alignParentRight="true"
-	    android:src="@drawable/logo" />
+			<TextView
+				android:id="@+id/dateText"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/messageText"
+				android:layout_toRightOf="@+id/moodImage"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_marginBottom="15dp"
+				android:textSize="12dp"
+				android:textColor="#555555" />
 
+			<LinearLayout
+				android:id="@+id/EntryButtonsLayout"
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/dateText"
+				android:layout_margin="10dp"
+				android:background="#dddddd" >
+					<Button
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="0.20"
+						android:text="@string/button_changeMood"
+						android:id="@+id/setNewMoodButton"
+						android:layout_centerVertical="true"
+						android:layout_alignParentRight="true"
+						android:paddingTop="10dp"
+						android:paddingBottom="10dp"
+						android:background="#dddddd"
+						android:onClick="onMoodButtonClicked"/>
+
+					<Button
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="0.20"
+						android:text="@string/button_editEntry"
+						android:id="@+id/editEntryButton"
+						android:layout_centerVertical="true"
+						android:layout_alignParentRight="true"
+						android:paddingTop="10dp"
+						android:paddingBottom="10dp"
+						android:background="#dddddd"
+						android:onClick="onMoodButtonClicked"/>
+
+					<Button
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="0.20"
+						android:text="@string/button_deleteEntry"
+						android:id="@+id/deleteEntryButton"
+						android:layout_centerVertical="true"
+						android:layout_alignParentRight="true"
+						android:paddingTop="10dp"
+						android:paddingBottom="10dp"
+						android:background="#dddddd"
+						android:onClick="onMoodButtonClicked"/>
+
+					<Button
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="0.20"
+						android:text="@string/button_shareEntry"
+						android:id="@+id/shareEntryButton"
+						android:layout_centerVertical="true"
+						android:layout_alignParentRight="true"
+						android:paddingTop="10dp"
+						android:paddingBottom="10dp"
+						android:background="#dddddd"
+						android:onClick="onMoodButtonClicked"/>
+			</LinearLayout>
+
+
+			<ImageView
+				android:id="@+id/photoButton"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:onClick="onPhotoButtonClicked"
+				android:layout_below="@+id/EntryButtonsLayout"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_marginBottom="10dp"
+				android:paddingBottom="10dp"
+				android:adjustViewBounds="true"
+				android:scaleType="center" />
+
+		</RelativeLayout>
+	</ScrollView>
 </RelativeLayout>

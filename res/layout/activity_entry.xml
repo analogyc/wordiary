@@ -30,35 +30,42 @@
 				android:layout_alignParentLeft="true"
 				android:layout_alignParentTop="true"
 				android:layout_alignParentRight="true"
+				android:textColor="#222222"
 				android:textSize="25dp" />
 
-			<ImageView
-				android:id="@+id/moodImage"
-				android:layout_width="wrap_content"
+			<LinearLayout
+				android:id="@+id/DataAndMoodLayout"
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:layout_alignParentBottom="true"
-				android:layout_alignParentRight="true"
-				android:layout_below="@+id/messageText"/>
-
-			<TextView
-				android:id="@+id/dateText"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@+id/messageText"
-				android:layout_toRightOf="@+id/moodImage"
-				android:layout_marginTop="10dp"
 				android:layout_marginLeft="10dp"
 				android:layout_marginRight="10dp"
-				android:layout_marginBottom="15dp"
-				android:textSize="12dp"
-				android:textColor="#555555" />
+				android:layout_below="@+id/messageText">
+
+				<TextView
+					android:id="@+id/dateText"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:layout_weight="0.50"
+					android:textSize="18dp"
+					android:paddingTop="5dp"
+					android:paddingBottom="5dp"
+					android:textColor="#555555"/>
+
+				<ImageView
+					android:id="@+id/moodImage"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:layout_weight="0.50"/>
+
+			</LinearLayout>
 
 			<LinearLayout
 				android:id="@+id/EntryButtonsLayout"
 				android:orientation="horizontal"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:layout_below="@+id/dateText"
+				android:layout_below="@+id/DataAndMoodLayout"
 				android:layout_margin="10dp"
 				android:background="#dddddd" >
 					<Button
@@ -127,7 +134,7 @@
 				android:layout_marginBottom="10dp"
 				android:paddingBottom="10dp"
 				android:adjustViewBounds="true"
-				android:scaleType="center" />
+				android:scaleType="fitCenter" />
 
 		</RelativeLayout>
 	</ScrollView>

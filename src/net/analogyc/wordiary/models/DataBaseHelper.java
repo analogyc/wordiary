@@ -44,7 +44,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public void fillWithFake() {
-		
+
 	}
 	
 	public String randomString(){

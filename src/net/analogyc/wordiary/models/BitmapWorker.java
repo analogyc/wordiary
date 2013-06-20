@@ -18,6 +18,9 @@ public class BitmapWorker extends Fragment {
 	private static final String TAG = "BitmapWorker";
 	private LruCache<String, Bitmap> mMemoryCache;
 
+	/**
+	 * Sets the max memory usage for the LRU cache
+	 */
 	public BitmapWorker() {
 
 		final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
@@ -33,8 +36,16 @@ public class BitmapWorker extends Fragment {
 		};
 	}
 
+	/**
+	 * Retrieves a BitmapWorker if one is already available, with sticky LRU cache
+	 *
+	 * @param fm The FragmentManager
+	 * @return The BitmapWorker fragment
+	 */
 	public static BitmapWorker findOrCreateBitmapWorker(FragmentManager fm) {
 		BitmapWorker fragment = (BitmapWorker) fm.findFragmentByTag(TAG);
+
+		// create the fragment on request
 		if (fragment == null) {
 			FragmentTransaction ft = fm.beginTransaction();
 			fragment = new BitmapWorker();
@@ -45,34 +56,62 @@ public class BitmapWorker extends Fragment {
 		return fragment;
 	}
 
+	/**
+	 * Sets the fragment to retain the instance, so we can grab it unchanged with findOrCreateBitmapWorker()
+	 *
+	 * @param savedInstanceState
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 	}
 
-	public BitmapWorkerTaskBuilder newTask(ImageView imageView, String path) {
-		return new BitmapWorkerTaskBuilder(imageView, path);
-	}
-
+	/**
+	 * Adds the bitmap to the cache
+	 *
+	 * @param key Unique key for the modified image
+	 * @param bitmap The image
+	 */
 	protected void addBitmapToMemoryCache(String key, Bitmap bitmap) {
 		if (getBitmapFromMemCache(key) == null) {
 			mMemoryCache.put(key, bitmap);
 		}
 	}
 
+	/**
+	 * Returns the image associated with a key
+	 *
+	 * @param key Unique key for the modified image
+	 * @return The modified image
+	 */
 	protected Bitmap getBitmapFromMemCache(String key) {
 		return mMemoryCache.get(key);
 	}
 
+	/**
+	 * Clears the image from the cache, given the path
+	 *
+	 * @param path The path of the bitmap
+	 */
 	public void clearBitmapFromMemCache(String path) {
 		mMemoryCache.remove("models.EntryAdapter.thumbnails." + path);
 	}
 
+	/**
+	 * Returns a new builder to prepare the BitmapWorkerTask
+	 *
+	 * @param imageView The view in which the image will be displayed
+	 * @param path The path to the image
+	 * @return The builder object to prepare the task
+	 */
 	public BitmapWorkerTaskBuilder createTask(ImageView imageView, String path) {
 		return new BitmapWorkerTaskBuilder(imageView, path);
 	}
 
+	/**
+	 * Builder for the task, allows chained settings
+	 */
 	public class BitmapWorkerTaskBuilder {
 
 		protected ImageView imageView;
@@ -85,15 +124,28 @@ public class BitmapWorker extends Fragment {
 		protected int roundedCorner = 0;
 		protected int innerShadow = 0;
 
+		/**
+		 * @return The default bitmap
+		 */
 		public Bitmap getDefaultBitmap() {
 			return defaultBitmap;
 		}
 
+		/**
+		 * Set a placeholder to display while the edited image isn't yet ready
+		 *
+		 * @param defaultBitmap The placeholder
+		 * @return The builder
+		 */
 		public BitmapWorkerTaskBuilder setDefaultBitmap(Bitmap defaultBitmap) {
 			this.defaultBitmap = defaultBitmap;
 			return this;
 		}
 
+		/**
+		 *
+		 * @return
+		 */
 		public int getTargetWidth() {
 			return targetWidth;
 		}
@@ -265,8 +317,8 @@ public class BitmapWorker extends Fragment {
 				bmp = Bitmap.createScaledBitmap(bmp, targetWidth, targetHeight, true);
 			}
 
-			if (roundedCorner != 0 || innerShadow != 0) {
-				bmp = getRoundedCornerAndInnerShadowBitmap(bmp, roundedCorner, innerShadow);
+			if (roundedCorner != 0) {
+				bmp = getRoundedCornerBitmap(bmp, roundedCorner);
 			}
 
 			return bmp;
@@ -280,7 +332,7 @@ public class BitmapWorker extends Fragment {
 		 * @param bitmap
 		 * @return
 		 */
-		public Bitmap getRoundedCornerAndInnerShadowBitmap(Bitmap bitmap, int roundedPixels, int innerShadowPixels) {
+		public Bitmap getRoundedCornerBitmap(Bitmap bitmap, int roundedPixels) {
 			Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
 				.getHeight(), Bitmap.Config.ARGB_8888);
 			Canvas canvas = new Canvas(output);
@@ -290,30 +342,12 @@ public class BitmapWorker extends Fragment {
 			Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
 			rectF = new RectF(rect);
 
-			if (roundedPixels > 0 && innerShadowPixels == 0) {
-				paint = new Paint();
-				paint.setAntiAlias(true);
-				paint.setColor(Color.BLACK);
-				canvas.drawRoundRect(rectF, roundedPixels, roundedPixels, paint);
-				paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-				canvas.drawBitmap(bitmap, rect, rect, paint);
-			}
-
-			// we keep it in this function because it must be compatible with rounded corners
-			if (innerShadowPixels > 0) {
-				paint = new Paint();
-				paint.setAntiAlias(true);
-				paint.setColor(0xFF000000);
-				paint.setAlpha(200);
-				canvas.drawRoundRect(rectF, roundedPixels, roundedPixels, paint);
-
-				Shader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-				paint = new Paint();
-				paint.setAntiAlias(true);
-				paint.setMaskFilter(new BlurMaskFilter(innerShadowPixels, BlurMaskFilter.Blur.INNER));
-				paint.setShader(bitmapShader);
-				canvas.drawRoundRect(rectF, roundedPixels, roundedPixels, paint);
-			}
+			paint = new Paint();
+			paint.setAntiAlias(true);
+			paint.setColor(Color.BLACK);
+			canvas.drawRoundRect(rectF, roundedPixels, roundedPixels, paint);
+			paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+			canvas.drawBitmap(bitmap, rect, rect, paint);
 
 			return output;
 		}

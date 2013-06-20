@@ -93,7 +93,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 				return true;
 			}
 		});
-		
+
 		view.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

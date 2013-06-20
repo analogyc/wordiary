@@ -17,6 +17,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
@@ -186,6 +187,25 @@ public class EntryActivity extends BaseActivity {
 		intent.putExtra("entryId", entryId);
 		startActivityForResult(intent, MOOD_RESULT_CODE);
 	}
+	
+	public void onShareButtonClicked(View view){
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		String shareBody = (String) messageText.getText();
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wordiary");
+		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+		startActivity(Intent.createChooser(sharingIntent, "Share via"));
+	}
+	
+	public void onDeleteButtonClicked(View view){
+		dataBase.deleteEntry(entryId);
+		finish();
+	}
+	
+	public void onEditButtonClicked(View view){
+		NewEntryDialogFragment newFragment = new NewEntryDialogFragment();
+		newFragment.show(getSupportFragmentManager(), "modifyEntry");
+	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState){
@@ -205,6 +225,27 @@ public class EntryActivity extends BaseActivity {
 	protected void onResume(){
 		super.onResume();
 		setView();
+	}
+	
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		Context context = getApplicationContext();
+		CharSequence text;
+		int duration = Toast.LENGTH_SHORT;
+
+		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
+		String message = edit.getText().toString();
+
+		if(message != ""){
+			text = "Message modified";
+			dataBase.updateMessage(entryId, message);
+			setView();
+		} else {
+			text = "Message not modified";
+		}
+
+		Toast toast1 = Toast.makeText(context, text, duration);
+		toast1.show();
 	}
 
 }

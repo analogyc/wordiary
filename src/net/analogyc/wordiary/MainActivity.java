@@ -3,7 +3,6 @@ package net.analogyc.wordiary;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import android.widget.ExpandableListView;
 import net.analogyc.wordiary.models.EntryListAdapter;
 
@@ -55,11 +54,6 @@ public class MainActivity extends BaseActivity {
 		entryAdapter = new EntryListAdapter(this, bitmapWorker);
 		entryList.setAdapter(entryAdapter);
 		
-	}
-	
-	public void showGallery(View view){
-		Intent intent = new Intent(MainActivity.this, GalleryActivity.class);
-    	startActivity(intent);
 	}
 
 		

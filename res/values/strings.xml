@@ -6,7 +6,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_day">Day</string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="button_takePhoto">&#xf030;</string>
+	<string name="button_takePhoto">&#xf030;</string>
+	<string name="button_openGallery">&#xf03e;</string>
     <string name="button_newEntry">&#xf10e;</string>
 	<string name="button_openPreferences">&#xf013;</string>
 	<string name="button_changeMood">&#xf118;</string>

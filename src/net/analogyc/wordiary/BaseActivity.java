@@ -62,6 +62,10 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		newFragment.show(getSupportFragmentManager(), "newEntry");
 	}
 
+	public void onOpenGalleryClicked(View view){
+		Intent intent = new Intent(this, GalleryActivity.class);
+		startActivity(intent);
+	}
 
 	//method used when "takePhoto" button is clicked
 	public void onTakePhotoClicked(View view){

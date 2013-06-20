@@ -17,9 +17,6 @@
 		android:layout_weight="0.20"
 		android:onClick="onHomeButtonClicked"
 		android:text="Wd"
-		android:layout_below="@+id/MainButtonsLayout"
-		android:layout_alignParentRight="true"
-		android:layout_alignParentLeft="true"
 		android:textColor="#ffffff"
 		android:background="@drawable/flatbutton"
 		android:textSize="17dp"/>
@@ -31,9 +28,6 @@
 		android:layout_weight="0.20"
 		android:onClick="onNewEntryButtonClicked"
 		android:text="@string/button_newEntry"
-		android:layout_below="@+id/MainButtonsLayout"
-		android:layout_alignParentRight="true"
-		android:layout_alignParentLeft="true"
 		android:textColor="#ffffff"
 		android:background="@drawable/flatbutton"
 		android:paddingTop="10dp"
@@ -47,14 +41,24 @@
 		android:layout_weight="0.20"
 		android:onClick="onTakePhotoClicked"
 		android:text="@string/button_takePhoto"
-		android:layout_alignParentTop="true"
-		android:layout_toLeftOf="@+id/newMoodButton"
 		android:background="@drawable/flatbutton"
 		android:textColor="#ffffff"
 		android:paddingTop="10dp"
 		android:paddingBottom="10dp"
 		android:textSize="20dp"/>
 
+	<Button
+		android:id="@+id/openGalleryButton"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="0.20"
+		android:onClick="onOpenGalleryClicked"
+		android:text="@string/button_openGallery"
+		android:background="@drawable/flatbutton"
+		android:textColor="#ffffff"
+		android:paddingTop="10dp"
+		android:paddingBottom="10dp"
+		android:textSize="20dp"/>
 
 	<Button
 		android:id="@+id/openPreferencesButton"
@@ -63,8 +67,6 @@
 		android:layout_weight="0.20"
 		android:onClick="onOpenPreferencesClicked"
 		android:text="@string/button_openPreferences"
-		android:layout_alignParentTop="true"
-		android:layout_toLeftOf="@+id/newMoodButton"
 		android:background="@drawable/flatbutton"
 		android:textColor="#ffffff"
 		android:paddingTop="10dp"

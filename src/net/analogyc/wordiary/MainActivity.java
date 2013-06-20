@@ -59,6 +59,11 @@ public class MainActivity extends BaseActivity {
 		entryList.setAdapter(entryAdapter);
 		
 	}
+	
+	public void showGallery(View view){
+		Intent intent = new Intent(MainActivity.this, GalleryActivity.class);
+    	startActivity(intent);
+	}
 
 		
 	/*

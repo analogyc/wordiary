@@ -215,6 +215,18 @@ public class DBAdapter {
 		String query = "SELECT * FROM " + Day.TABLE_NAME + " ORDER BY " + Day._ID + " DESC";
 		return getConnection().rawQuery(query, null);
 	}
+	
+	/**
+	 * Get all the days ordered by date (DESC)
+	 *
+	 * @return Cursor containing the days
+	 */
+	public Cursor getAllPhotos() {
+		String query = "SELECT * FROM " + Day.TABLE_NAME + 
+					" WHERE " + Day.COLUMN_NAME_FILENAME + "<> ''" +
+					" ORDER BY " + Day._ID + " DESC";
+		return getConnection().rawQuery(query, null);
+	}
 
 	/**
 	 * Get the selected entry

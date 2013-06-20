@@ -6,7 +6,7 @@
         android:dialogTitle="@string/font_size"
         android:entries="@array/fontSize"
         android:entryValues="@array/fontSizeValues"
-        android:defaultValue="20sp" 
+        android:defaultValue="2" 
     	android:dependency="font_size"/>
  	<EditTextPreference
  	    android:title="@string/grace_period"

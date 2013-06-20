@@ -23,5 +23,6 @@
     <string name="preferences">Preferences</string>
     <string name="grace_period">Set editing grace period</string>
     <string name="typeface">Font type for entries</string>
+    <string name="title_activity_gallery">GalleryActivity</string>
 
 </resources>

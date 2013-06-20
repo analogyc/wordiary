@@ -1,6 +1,5 @@
 package net.analogyc.wordiary;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -138,4 +137,5 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	protected void onResume(){
 		super.onResume();
 	}
+
 }

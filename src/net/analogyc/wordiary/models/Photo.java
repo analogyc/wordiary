@@ -1,12 +1,12 @@
 package net.analogyc.wordiary.models;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Photo {
 	

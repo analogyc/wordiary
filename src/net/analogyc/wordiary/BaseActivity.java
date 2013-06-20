@@ -137,4 +137,5 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	protected void onResume(){
 		super.onResume();
 	}
+
 }

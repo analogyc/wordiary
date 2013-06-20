@@ -1,11 +1,13 @@
 package net.analogyc.wordiary.models;
 
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -239,10 +241,57 @@ public class DBAdapter {
 		return getConnection().rawQuery(query, null);
 	}
 
-
+	/**
+	 * Modify the mood of the selected entry
+	 *
+	 * @param id entry's id
+	 * @param mood name
+	 */
 	public void updateMood(int entryId, String moodId) {
 		String query = "UPDATE " + Entry.TABLE_NAME +
 			" SET "+ Entry.COLUMN_NAME_MOOD +" =  ? WHERE " + Entry._ID + " = ?";
 		getConnection().execSQL(query, new Object[]{moodId,entryId});
 	}
+	
+	
+	/**
+	 * Modify the message of the selected entry
+	 *
+	 * @param id entry's id
+	 * @param message
+	 */
+	public void updateMessage(int entryId, String message) {
+		String query = "UPDATE " + Entry.TABLE_NAME +
+			" SET "+ Entry.COLUMN_NAME_MESSAGE +" =  ? WHERE " + Entry._ID + " = ?";
+		getConnection().execSQL(query, new Object[]{message,entryId});
+	}
+	
+	/**
+	 * Verify if the selected entry can be modified
+	 *
+	 * @param int entry id
+	 * @throws ParseException 
+	 * @return boolean true if is editable, false otherwise
+	 */
+	public boolean idEditable(int entryId) throws ParseException {
+		//create the current timestamp
+		Date now = new Date(System.currentTimeMillis());
+		String DATE_FORMAT = "yyyyMMddHHmmss";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ITALY);
+
+		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry._ID + " = " + entryId;
+		Cursor c =getConnection().rawQuery(query, null);
+		c.moveToFirst();
+		Date created = sdf.parse(c.getString(4));
+		long now_mil = now.getTime();
+		long created_mil = created.getTime();
+		
+		long diff = now_mil - created_mil;
+		
+		return diff < 30000; // 3000 must be substituted by the number selected in the preferences
+
+	}
+
+	
+	
 }

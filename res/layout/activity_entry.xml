@@ -92,7 +92,7 @@
 						android:paddingTop="10dp"
 						android:paddingBottom="10dp"
 						android:background="#dddddd"
-						android:onClick="onMoodButtonClicked"/>
+						android:onClick="onEditButtonClicked"/>
 
 					<Button
 						android:layout_width="0dp"
@@ -105,7 +105,7 @@
 						android:paddingTop="10dp"
 						android:paddingBottom="10dp"
 						android:background="#dddddd"
-						android:onClick="onMoodButtonClicked"/>
+						android:onClick="onDeleteButtonClicked"/>
 
 					<Button
 						android:layout_width="0dp"
@@ -118,7 +118,7 @@
 						android:paddingTop="10dp"
 						android:paddingBottom="10dp"
 						android:background="#dddddd"
-						android:onClick="onMoodButtonClicked"/>
+						android:onClick="onShareButtonClicked"/>
 			</LinearLayout>
 
 

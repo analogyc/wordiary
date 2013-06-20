@@ -1,5 +1,6 @@
 package net.analogyc.wordiary;
 
+import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,13 +10,16 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -180,6 +184,25 @@ public class EntryActivity extends BaseActivity {
 		intent.putExtra("entryId", entryId);
 		startActivityForResult(intent, MOOD_RESULT_CODE);
 	}
+	
+	public void onShareButtonClicked(View view){
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		String shareBody = (String) messageText.getText();
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wordiary");
+		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+		startActivity(Intent.createChooser(sharingIntent, "Share via"));
+	}
+	
+	public void onDeleteButtonClicked(View view){
+		dataBase.deleteEntry(entryId);
+		finish();
+	}
+	
+	public void onEditButtonClicked(View view){
+		NewEntryDialogFragment newFragment = new NewEntryDialogFragment();
+		newFragment.show(getSupportFragmentManager(), "modifyEntry");
+	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState){
@@ -199,6 +222,27 @@ public class EntryActivity extends BaseActivity {
 	protected void onResume(){
 		super.onResume();
 		setView();
+	}
+	
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		Context context = getApplicationContext();
+		CharSequence text;
+		int duration = Toast.LENGTH_SHORT;
+
+		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
+		String message = edit.getText().toString();
+
+		if(message != ""){
+			text = "Message modified";
+			dataBase.updateMessage(entryId, message);
+			setView();
+		} else {
+			text = "Message not modified";
+		}
+
+		Toast toast1 = Toast.makeText(context, text, duration);
+		toast1.show();
 	}
 
 }

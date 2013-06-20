@@ -1,26 +1,26 @@
 package net.analogyc.wordiary.models;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+import net.analogyc.wordiary.MainActivity;
+import net.analogyc.wordiary.R;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-
-import android.graphics.BitmapFactory;
-import android.widget.*;
-import net.analogyc.wordiary.MainActivity;
-import net.analogyc.wordiary.R;
-
-import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 
 
 public class EntryListAdapter extends BaseExpandableListAdapter {

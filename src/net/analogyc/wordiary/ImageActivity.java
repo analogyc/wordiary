@@ -1,29 +1,13 @@
 package net.analogyc.wordiary;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.*;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.view.Menu;
 import net.analogyc.wordiary.models.DBAdapter;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 public class ImageActivity extends Activity {

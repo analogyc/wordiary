@@ -1,17 +1,16 @@
 package net.analogyc.wordiary.models;
 
-import java.util.ArrayList;
-
-import net.analogyc.wordiary.R;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import net.analogyc.wordiary.R;
+
+import java.util.ArrayList;
  
  
 public class PhotoAdapter extends BaseAdapter {

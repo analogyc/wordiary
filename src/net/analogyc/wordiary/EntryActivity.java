@@ -1,34 +1,28 @@
 package net.analogyc.wordiary;
 
-import java.io.File;
-import java.io.FileInputStream;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import android.content.Context;
-import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
-import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.provider.MediaStore;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.*;
-import android.widget.*;
-import net.analogyc.wordiary.models.BitmapWorker;
-import net.analogyc.wordiary.models.DBAdapter;
-import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import net.analogyc.wordiary.models.Photo;
 
 public class EntryActivity extends BaseActivity {
 	private final int MOOD_RESULT_CODE = 101;

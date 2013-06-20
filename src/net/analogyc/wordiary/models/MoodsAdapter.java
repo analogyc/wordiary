@@ -1,12 +1,12 @@
 package net.analogyc.wordiary.models;
 
-import net.analogyc.wordiary.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import net.analogyc.wordiary.R;
  
  
 public class MoodsAdapter extends BaseAdapter {

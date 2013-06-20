@@ -1,14 +1,11 @@
 package net.analogyc.wordiary;
 
-import android.widget.*;
-import android.widget.ExpandableListView.OnChildClickListener;
-import net.analogyc.wordiary.models.EntryListAdapter;
-import android.support.v4.app.DialogFragment;
-import android.os.Bundle;
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ExpandableListView;
+import net.analogyc.wordiary.models.EntryListAdapter;
 
 public class MainActivity extends BaseActivity {
 

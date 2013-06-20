@@ -86,16 +86,16 @@ public class EntryActivity extends BaseActivity {
 			default:
 				messageText.setTypeface(Typeface.SANS_SERIF);
 		}
-		int fontSize = Integer.parseInt(preferences.getString("fontSize", "2"));
+		int fontSize = Integer.parseInt(preferences.getString("font_size", "2"));
 		switch (fontSize) {
 			case 1:
-				messageText.setTextSize(10);
+				messageText.setTextSize(14);
 				break;
 			case 3:
 				messageText.setTextSize(18);
 				break;
 			default:
-				messageText.setTextSize(14);
+				messageText.setTextSize(24);
 		}
 
   		Cursor c_entry = dataBase.getEntryById(entryId);

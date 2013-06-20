@@ -61,22 +61,7 @@ public class ImageActivity extends Activity {
 			c.close();
 		}
 
-		WebSettings imageWebViewSettings = imageWebView.getSettings();
-		imageWebViewSettings.setAllowFileAccess(true);
-		imageWebViewSettings.setJavaScriptEnabled(true);
-		imageWebViewSettings.setBuiltInZoomControls(true);
-
-		Display display = getWindowManager().getDefaultDisplay();
-		int width = display.getWidth();
-
-		String html =
-			"<html>" +
-			"<head><meta name=\"viewport\" content=\"width=" + (width) + ", initial-scale=1, max-scale=15 \" /></head>" +
-			"<body style=\"margin:0; padding:0;\">" +
-				"<center><img width=\"" + (width) + "\" src=\"" + location + "\" /></center>" +
-			"</body>" +
-			"</html>";
-		imageWebView.loadDataWithBaseURL("", html, "text/html", "utf-8", "");
+		imageWebView.setImage(location);
 	}
 
 	/*@Override

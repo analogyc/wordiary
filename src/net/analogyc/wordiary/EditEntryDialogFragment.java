@@ -41,7 +41,7 @@ public class EditEntryDialogFragment extends DialogFragment{
 		// Inflate and set the layout for the dialog
 		// Pass null as the parent view because its going in the dialog layout
 		builder.setView(inflater.inflate(R.layout.dialog_custom, null))
-				.setTitle(R.string.dialog_new_entry)
+				.setTitle(R.string.dialog_edit_entry)
 				// Add action buttons
 				.setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
 					@Override

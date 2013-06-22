@@ -18,7 +18,7 @@ public class OptionEntryDialogFragment extends DialogFragment {
 		// Inflate and set the layout for the dialog
 		// Pass null as the parent view because its going in the dialog layout
 		builder.setView(inflater.inflate(R.layout.dialog_edit_entry, null))
-			.setTitle(R.string.dialog_new_entry);
+			.setTitle(R.string.dialog_option_entry);
 		return builder.create();
 
 	}

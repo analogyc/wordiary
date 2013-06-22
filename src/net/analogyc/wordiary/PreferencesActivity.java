@@ -1,5 +1,7 @@
 package net.analogyc.wordiary;
 
+
+
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -25,7 +27,7 @@ public class PreferencesActivity extends PreferenceActivity{
 					
 					try {
 						value = Integer.parseInt((String) newValue);
-						if (!newValue.toString().matches("^([1-9][0-9]*)|([0])$")) {
+						if (!newValue.toString().matches("^([1-9][0-9]*)|([0])$") || (value > 168)) {
 							throw new NumberFormatException();
 						}
 					}

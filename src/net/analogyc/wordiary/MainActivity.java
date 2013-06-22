@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ExpandableListView;
 import net.analogyc.wordiary.models.EntryListAdapter;
+import net.analogyc.wordiary.OptionEntryDialogFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -45,7 +46,7 @@ public class MainActivity extends BaseActivity {
 
 
 	public void onEntryLongClicked(int id){
-		EditEntryDialogFragment editFragment = new EditEntryDialogFragment();
+		OptionEntryDialogFragment editFragment = new OptionEntryDialogFragment();
 		editFragment.show(getSupportFragmentManager(), "editEntry");
 	}
 

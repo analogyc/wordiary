@@ -48,20 +48,16 @@ public class ImageActivity extends Activity {
 		imageWebView.setImage(location);
 	}
 
-	/*@Override
+	@Override
 	public void onBackPressed() {
-		if (scale != 1.0f) {
-			Animation scaleAnimation = new ScaleAnimation(scale, 1.0f, scale, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-			scaleAnimation.setFillAfter(true);
-			scaleAnimation.setDuration(250);
-			imageView.startAnimation(scaleAnimation);
-			scale = 1.0f;
-			relativeX = 0;
-			relativeY = 0;
+
+		if (imageWebView.getScale() != 1f) {
+			imageWebView.setScaleX(1f);
+			imageWebView.setScaleY(1f);
 		} else {
 			super.onBackPressed();
 		}
-	}*/
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

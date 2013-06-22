@@ -59,9 +59,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		
 		Cursor days = db.rawQuery("SELECT "+ Day._ID + ", " + Day.COLUMN_NAME_CREATED + " FROM " + Day.TABLE_NAME, null );
 		while (days.moveToNext()){
+			Random rand = new Random();
+			for (int i = 0; i < rand.nextInt(15); i++){
 			db.execSQL("INSERT INTO " + Entry.TABLE_NAME + " (" + Entry._ID + ", " + Entry.COLUMN_NAME_CREATED + ", "
 					+ Entry.COLUMN_NAME_MESSAGE + ")  VALUES (?, ?, ?)" , 
 					new Object[] {days.getInt(0), days.getString(1), randomString()}) ;
+			}
 		}
 		days.close();
 	}
@@ -76,7 +79,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		Random rand = new Random();
 		int random = rand.nextInt(40);
 		
-		for (int i = 0; i < 4; i++){
+		for (int i = 0; i < rand.nextInt(14)+1; i++){
 		theWords = theWords + " " + words[rand.nextInt(40)];
 		}
 		return theWords;

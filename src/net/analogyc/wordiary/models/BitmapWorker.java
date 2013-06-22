@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.LruCache;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
@@ -122,7 +123,6 @@ public class BitmapWorker extends Fragment {
 		protected boolean centerCrop = false;
 		protected boolean highQuality = true;
 		protected int roundedCorner = 0;
-		protected int innerShadow = 0;
 
 		/**
 		 * @return The default bitmap
@@ -191,15 +191,6 @@ public class BitmapWorker extends Fragment {
 			return this;
 		}
 
-		public int getInnerShadow() {
-			return innerShadow;
-		}
-
-		public BitmapWorkerTaskBuilder setInnerShadow(int innerShadow) {
-			this.innerShadow = innerShadow;
-			return this;
-		}
-
 		public BitmapWorkerTaskBuilder(ImageView imageView, String path) {
 			this.imageView = imageView;
 			this.path = path;
@@ -214,7 +205,7 @@ public class BitmapWorker extends Fragment {
 			}
 
 			BitmapWorkerTask task = new BitmapWorkerTask(imageView, path, targetWidth, targetHeight,
-				centerCrop, highQuality, roundedCorner, innerShadow);
+				centerCrop, highQuality, roundedCorner);
 			imageView.setImageDrawable(new AsyncDrawable(getResources(), defaultBitmap, task));
 			task.execute();
 			return task;
@@ -242,10 +233,9 @@ public class BitmapWorker extends Fragment {
 		private final boolean centerCrop;
 		private final boolean highQuality;
 		private final int roundedCorner;
-		private final int innerShadow;
 
 		public BitmapWorkerTask(ImageView imageView, String path, int targetWidth, int targetHeight,
-								boolean centerCrop, boolean highQuality, int roundedCorner, int innerShadow) {
+								boolean centerCrop, boolean highQuality, int roundedCorner) {
 			imageViewReference = new WeakReference<ImageView>(imageView);
 			this.path = path;
 			this.targetWidth = targetWidth;
@@ -253,7 +243,6 @@ public class BitmapWorker extends Fragment {
 			this.centerCrop = centerCrop;
 			this.highQuality = highQuality;
 			this.roundedCorner = roundedCorner;
-			this.innerShadow = innerShadow;
 		}
 
 		// Resize image in background.

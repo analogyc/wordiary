@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.view.GestureDetectorCompat;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnDoubleTapListener;
 import android.view.GestureDetector.OnGestureListener;
@@ -147,28 +148,25 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		Bitmap image;
 		ImageView imageView = (ImageView) view.findViewById(R.id.dayImage);
 
-		// avoid rebuilding if the imageView is already set
-		if (imageView.getDrawable() == null) {
-			// set a default picture if an image wasn't already set from cache
-			try {
-				image = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
-				imageView.setImageBitmap(image);
+		// set a default picture if an image wasn't already set from cache
+		try {
+			image = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
+			imageView.setImageBitmap(image);
 
-				if (!info[1].equals("")) {
-					bitmapWorker.createTask(imageView, info[1])
-						.setDefaultBitmap(image)
-						.setTargetHeight(256)
-						.setTargetWidth(256)
-						.setCenterCrop(true)
-						.setHighQuality(false)
-						.setRoundedCorner(15)
-						.execute();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (!info[1].equals("")) {
+				bitmapWorker.createTask(imageView, info[1])
+					.setDefaultBitmap(image)
+					.setTargetHeight(256)
+					.setTargetWidth(256)
+					.setCenterCrop(true)
+					.setHighQuality(false)
+					.setRoundedCorner(15)
+					.execute();
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		
+
 		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);
 		SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.ITALY);
 		try {

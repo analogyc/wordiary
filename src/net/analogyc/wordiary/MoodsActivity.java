@@ -11,7 +11,7 @@ import net.analogyc.wordiary.models.MoodsAdapter;
 
 public class MoodsActivity extends Activity {
 	//the number of the available moods
-	private int nMoods = 5;
+	private int nMoods = 10;
 	private String[] moods = new String[nMoods];
 	
 	
@@ -26,7 +26,7 @@ public class MoodsActivity extends Activity {
 		for (int i= 1; i<= nMoods; i++){
 			moods[i-1] = "mood" + i;
 		}
-		
+
 		//get and set the gridview that will show the moods on the screen
 		gridView = (GridView) findViewById(R.id.moodGrid);
 		gridView.setAdapter(new MoodsAdapter(this, moods));

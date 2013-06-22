@@ -43,30 +43,25 @@ public class PhotoAdapter extends BaseAdapter {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View gridView;
 		
-		//if (convertView == null) {
-			// get layout from mobile.xml
-			gridView = inflater.inflate(R.layout.moods_style, null);
-			
-			// set image based on selected text
-			ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
+		// get layout from mobile.xml
+		gridView = inflater.inflate(R.layout.moods_style, null);
 
-			try {
-				bitmapWorker.createTask(imageView, photos.get(position)[1])
-					.setDefaultBitmap(BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg")))
-					.setTargetHeight(256)
-					.setTargetWidth(256)
-					.setCenterCrop(true)
-					.setHighQuality(false)
-					.setRoundedCorner(15)
-					.execute();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		//} else {
-			//it won't happen
-		//	gridView = (View) convertView;
-		//}
- 
+		// set image based on selected text
+		ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
+
+		try {
+			bitmapWorker.createTask(imageView, photos.get(position)[1])
+				.setDefaultBitmap(BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg")))
+				.setTargetHeight(256)
+				.setTargetWidth(256)
+				.setCenterCrop(true)
+				.setHighQuality(false)
+				.setRoundedCorner(15)
+				.execute();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		return gridView;
 	}
  

@@ -30,7 +30,6 @@ public class GalleryActivity extends BaseActivity {
 				Intent intent = new Intent(GalleryActivity.this, ImageActivity.class);
 				intent.putExtra("dayId", (int)arg3);
 				startActivity(intent);
-				
 			}
 		});
 		

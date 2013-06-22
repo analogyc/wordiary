@@ -21,7 +21,7 @@ public class GalleryActivity extends BaseActivity {
 		
 		gridView = (GridView) findViewById(R.id.photoGrid);
 		
-		gridView.setAdapter(new PhotoAdapter(this));
+		gridView.setAdapter(new PhotoAdapter(this, bitmapWorker));
  
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 

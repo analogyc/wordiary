@@ -9,7 +9,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import net.analogyc.wordiary.models.MoodsAdapter;
 
-public class MoodsActivity extends Activity {
+public class MoodsActivity extends BaseActivity {
 	//the number of the available moods
 	private int nMoods = 10;
 	private String[] moods = new String[nMoods];
@@ -18,7 +18,7 @@ public class MoodsActivity extends Activity {
 	GridView gridView;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mood);
  

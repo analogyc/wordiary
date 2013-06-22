@@ -1,11 +1,16 @@
 package net.analogyc.wordiary;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
+import android.view.WindowManager;
 import net.analogyc.wordiary.models.DBAdapter;
 
 import java.io.InputStream;
@@ -50,12 +55,16 @@ public class ImageActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
+		// we are getting this 2.0 scale because of hdpi phones.
+		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		DisplayMetrics dm = new DisplayMetrics();
+		display.getMetrics(dm);
 
-		if (imageWebView.getScale() != 1f) {
-			imageWebView.setScaleX(1f);
-			imageWebView.setScaleY(1f);
-		} else {
+		if ((dm.densityDpi > 300 && imageWebView.getScale() == 2.0f)
+			|| dm.densityDpi <= 300 && imageWebView.getScale() == 1.0f) {
 			super.onBackPressed();
+		} else {
+			setView();
 		}
 	}
 

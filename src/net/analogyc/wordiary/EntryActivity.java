@@ -98,10 +98,10 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 				messageText.setTextSize(14);
 				break;
 			case 3:
-				messageText.setTextSize(18);
+				messageText.setTextSize(24);
 				break;
 			default:
-				messageText.setTextSize(24);
+				messageText.setTextSize(18);
 		}
 
   		Cursor c_entry = dataBase.getEntryById(entryId);

@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.WindowManager;
@@ -20,8 +19,6 @@ public class ImageActivity extends Activity {
 	private DBAdapter dataBase;
 	private ImageWebView imageWebView;
 	private float scale = 1.f;
-	private float relativeX;
-	private float relativeY;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

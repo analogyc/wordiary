@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ExpandableListView;
 import net.analogyc.wordiary.models.EntryListAdapter;
-import net.analogyc.wordiary.OptionEntryDialogFragment;
 
 public class MainActivity extends BaseActivity {
 

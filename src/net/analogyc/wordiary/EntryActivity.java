@@ -15,6 +15,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.*;
+import net.analogyc.wordiary.EditEntryDialogFragment.EditEntryDialogListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,8 +23,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import net.analogyc.wordiary.EditEntryDialogFragment.EditEntryDialogListener;
 
 public class EntryActivity extends BaseActivity implements EditEntryDialogListener  {
 	private final int MOOD_RESULT_CODE = 101;

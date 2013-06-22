@@ -23,7 +23,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class EntryActivity extends BaseActivity {
+import net.analogyc.wordiary.EditEntryDialogFragment.EditEntryDialogListener;
+
+public class EntryActivity extends BaseActivity implements EditEntryDialogListener  {
 	private final int MOOD_RESULT_CODE = 101;
 	private int entryId;
 	private int dayId;
@@ -195,7 +197,7 @@ public class EntryActivity extends BaseActivity {
 	}
 	
 	public void onEditButtonClicked(View view){
-		NewEntryDialogFragment newFragment = new NewEntryDialogFragment();
+		EditEntryDialogFragment newFragment = new EditEntryDialogFragment();
 		newFragment.show(getSupportFragmentManager(), "modifyEntry");
 	}
 
@@ -219,8 +221,7 @@ public class EntryActivity extends BaseActivity {
 		setView();
 	}
 	
-	@Override
-	public void onDialogPositiveClick(DialogFragment dialog) {
+	public void onDialogModifyClick(DialogFragment dialog) {
 		Context context = getApplicationContext();
 		CharSequence text;
 		int duration = Toast.LENGTH_SHORT;

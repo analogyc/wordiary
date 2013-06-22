@@ -1,8 +1,11 @@
 package net.analogyc.wordiary.models;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -14,14 +17,16 @@ public class DBAdapter {
 
 	private DataBaseHelper dbHelper;
 	private SQLiteDatabase database;
+	private SharedPreferences preferences;
 
 	/**
 	 * Constructor
 	 * <p/>
 	 * You must call open() on this object to use other methods
 	 */
-	public DBAdapter(Context contex) {
-		dbHelper = new DataBaseHelper(contex);
+	public DBAdapter(Context context) {
+		dbHelper = new DataBaseHelper(context);
+		preferences = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
 
@@ -272,7 +277,8 @@ public class DBAdapter {
 	 * @throws ParseException 
 	 * @return boolean true if is editable, false otherwise
 	 */
-	public boolean isEditable(int entryId) throws ParseException {
+	public boolean isEditable(int entryId){
+		 int grace_period = Integer.parseInt(preferences.getString("grace_period", "1"));
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
 		String DATE_FORMAT = "yyyyMMddHHmmss";
@@ -281,13 +287,22 @@ public class DBAdapter {
 		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry._ID + " = " + entryId;
 		Cursor c =getConnection().rawQuery(query, null);
 		c.moveToFirst();
-		Date created = sdf.parse(c.getString(4));
+		Date created;
+		try {
+			created = sdf.parse(c.getString(4));
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		c.close();
+
 		long now_mil = now.getTime();
 		long created_mil = created.getTime();
 		
 		long diff = now_mil - created_mil;
-		
-		return diff < 30000; // 3000 must be substituted by the number selected in the preferences
+		return diff < grace_period * 60 *60 * 1000;
 
 	}
 

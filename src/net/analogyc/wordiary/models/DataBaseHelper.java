@@ -5,8 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Random;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -14,9 +20,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public static final String DATABASE_NAME = "wordiary.db";
 	
 	public static final int DATABASE_VERSION = 1;
+	
+	private Context context;
 		
 	public DataBaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		this.context = context;
 	}
 
 	@Override
@@ -55,9 +64,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 				day = "" + i;
 				
 			}
+		 	
 			db.execSQL("INSERT INTO " + Day.TABLE_NAME + " " +
 				"(" + Day.COLUMN_NAME_FILENAME + ", " + Day.COLUMN_NAME_CREATED +  ") " +
-				"VALUES (\"\", \"201305" + day + "000000\")");
+				"VALUES (?, ?)", new String[] {randomImage(), "201305" + day + "000000"});
 		}
 		
 
@@ -77,6 +87,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		days.close();
 	}
 	
+	
 	public String randomString(){
 		String[] words = {"aliquam", "Proin", "enim", "venenatis", "at", "mi", "diam", "sed", "Curabitur", 
 				"vestibulum", "adipiscing", "Lorem", "Aenean", "Aliquam", "mi", "rutrum", "Nullam", "Sed",
@@ -95,6 +106,41 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		}
 
 		return theWords;
+	}
+	
+	public String randomImage() {
+		Random rand = new Random();
+		String[] images = null;
+		try {
+			images = context.getAssets().list("testing_images");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String image = images[rand.nextInt(images.length)];
+		
+		try
+		{
+			InputStream in = context.getAssets().open("testing_images/" + image);
+			File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) 
+					+ "/MyCameraApp/" + image);
+			OutputStream out = new FileOutputStream(file);
+
+			byte[] buffer = new byte[1024];
+			int read;
+			while((read = in.read(buffer)) != -1){
+				out.write(buffer, 0, read);
+			}
+
+			in.close();
+			out.close();
+			return file.getPath();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return "";
+
 	}
 			
 	

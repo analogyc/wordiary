@@ -2,6 +2,7 @@ package net.analogyc.wordiary.models;
 
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -36,6 +37,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			Day.COLUMN_NAME_CREATED + " TEXT" +
 			");"
 		);
+		fillWithFake(db);
 	}
 
 	@Override
@@ -43,8 +45,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		// NOT USED
 	}
 	
-	public void fillWithFake() {
-
+	public void fillWithFake(SQLiteDatabase db) {
+		for (int i = 1; i <= 31; i++){
+			String day = "";
+			if (i < 10){ 
+				day = "0" + i;
+			} else {
+				day = "" + i;
+				
+			}
+			db.execSQL("INSERT INTO " + Day.TABLE_NAME + " (" + Day.COLUMN_NAME_FILENAME + ", " + Day.COLUMN_NAME_CREATED +  ") VALUES (\"\", \"201305" + day + "000000\")");
+		}
+		
+		Cursor days = db.rawQuery("SELECT "+ Day._ID + ", " + Day.COLUMN_NAME_CREATED + " FROM " + Day.TABLE_NAME, null );
+		while (days.moveToNext()){
+			db.execSQL("INSERT INTO " + Entry.TABLE_NAME + " (" + Entry._ID + ", " + Entry.COLUMN_NAME_CREATED + ", "
+					+ Entry.COLUMN_NAME_MESSAGE + ")  VALUES (?, ?, ?)" , 
+					new Object[] {days.getInt(0), days.getString(1), randomString()}) ;
+		}
+		days.close();
 	}
 	
 	public String randomString(){

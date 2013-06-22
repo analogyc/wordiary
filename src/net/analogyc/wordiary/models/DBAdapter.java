@@ -272,7 +272,7 @@ public class DBAdapter {
 	 * @throws ParseException 
 	 * @return boolean true if is editable, false otherwise
 	 */
-	public boolean idEditable(int entryId) throws ParseException {
+	public boolean isEditable(int entryId) throws ParseException {
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
 		String DATE_FORMAT = "yyyyMMddHHmmss";

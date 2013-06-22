@@ -53,7 +53,6 @@ public class MainActivity extends BaseActivity {
 	protected void showEntries(){
 		entryAdapter = new EntryListAdapter(this, bitmapWorker);
 		entryList.setAdapter(entryAdapter);
-		
 	}
 
 		

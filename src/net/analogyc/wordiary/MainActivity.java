@@ -38,7 +38,6 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		showEntries();
 	}
 
-
 	public void onEntryLongClicked(int id){
 		OptionEntryDialogFragment editFragment = new OptionEntryDialogFragment();
 		Bundle args = new Bundle();
@@ -46,7 +45,6 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		editFragment.setArguments(args);
 		editFragment.show(getSupportFragmentManager(), "editEntry");
 	}
-
 
 	protected void showEntries(){
 		entryAdapter = new EntryListAdapter(this, bitmapWorker);

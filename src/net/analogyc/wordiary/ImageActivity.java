@@ -56,6 +56,10 @@ public class ImageActivity extends BaseActivity {
 		}
 	}
 
+	public String getCurrentImage() {
+		return currentImage;
+	}
+
 	/**
 	 * Prepares the views and loads the image
 	 */
@@ -103,6 +107,9 @@ public class ImageActivity extends BaseActivity {
 				DisplayMetrics dm = new DisplayMetrics();
 				display.getMetrics(dm);
 
+				Log.e("velocityX", ""+velocityX);
+				Log.e("scale", ""+imageWebView.getScale());
+
 				if ((dm.densityDpi > 300 && imageWebView.getScale() < 3.0f) || dm.densityDpi <= 300 && imageWebView.getScale() < 1.5f) {
 					if (velocityX > 1000f) {
 						getNext(false);
@@ -122,6 +129,7 @@ public class ImageActivity extends BaseActivity {
 	 * @param view
 	 */
 	public void onNextImageButtonClicked(View view) {
+		Log.e("onNext", "next");
 		getNext(true);
 	}
 
@@ -131,6 +139,7 @@ public class ImageActivity extends BaseActivity {
 	 * @param view
 	 */
 	public void onPrevImageButtonClicked(View view) {
+		Log.e("onPrev", "prev");
 		getNext(false);
 	}
 

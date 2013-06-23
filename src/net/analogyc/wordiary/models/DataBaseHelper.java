@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.*;
 import java.util.Random;
@@ -117,8 +118,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		try
 		{
 			InputStream in = context.getAssets().open("testing_images/" + image);
+			File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+				+ "/MyCameraApp/");
 			File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) 
 					+ "/MyCameraApp/" + image);
+
+			if (! dir.exists()){
+				if (! dir.mkdirs()){
+					Log.d("MyCameraApp", "failed to create directory");
+					throw new RuntimeException();
+				}
+			}
+
 			OutputStream out = new FileOutputStream(file);
 
 			byte[] buffer = new byte[1024];

@@ -12,6 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Aggregator for all the database queries
+ */
 public class DBAdapter {
 
 	private DataBaseHelper dbHelper;
@@ -19,8 +22,6 @@ public class DBAdapter {
 	private SharedPreferences preferences;
 
 	/**
-	 * Constructor
-	 * <p/>
 	 * You must call open() on this object to use other methods
 	 */
 	public DBAdapter(Context context) {
@@ -247,8 +248,8 @@ public class DBAdapter {
 	/**
 	 * Modify the mood of the selected entry
 	 *
-	 * @param id entry's id
-	 * @param mood name
+	 * @param entryId entry id
+	 * @param moodId filename of the mood
 	 */
 	public void updateMood(int entryId, String moodId) {
 		String query = "UPDATE " + Entry.TABLE_NAME +
@@ -260,8 +261,8 @@ public class DBAdapter {
 	/**
 	 * Modify the message of the selected entry
 	 *
-	 * @param id entry's id
-	 * @param message
+	 * @param entryId entry id
+	 * @param message The message to insert
 	 */
 	public void updateMessage(int entryId, String message) {
 		String query = "UPDATE " + Entry.TABLE_NAME +
@@ -272,7 +273,7 @@ public class DBAdapter {
 	/**
 	 * Verify if the selected entry can be modified
 	 *
-	 * @param int entry id
+	 * @param entryId entry id
 	 * @throws ParseException 
 	 * @return boolean true if is editable, false otherwise
 	 */
@@ -303,6 +304,13 @@ public class DBAdapter {
 
 	}
 
+	/**
+	 * Gets the next or the previous image
+	 *
+	 * @param currentDay The id of the current day opened
+	 * @param backwards If it should look for the previous image
+	 * @return The cursor containing the single row or zero rows, with as only column the ID
+	 */
 	public Cursor getNextDay(int currentDay, boolean backwards) {
 		return getConnection().rawQuery("SELECT " + Day._ID + " FROM " + Day.TABLE_NAME + " " +
 			"WHERE " + Day._ID + " " + (backwards ? "<" : ">") + " ? " +

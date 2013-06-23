@@ -56,8 +56,17 @@ public class ImageActivity extends BaseActivity {
 		}
 	}
 
+	/**
+	 * Get currently loaded image
+	 *
+	 * @return The uri to the currently loaded image
+	 */
 	public String getCurrentImage() {
 		return currentImage;
+	}
+
+	public void setCurrentImage(String image) {
+		currentImage = image;
 	}
 
 	/**
@@ -81,7 +90,7 @@ public class ImageActivity extends BaseActivity {
 				location = "file://" + c.getString(1);
 			}
 
-			currentImage = location;
+			setCurrentImage(location);
 
 			String dateString = c.getString(2);
 			SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);

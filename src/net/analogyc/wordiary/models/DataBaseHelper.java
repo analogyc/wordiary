@@ -14,9 +14,7 @@ import java.util.Random;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
 	public static final String DATABASE_NAME = "wordiary.db";
-	
 	public static final int DATABASE_VERSION = 1;
-	
 	private Context context;
 		
 	public DataBaseHelper(Context context) {
@@ -43,6 +41,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 				Day.COLUMN_NAME_CREATED + " TEXT" +
 			");"
 		);
+
 		fillWithFake(db);
 	}
 
@@ -50,11 +49,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// NOT USED
 	}
-	
+
+	/**
+	 * Fills the database with random data
+	 *
+	 * @param db
+	 */
 	public void fillWithFake(SQLiteDatabase db) {
-		for (int i = 1; i <= 31; i++){
-			String day = "";
-			if (i < 10){ 
+		for (int i = 1; i <= 31; i++) {
+			String day;
+
+			if (i < 10) {
 				day = "0" + i;
 			} else {
 				day = "" + i;
@@ -82,8 +87,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 		days.close();
 	}
-	
-	
+
+	/**
+	 * Returns a random string as example for the entries
+	 *
+	 * @return Example string
+	 */
 	public String randomString(){
 		String[] words = {"aliquam", "Proin", "enim", "venenatis", "at", "mi", "diam", "sed", "Curabitur", 
 				"vestibulum", "adipiscing", "Lorem", "Aenean", "Aliquam", "mi", "rutrum", "Nullam", "Sed",
@@ -94,17 +103,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		String theWords = "";
 		Random rand = new Random();
 
-		int random = rand.nextInt(40);
-		
 		for (int i = 0; i < rand.nextInt(14)+1; i++){
-		theWords = theWords + " " + words[rand.nextInt(40)];
-
+			theWords = theWords + " " + words[rand.nextInt(40)];
 		}
 
 		theWords = theWords.substring(1);
 		return theWords;
 	}
-	
+
+	/**
+	 * Returns the URI to a random image from assets
+	 *
+	 * @return The uri of the image
+	 */
 	public String randomImage() {
 		Random rand = new Random();
 		if (rand.nextInt(3) == 0){

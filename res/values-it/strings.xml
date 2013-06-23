@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Wordiary</string>
+    <string name="hello_world">Ciao, mondo!</string>
+    <string name="title_activity_day">Giorno</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+	<string name="button_takePhoto">&#xf030;</string>
+	<string name="button_openGallery">&#xf03e;</string>
+    <string name="button_newEntry">&#xf10e;</string>
+	<string name="button_openPreferences">&#xf013;</string>
+	<string name="button_changeMood">&#xf118;</string>
+	<string name="button_editEntry">&#xf044;</string>
+	<string name="button_shareEntry">&#xf045;</string>
+	<string name="button_deleteEntry">&#xf00d;</string>
+    <string name="title_activity_entry">EntryActivity</string>
+    <string name="dialog_new_entry">Nuovo post</string>
+    <string name="dialog_edit_entry">Edita il post</string>
+    <string name="dialog_option_entry">Opzioni</string>
+    <string name="confirm">Conferma</string>
+    <string name="cancel">Cancella</string>
+    <string name="go">Vai</string>
+    <string name="title_activity_mood">MoodActivity</string>
+    <string name="font_size">Dimensione del font per i post</string>
+    <string name="preferences">Preferenze</string>
+    <string name="grace_period">Imposta il tempo limite di modifica per i post</string>
+    <string name="typeface">Tipo di font per i post</string>
+    <string name="title_activity_gallery">GalleryActivity</string>
+    <string name="grace_period_ended">Il tempo limite di modifica per il post è scaduto.</string>
+    <string name="image_saved">Immagine salvata</string>
+    <string name="message_deleted">Messaggio cancellato</string>
+    <string name="accepted_values">Accettati solo valori tra 0 e 168.</string>
+    <string name="action_settings">Impostazioni</string>
+
+</resources>

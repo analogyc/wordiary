@@ -100,6 +100,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 		}
 
+		theWords = theWords.substring(1);
 		return theWords;
 	}
 	

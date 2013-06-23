@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <string-array name="fontSize">
+        <item name="size1">Piccolo</item>
+        <item name="size2">Medio</item>
+        <item name="size3">Grande</item>
+    </string-array>
+    <string-array name="fontSizeValues">
+        <item name="size1">1</item>
+        <item name="size2">2</item>
+        <item name="size3">3</item>
+    </string-array>
+    <string-array name="typeface">
+        <item name="font1">Droid Sans</item>
+        <item name="font2">Anime Ace 2.0</item>
+        <item name="font3">Stan Hand</item>
+    </string-array>
+     <string-array name="typefaceValues">
+        <item name="font1">1</item>
+        <item name="font2">2</item>
+        <item name="font3">3</item>
+    </string-array>
+</resources>

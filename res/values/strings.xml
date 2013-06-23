@@ -28,8 +28,8 @@
     <string name="typeface">Font type for entries</string>
     <string name="title_activity_gallery">GalleryActivity</string>
     <string name="grace_period_ended">Grace period for editing ended.</string>
-    <string name="image_saved_to">Image saved to:\n</string>
+    <string name="image_saved">Image saved</string>
     <string name="message_deleted">Message deleted</string>
-    <string name="accepted_values">Only values between 0 and 168 allowed</string>
+    <string name="accepted_values">Only values between 0 and 168 allowed.</string>
 
 </resources>

@@ -16,6 +16,7 @@
 	<string name="button_deleteEntry">&#xf00d;</string>
 	<string name="button_prevImage">&#xf100;</string>
 	<string name="button_nextImage">&#xf101;</string>
+	<string name="button_shareImage">&#xf045;</string>
     <string name="title_activity_entry">EntryActivity</string>
     <string name="dialog_new_entry">New Entry</string>
     <string name="dialog_edit_entry">Edit Entry</string>

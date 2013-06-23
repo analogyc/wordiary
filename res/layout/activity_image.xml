@@ -48,6 +48,18 @@
 		<Button
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:text="@string/button_shareImage"
+			android:id="@+id/shareImageButton"
+			android:layout_weight="20"
+			android:background="#00000000"
+			android:textColor="#eeeeee"
+			android:onClick="onNextImageButtonClicked"
+			android:paddingTop="8sp"
+			android:paddingBottom="8sp"/>
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
 			android:text="@string/button_nextImage"
 			android:id="@+id/nextImageButton"
 			android:layout_weight="20"

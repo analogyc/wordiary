@@ -11,25 +11,28 @@
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:id="@+id/imageWebView"
-		android:layout_gravity="center"/>
+		android:layout_gravity="center"
+		android:layout_marginBottom="40dp"/>
 
 	<LinearLayout
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="40dp"
 		android:layout_alignParentBottom="true"
 		android:layout_centerHorizontal="true"
 		android:background="#88000000"
-		android:alpha="10">
+		>
 
 		<Button
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="Prev"
+			android:text="@string/button_prevImage"
 			android:id="@+id/prevImageButton"
 			android:layout_weight="20"
 			android:background="#00000000"
 			android:textColor="#eeeeee"
-			android:onClick="onPrevImageButtonClicked"/>
+			android:onClick="onPrevImageButtonClicked"
+			android:paddingTop="8sp"
+			android:paddingBottom="8sp"/>
 
 		<TextView
 			android:layout_width="wrap_content"
@@ -39,17 +42,20 @@
 			android:id="@+id/imageDateText"
 			android:layout_weight="100"
 			android:textColor="#cccccc"
-			android:textAlignment="center"/>
+			android:paddingTop="8sp"
+			android:paddingBottom="8sp"/>
 
 		<Button
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="Next"
+			android:text="@string/button_nextImage"
 			android:id="@+id/nextImageButton"
 			android:layout_weight="20"
 			android:background="#00000000"
 			android:textColor="#eeeeee"
-			android:onClick="onNextImageButtonClicked"/>
+			android:onClick="onNextImageButtonClicked"
+			android:paddingTop="8sp"
+			android:paddingBottom="8sp"/>
 	</LinearLayout>
 
 

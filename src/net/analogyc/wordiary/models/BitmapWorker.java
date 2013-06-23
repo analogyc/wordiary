@@ -24,7 +24,7 @@ public class BitmapWorker extends Fragment {
 	public BitmapWorker() {
 
 		final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-		final int cacheSize = maxMemory / 4;
+		final int cacheSize = maxMemory / 8;
 
 		mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
 			@Override
@@ -117,11 +117,12 @@ public class BitmapWorker extends Fragment {
 		protected ImageView imageView;
 		protected String path;
 		protected Bitmap defaultBitmap;
-		protected int targetWidth = 0;
-		protected int targetHeight = 0;
+		protected int targetWidth;
+		protected int targetHeight;
 		protected boolean centerCrop = false;
 		protected boolean highQuality = true;
-		protected int roundedCorner = 0;
+		protected int roundedCorner;
+		protected String prefix = "";
 
 		/**
 		 * @return The default bitmap
@@ -195,6 +196,15 @@ public class BitmapWorker extends Fragment {
 			this.path = path;
 		}
 
+		public BitmapWorkerTaskBuilder setPrefix(String prefix) {
+			this.prefix = prefix;
+			return this;
+		}
+
+		public String getPrefix() {
+			return prefix;
+		}
+
 		public BitmapWorkerTask execute() {
 			if (imageView.getDrawable() instanceof AsyncDrawable) {
 				BitmapWorkerTask oldTask = ((AsyncDrawable) imageView.getDrawable()).getBitmapWorkerTask();
@@ -204,7 +214,7 @@ public class BitmapWorker extends Fragment {
 			}
 
 			BitmapWorkerTask task = new BitmapWorkerTask(imageView, path, targetWidth, targetHeight,
-				centerCrop, highQuality, roundedCorner);
+				centerCrop, highQuality, roundedCorner, prefix);
 			imageView.setImageDrawable(new AsyncDrawable(getResources(), defaultBitmap, task));
 			task.execute();
 			return task;
@@ -232,9 +242,10 @@ public class BitmapWorker extends Fragment {
 		private final boolean centerCrop;
 		private final boolean highQuality;
 		private final int roundedCorner;
+		private final String prefix;
 
 		public BitmapWorkerTask(ImageView imageView, String path, int targetWidth, int targetHeight,
-								boolean centerCrop, boolean highQuality, int roundedCorner) {
+								boolean centerCrop, boolean highQuality, int roundedCorner, String prefix) {
 			imageViewReference = new WeakReference<ImageView>(imageView);
 			this.path = path;
 			this.targetWidth = targetWidth;
@@ -242,12 +253,13 @@ public class BitmapWorker extends Fragment {
 			this.centerCrop = centerCrop;
 			this.highQuality = highQuality;
 			this.roundedCorner = roundedCorner;
+			this.prefix = prefix;
 		}
 
 		// Resize image in background.
 		@Override
 		protected Bitmap doInBackground(Integer... params) {
-			Bitmap image = getBitmapFromMemCache("models.EntryAdapter.thumbnails." + path);
+			Bitmap image = getBitmapFromMemCache("models.EntryAdapter.thumbnails." + prefix + path);
 
 			if (image != null) {
 				return image;
@@ -313,7 +325,7 @@ public class BitmapWorker extends Fragment {
 		}
 
 		/**
-		 * Applies inner shadow
+		 * Applies rounded corners
 		 * Sets background color to black and blurs image borders
 		 * Inspired from: http://stackoverflow.com/a/3292810/644504
 		 *
@@ -343,7 +355,7 @@ public class BitmapWorker extends Fragment {
 		@Override
 		protected void onPostExecute(Bitmap bitmap) {
 			if (!isCancelled() && imageViewReference != null && bitmap != null) {
-				addBitmapToMemoryCache("models.EntryAdapter.thumbnails." + path, bitmap);
+				addBitmapToMemoryCache("models.EntryAdapter.thumbnails."  + prefix + path, bitmap);
 				final ImageView imageView = imageViewReference.get();
 				if (imageView != null) {
 					imageView.setImageBitmap(bitmap);

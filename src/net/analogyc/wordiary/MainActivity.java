@@ -1,12 +1,15 @@
 package net.analogyc.wordiary;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
+import net.analogyc.wordiary.OptionEntryDialogFragment.OptionEntryDialogListener;
 import net.analogyc.wordiary.models.EntryListAdapter;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements OptionEntryDialogListener{
 
 	//view links
 	private ExpandableListView entryList;
@@ -46,6 +49,9 @@ public class MainActivity extends BaseActivity {
 
 	public void onEntryLongClicked(int id){
 		OptionEntryDialogFragment editFragment = new OptionEntryDialogFragment();
+		Bundle args = new Bundle();
+		args.putInt("entryId", id);
+		editFragment.setArguments(args);
 		editFragment.show(getSupportFragmentManager(), "editEntry");
 	}
 
@@ -55,32 +61,24 @@ public class MainActivity extends BaseActivity {
 		entryList.setAdapter(entryAdapter);
 	}
 
-		
-	/*
-	THIS CODE NEEDS TO BE REPLACED WITH A FRAGMENT DIALOG
-	  
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {  
-    	super.onCreateContextMenu(menu, v, menuInfo);  
-    	menu.setHeaderTitle("Entry Menu");  
-    	menu.add(0, v.getId(), 0, "Share");  
-    	menu.add(0, v.getId(), 0, "Delete");  
-    } 
-    
-   public boolean onContextItemSelected(MenuItem item) {
-		Context context = getApplicationContext();
-		int duration = Toast.LENGTH_SHORT;
-		
-		//get the id of the selected entry
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-		int number=(int)entryAdapter.getItemId(info.position);
-		if(item.getTitle()=="Delete"){
-			//delete the entry
-			dataBase.deleteEntry(number);
-			showEntries();
-			Toast toast1 = Toast.makeText(context, getString(R.string.message_deleted), duration);
-			toast1.show();
-        } 
-		return true;
-    } */
+	@Override
+	public void deleteSelectedEntry(int id) {
+		dataBase.deleteEntry(id);
+		showEntries();
+		Toast toast = Toast.makeText(this, "Message deleted", 2000);
+		toast.show();
+	}
+
+	@Override
+	public void shareSelectedEntry(int id) {
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		Cursor entry = dataBase.getEntryById(id);
+		entry.moveToFirst();
+		String shareBody = entry.getString(2);
+		entry.close();
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wordiary");
+		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+		startActivity(Intent.createChooser(sharingIntent, "Share via"));
+	}
 }

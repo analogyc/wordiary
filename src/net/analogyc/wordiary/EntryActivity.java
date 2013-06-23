@@ -182,7 +182,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 
 	public void onMoodButtonClicked(View view){
 		if(!dataBase.isEditable(entryId)){
-			Toast toast = Toast.makeText(getBaseContext(), "Grace period for editing ended.", 1000);
+			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), 1000);
 			toast.show();
 			return;
 		}
@@ -204,12 +204,14 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	
 	public void onDeleteButtonClicked(View view){
 		dataBase.deleteEntry(entryId);
+		Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted), 1000);
+		toast.show();
 		finish();
 	}
 	
 	public void onEditButtonClicked(View view){
 		if(!dataBase.isEditable(entryId)){
-			Toast toast = Toast.makeText(getBaseContext(), "Grace period for editing ended.", 1000);
+			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), 1000);
 			toast.show();
 			return;
 		}

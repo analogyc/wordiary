@@ -32,7 +32,7 @@ public class PreferencesActivity extends PreferenceActivity{
 						}
 					}
 					catch(NumberFormatException e) {
-						Toast toast1 = Toast.makeText(getBaseContext(), "Only values between 0 and 168 allowed", 1000);
+						Toast toast1 = Toast.makeText(getBaseContext(), getString(R.string.accepted_values), 1000);
 						toast1.show();
 						return false;
 					}

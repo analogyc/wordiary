@@ -23,6 +23,9 @@ import android.widget.Toast;
 public class BaseActivity extends FragmentActivity implements NewEntryDialogFragment.NewEntryDialogListener {
 
 	protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+	
+	protected final int TOAST_DURATION_L = 2000;
+	protected final int TOAST_DURATION_S = 1000;
 
 	protected Uri imageUri;
 	protected DBAdapter dataBase;
@@ -32,7 +35,6 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		super.onCreate(savedInstanceState);
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
-		dataBase = new DBAdapter(this);
 		bitmapWorker = BitmapWorker.findOrCreateBitmapWorker(getSupportFragmentManager());
 	}
 
@@ -103,7 +105,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 			if (resultCode == RESULT_OK) {
 				dataBase.addPhoto(imageUri.getPath());
 				// Image captured and saved to fileUri specified in the Intent
-				Toast.makeText(this, getString(R.string.image_saved) + imageUri, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getString(R.string.image_saved) + imageUri, TOAST_DURATION_L).show();
 				bitmapWorker.clearBitmapFromMemCache(imageUri.getPath());
 			}
 		}
@@ -118,7 +120,6 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		Context context = getApplicationContext();
 		CharSequence text;
-		int duration = Toast.LENGTH_SHORT;
 
 		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
 		String message = edit.getText().toString();
@@ -133,7 +134,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 			text = "Message not saved";
 		}
 
-		Toast toast1 = Toast.makeText(context, text, duration);
+		Toast toast1 = Toast.makeText(context, text, TOAST_DURATION_S);
 		toast1.show();
 	}
 
@@ -161,6 +162,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 
 	@Override
 	protected void onResume(){
+		dataBase = new DBAdapter(this);
 		super.onResume();
 	}
 }

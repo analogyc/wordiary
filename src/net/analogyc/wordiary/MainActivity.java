@@ -3,7 +3,6 @@ package net.analogyc.wordiary;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Menu;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 import net.analogyc.wordiary.OptionEntryDialogFragment.OptionEntryDialogListener;
@@ -55,7 +54,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	public void deleteSelectedEntry(int id) {
 		dataBase.deleteEntry(id);
 		showEntries();
-		Toast toast = Toast.makeText(this, "Message deleted", 2000);
+		Toast toast = Toast.makeText(this, "Message deleted", TOAST_DURATION_S);
 		toast.show();
 	}
 

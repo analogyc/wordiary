@@ -94,7 +94,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		String theWords = "";
 		Random rand = new Random();
 
-		int random = rand.nextInt(40);
 		
 		for (int i = 0; i < rand.nextInt(14)+1; i++){
 		theWords = theWords + " " + words[rand.nextInt(40)];

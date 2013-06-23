@@ -3,8 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			  android:orientation="vertical"
 			  android:layout_width="fill_parent"
-			  android:layout_height="match_parent"
-	>
+			  android:layout_height="match_parent" >
 
 	<net.analogyc.wordiary.ImageWebView
 		android:background="#000000"
@@ -31,8 +30,9 @@
 			android:background="#00000000"
 			android:textColor="#eeeeee"
 			android:onClick="onPrevImageButtonClicked"
-			android:paddingTop="8sp"
-			android:paddingBottom="8sp"/>
+			android:textSize="24sp"
+			android:paddingTop="2sp"
+			android:paddingBottom="2sp"/>
 
 		<TextView
 			android:layout_width="wrap_content"
@@ -42,8 +42,8 @@
 			android:id="@+id/imageDateText"
 			android:layout_weight="100"
 			android:textColor="#cccccc"
-			android:paddingTop="8sp"
-			android:paddingBottom="8sp"/>
+			android:paddingTop="2sp"
+			android:paddingBottom="2sp"/>
 
 		<Button
 			android:layout_width="wrap_content"
@@ -54,8 +54,9 @@
 			android:background="#00000000"
 			android:textColor="#eeeeee"
 			android:onClick="onShareImageButtonClicked"
-			android:paddingTop="8sp"
-			android:paddingBottom="8sp"/>
+			android:paddingTop="2sp"
+			android:textSize="24sp"
+			android:paddingBottom="2sp"/>
 
 		<Button
 			android:layout_width="wrap_content"
@@ -66,8 +67,9 @@
 			android:background="#00000000"
 			android:textColor="#eeeeee"
 			android:onClick="onNextImageButtonClicked"
-			android:paddingTop="8sp"
-			android:paddingBottom="8sp"/>
+			android:textSize="24sp"
+			android:paddingTop="2sp"
+			android:paddingBottom="2sp"/>
 	</LinearLayout>
 
 

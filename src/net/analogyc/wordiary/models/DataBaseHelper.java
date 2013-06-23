@@ -107,6 +107,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	
 	public String randomImage() {
 		Random rand = new Random();
+		if (rand.nextInt(3) == 0){
+			return "";
+		}
 		String[] images = null;
 		try {
 			images = context.getAssets().list("testing_images");
@@ -145,7 +148,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		return "";
 
 	}

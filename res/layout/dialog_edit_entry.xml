@@ -8,12 +8,12 @@
 	<Button
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:text="Share"
+		android:text="@string/share_button"
 		android:id="@+id/shareButton"/>
 
 	<Button
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:text="Delete"
+		android:text="@string/delete_button"
 		android:id="@+id/deleteButton"/>
 </LinearLayout>

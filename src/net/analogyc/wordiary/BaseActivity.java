@@ -12,11 +12,14 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Allows having the header in every page extending it
+ * Gives basic CRUD functions for Entries and Days
+ */
 public class BaseActivity extends FragmentActivity implements NewEntryDialogFragment.NewEntryDialogListener {
 
 	protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -33,6 +36,11 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		bitmapWorker = BitmapWorker.findOrCreateBitmapWorker(getSupportFragmentManager());
 	}
 
+	/**
+	 * Brings back to the home page
+	 *
+	 * @param view
+	 */
 	public void onHomeButtonClicked(View view) {
 		if (!(this instanceof MainActivity)) {
 			Intent intent = new Intent(this, MainActivity.class);
@@ -40,23 +48,41 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		}
 	}
 
+	/**
+	 * Displays the preferences panel, instead of using the ••• button
+	 *
+	 * @param view
+	 */
 	public void onOpenPreferencesClicked(View view) {
 		Intent intent = new Intent(this, PreferencesActivity.class);
 		startActivity(intent);
 	}
 
-	//method used when "newEntryButton" button is clicked
+	/**
+	 * Pops up a simple dialog to input a new entry
+	 *
+	 * @param view
+	 */
 	public void onNewEntryButtonClicked(View view){
 		NewEntryDialogFragment newFragment = new NewEntryDialogFragment();
 		newFragment.show(getSupportFragmentManager(), "newEntry");
 	}
 
+	/**
+	 * Opens the gallery
+	 *
+	 * @param view
+	 */
 	public void onOpenGalleryClicked(View view){
 		Intent intent = new Intent(this, GalleryActivity.class);
 		startActivity(intent);
 	}
 
-	//method used when "takePhoto" button is clicked
+	/**
+	 * Runs the standard Android camera intent
+	 *
+	 * @param view
+	 */
 	public void onTakePhotoClicked(View view){
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		imageUri = Uri.fromFile(Photo.getOutputMediaFile(1));
@@ -64,6 +90,13 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 	}
 
+	/**
+	 * Takes results from: camera intent (100)
+	 *
+	 * @param requestCode
+	 * @param resultCode
+	 * @param data
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -72,14 +105,15 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 				// Image captured and saved to fileUri specified in the Intent
 				Toast.makeText(this, getString(R.string.image_saved) + imageUri, Toast.LENGTH_LONG).show();
 				bitmapWorker.clearBitmapFromMemCache(imageUri.getPath());
-			} else if (resultCode == RESULT_CANCELED) {
-				// User cancelled the image capture
-			} else {
-				// Image capture failed, advise user
 			}
 		}
 	}
 
+	/**
+	 * Positive input for the dialog for creating a new Entry
+	 *
+	 * @param dialog
+	 */
 	@Override
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		Context context = getApplicationContext();
@@ -89,7 +123,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
 		String message = edit.getText().toString();
 
-		if(message != ""){
+		if(!message.equals("")){
 			text = "Message saved";
 			dataBase.addEntry(message, 0);
 			if (this instanceof MainActivity) {
@@ -122,7 +156,6 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	@Override
 	protected void onPause(){
 		dataBase.close();
-		//entryAdapter.getCursor().close();
 		super.onPause();
 	}
 
@@ -130,5 +163,4 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	protected void onResume(){
 		super.onResume();
 	}
-
 }

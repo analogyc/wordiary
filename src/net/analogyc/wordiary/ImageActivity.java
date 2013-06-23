@@ -97,9 +97,7 @@ public class ImageActivity extends BaseActivity {
 				DisplayMetrics dm = new DisplayMetrics();
 				display.getMetrics(dm);
 
-				if ((dm.densityDpi > 300 && imageWebView.getScale() == 2.0f)
-					|| dm.densityDpi <= 300 && imageWebView.getScale() == 1.0f) {
-
+				if ((dm.densityDpi > 300 && imageWebView.getScale() < 3.0f) || dm.densityDpi <= 300 && imageWebView.getScale() < 1.5f) {
 					if (velocityX > 1000f) {
 						getNext(false);
 					} else if (velocityX < -1000f) {
@@ -142,8 +140,7 @@ public class ImageActivity extends BaseActivity {
 		DisplayMetrics dm = new DisplayMetrics();
 		display.getMetrics(dm);
 
-		if ((dm.densityDpi > 300 && imageWebView.getScale() == 2.0f)
-			|| dm.densityDpi <= 300 && imageWebView.getScale() == 1.0f) {
+		if ((dm.densityDpi > 300 && imageWebView.getScale() == 2.0f) || dm.densityDpi <= 300 && imageWebView.getScale() == 1.0f) {
 			super.onBackPressed();
 		} else {
 			setView();

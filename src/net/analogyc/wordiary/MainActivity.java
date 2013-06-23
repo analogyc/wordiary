@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity {
 			//delete the entry
 			dataBase.deleteEntry(number);
 			showEntries();
-			Toast toast1 = Toast.makeText(context, "Message deleted", duration);
+			Toast toast1 = Toast.makeText(context, getString(R.string.message_deleted), duration);
 			toast1.show();
         } 
 		return true;

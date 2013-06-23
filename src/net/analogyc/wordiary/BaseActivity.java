@@ -1,3 +1,4 @@
+
 package net.analogyc.wordiary;
 
 import net.analogyc.wordiary.models.BitmapWorker;
@@ -81,7 +82,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 			if (resultCode == RESULT_OK) {
 				dataBase.addPhoto(imageUri.getPath());
 				// Image captured and saved to fileUri specified in the Intent
-				Toast.makeText(this, getString(R.string.image_saved_to) + imageUri, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getString(R.string.image_saved) + imageUri, Toast.LENGTH_LONG).show();
 				bitmapWorker.clearBitmapFromMemCache(imageUri.getPath());
 			} else if (resultCode == RESULT_CANCELED) {
 				// User cancelled the image capture
@@ -141,4 +142,5 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	protected void onResume(){
 		super.onResume();
 	}
+
 }

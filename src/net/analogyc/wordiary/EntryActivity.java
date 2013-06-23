@@ -219,8 +219,11 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			return;
 		}
 		
-		EditEntryDialogFragment newFragment = new EditEntryDialogFragment();
-		newFragment.show(getSupportFragmentManager(), "modifyEntry");
+		EditEntryDialogFragment editFragment = new EditEntryDialogFragment();
+		Bundle args = new Bundle();
+		args.putString("message", (String) messageText.getText());
+		editFragment.setArguments(args);
+		editFragment.show(getSupportFragmentManager(), "modifyEntry");
 		
 	}
 

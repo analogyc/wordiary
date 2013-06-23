@@ -14,6 +14,8 @@
 	<string name="button_editEntry">&#xf044;</string>
 	<string name="button_shareEntry">&#xf045;</string>
 	<string name="button_deleteEntry">&#xf00d;</string>
+	<string name="button_prevImage">&#xf100;</string>
+	<string name="button_nextImage">&#xf101;</string>
     <string name="title_activity_entry">EntryActivity</string>
     <string name="dialog_new_entry">New Entry</string>
     <string name="dialog_edit_entry">Edit Entry</string>
@@ -27,5 +29,9 @@
     <string name="grace_period">Set editing grace period</string>
     <string name="typeface">Font type for entries</string>
     <string name="title_activity_gallery">GalleryActivity</string>
+    <string name="grace_period_ended">Grace period for editing ended.</string>
+    <string name="image_saved_to">Image saved to:\n</string>
+    <string name="message_deleted">Message deleted</string>
+    <string name="accepted_values">Only values between 0 and 168 allowed</string>
 
 </resources>

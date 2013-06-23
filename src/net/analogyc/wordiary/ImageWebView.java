@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.*;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ZoomButtonsController;
 
 import java.lang.reflect.Field;
 
@@ -76,8 +77,9 @@ public class ImageWebView extends WebView {
 	}
 
 	public void overrideZoom() {
-		// infinite zoom for 2.2~ the exception handles it if this doesn't exist
 		Class<?> webViewClass = this.getClass().getSuperclass();
+
+		// infinite zoom for 2.2~ the exception handles it if this doesn't exist
 		try {
 			Field mMaxZoomScale = webViewClass.getDeclaredField("mMaxZoomScale");
 			mMaxZoomScale.setAccessible(true);

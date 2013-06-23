@@ -28,6 +28,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	private final int MOOD_RESULT_CODE = 101;
 	private int entryId;
 	private int dayId;
+	private boolean hasImage = false;
 	private TextView messageText, dateText;
     private ImageView photoButton, moodImage;
 	private Button setNewMoodButton, editEntryButton, deleteEntryButton, shareEntryButton;
@@ -141,7 +142,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 				c_photo.moveToFirst();
 				if (!c_photo.getString(1).equals("")) {
 					try {
-
+					hasImage = true;
 					bitmapWorker.createTask(photoButton, c_photo.getString(1))
 						.setDefaultBitmap(BitmapFactory.decodeStream(getAssets().open("default-avatar.jpg")))
 						.setTargetHeight(photoButton.getWidth())
@@ -175,14 +176,16 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	}
 
 	public void onPhotoButtonClicked(View view) {
-		Intent intent = new Intent(this, ImageActivity.class);
-		intent.putExtra("dayId", dayId);
-		startActivity(intent);
+		if (hasImage) {
+			Intent intent = new Intent(this, ImageActivity.class);
+			intent.putExtra("dayId", dayId);
+			startActivity(intent);
+		}
 	}
 
 	public void onMoodButtonClicked(View view){
 		if(!dataBase.isEditable(entryId)){
-			Toast toast = Toast.makeText(getBaseContext(), "Grace period for editing ended.", 1000);
+			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), 1000);
 			toast.show();
 			return;
 		}
@@ -204,12 +207,14 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	
 	public void onDeleteButtonClicked(View view){
 		dataBase.deleteEntry(entryId);
+		Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted), 1000);
+		toast.show();
 		finish();
 	}
 	
 	public void onEditButtonClicked(View view){
 		if(!dataBase.isEditable(entryId)){
-			Toast toast = Toast.makeText(getBaseContext(), "Grace period for editing ended.", 1000);
+			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), 1000);
 			toast.show();
 			return;
 		}

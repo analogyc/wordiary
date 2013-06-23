@@ -1,20 +1,25 @@
 package net.analogyc.wordiary;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.*;
-import net.analogyc.wordiary.models.DBAdapter;
+import android.widget.Button;
+import android.widget.TextView;
 
-public class ImageActivity extends Activity {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+public class ImageActivity extends BaseActivity {
 	private int dayId;
-	private DBAdapter dataBase;
 	private ImageWebView imageWebView;
-	private float scale = 1.f;
+	private TextView dateText;
+	private Button nextButton, prevButton;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,8 +30,12 @@ public class ImageActivity extends Activity {
 			dayId = intent.getIntExtra("dayId", -1);
 		}
 
-		dataBase = new DBAdapter(this);
 		imageWebView = (ImageWebView) findViewById(R.id.imageWebView);
+		dateText = (TextView) findViewById(R.id.imageDateText);
+		nextButton = (Button) findViewById(R.id.nextImageButton);
+		prevButton = (Button) findViewById(R.id.prevImageButton);
+
+		setView();
 	}
 
 	public void getNext(boolean backwards) {
@@ -38,19 +47,34 @@ public class ImageActivity extends Activity {
 		}
 	}
 
-
 	public void setView() {
+		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+		nextButton.setTypeface(fontawsm);
+		prevButton.setTypeface(fontawsm);
+
 		String location;
 		if (dayId == -1) {
-			location = "file:///android_asset/default-avatar.jpg";
+			location = "file://android_asset/default-avatar.jpg";
 		} else {
 			Cursor c = dataBase.getDayById(dayId);
 			c.moveToFirst();
 			if (c.getString(1) == "") {
-				location = "file:///android_asset/default-avatar.jpg";
+				location = "file://android_asset/default-avatar.jpg";
 			} else {
 				location = "file://" + c.getString(1);
 			}
+
+			String dateString = c.getString(2);
+			SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);
+			SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.ITALY);
+
+			try {
+				Date date = format_in.parse(dateString);
+				dateText.setText(format_out.format(date));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
 			c.close();
 		}
 
@@ -79,6 +103,14 @@ public class ImageActivity extends Activity {
 		});
 	}
 
+	public void onNextImageButtonClicked(View view) {
+		getNext(true);
+	}
+
+	public void onPrevImageButtonClicked(View view) {
+		getNext(false);
+	}
+
 	@Override
 	public void onBackPressed() {
 		// we are getting this 2.0 scale because of hdpi phones.
@@ -105,7 +137,6 @@ public class ImageActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
 		outState.putInt("dayId", dayId);
-		outState.putFloat("scale", scale);
 	}
 
 	@Override
@@ -113,19 +144,6 @@ public class ImageActivity extends Activity {
 		super.onRestoreInstanceState(savedInstanceState);
 		if(savedInstanceState.containsKey("dayId")){
 			dayId = savedInstanceState.getInt("dayId");
-			scale = savedInstanceState.getFloat("scale");
 		}
-	}
-
-	@Override
-	protected void onPause(){
-		dataBase.close();
-		super.onPause();
-	}
-
-	@Override
-	protected void onResume(){
-		super.onResume();
-		setView();
 	}
 }

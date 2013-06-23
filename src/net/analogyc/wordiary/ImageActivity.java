@@ -19,7 +19,7 @@ public class ImageActivity extends BaseActivity {
 	private int dayId;
 	private ImageWebView imageWebView;
 	private TextView dateText;
-	private Button nextButton, prevButton;
+	private Button nextButton, prevButton, shareButton;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,6 +34,7 @@ public class ImageActivity extends BaseActivity {
 		dateText = (TextView) findViewById(R.id.imageDateText);
 		nextButton = (Button) findViewById(R.id.nextImageButton);
 		prevButton = (Button) findViewById(R.id.prevImageButton);
+		shareButton = (Button) findViewById(R.id.shareImageButton);
 
 		setView();
 	}
@@ -51,6 +52,7 @@ public class ImageActivity extends BaseActivity {
 		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
 		nextButton.setTypeface(fontawsm);
 		prevButton.setTypeface(fontawsm);
+		shareButton.setTypeface(fontawsm);
 
 		String location;
 		if (dayId == -1) {

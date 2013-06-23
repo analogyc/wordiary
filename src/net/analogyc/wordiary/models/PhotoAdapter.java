@@ -3,9 +3,8 @@ package net.analogyc.wordiary.models;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.DisplayMetrics;
+import android.view.*;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import net.analogyc.wordiary.R;
@@ -48,11 +47,21 @@ public class PhotoAdapter extends BaseAdapter {
 		// set image based on selected text
 		ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_gallery);
 
+		int size = 128;
+
+		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		DisplayMetrics dm = new DisplayMetrics();
+		display.getMetrics(dm);
+
+		if (dm.densityDpi > 300) {
+			size = 256;
+		}
+
 		try {
 			bitmapWorker.createTask(imageView, photos.get(position)[1])
 				.setDefaultBitmap(BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg")))
-				.setTargetHeight(128)
-				.setTargetWidth(128)
+				.setTargetHeight(size)
+				.setTargetWidth(size)
 				.setCenterCrop(true)
 				.setHighQuality(true)
 				.setRoundedCorner(15)

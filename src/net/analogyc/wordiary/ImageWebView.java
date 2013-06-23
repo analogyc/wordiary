@@ -4,10 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.WindowManager;
+import android.view.*;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -15,8 +12,10 @@ import java.lang.reflect.Field;
 
 public class ImageWebView extends WebView {
 
-	Context context;
-	GestureDetector gestureDetector;
+	private Context context;
+	private GestureDetector gestureDetector;
+
+	private OnFlingListener flingListener;
 
 	public ImageWebView(Context context) {
 		super(context);
@@ -39,6 +38,10 @@ public class ImageWebView extends WebView {
 		setup();
 	}
 
+	public GestureDetector getGestureDetector() {
+		return gestureDetector;
+	}
+
 	public void setup() {
 		WebSettings set = getSettings();
 		set.setAllowFileAccess(true);
@@ -54,6 +57,12 @@ public class ImageWebView extends WebView {
 			@Override
 			public boolean onDoubleTap(MotionEvent e) {
 				ImageWebView.this.zoomIn();
+				return true;
+			}
+
+			@Override
+			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+				ImageWebView.this.flingListener.onFling(ImageWebView.this, e1, e2, velocityX, velocityY);
 				return true;
 			}
 		});
@@ -148,5 +157,13 @@ public class ImageWebView extends WebView {
 
 	public boolean onTouchEvent(MotionEvent event) {
 		return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
+	}
+
+	public void setOnFlingListener(OnFlingListener fl) {
+		flingListener = fl;
+	}
+
+	public interface OnFlingListener {
+		public boolean onFling(View view, MotionEvent e1, MotionEvent motionEvent, float velocityX, float velocityY);
 	}
 }

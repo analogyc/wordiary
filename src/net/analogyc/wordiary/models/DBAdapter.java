@@ -289,9 +289,7 @@ public class DBAdapter {
 		Date created;
 		try {
 			created = sdf.parse(c.getString(4));
-			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -301,10 +299,16 @@ public class DBAdapter {
 		long created_mil = created.getTime();
 		
 		long diff = now_mil - created_mil;
-		return diff < grace_period * 60 *60 * 1000;
+		return diff < grace_period * 60 * 60 * 1000;
 
 	}
 
-	
-	
+	public Cursor getNextDay(int currentDay, boolean backwards) {
+		return getConnection().rawQuery("SELECT " + Day._ID + " FROM " + Day.TABLE_NAME + " " +
+			"WHERE " + Day._ID + " " + (backwards ? "<" : ">") + " ? " +
+			"AND " + Day.COLUMN_NAME_FILENAME + " <> ? " +
+			"ORDER BY " + Day._ID + " " + (backwards ? "DESC" : "ASC") + " " +
+			"LIMIT 1",
+			new String[] {Integer.toString(currentDay), "" });
+	}
 }

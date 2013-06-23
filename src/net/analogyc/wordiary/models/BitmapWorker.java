@@ -268,11 +268,11 @@ public class BitmapWorker extends Fragment {
 			Bitmap bmp;
 
 			// just use lower inSampleSize
-			if (targetWidth != 0 && !highQuality) {
+			if (targetWidth != 0) {
 				// get the image width and height without loading it in memory
 				BitmapFactory.Options options = new BitmapFactory.Options();
 				options.inJustDecodeBounds = true;
-				bmp = BitmapFactory.decodeFile(path, options);
+				BitmapFactory.decodeFile(path, options);
 				int height = options.outHeight;
 				int width = options.outWidth;
 

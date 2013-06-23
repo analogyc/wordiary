@@ -75,6 +75,11 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		editEntryButton.setTypeface(fontawsm);
 		deleteEntryButton.setTypeface(fontawsm);
 		shareEntryButton.setTypeface(fontawsm);
+		
+		if(!dataBase.isEditable(entryId)){
+			setNewMoodButton.setTextColor(0xFFBBBBBB);
+			editEntryButton.setTextColor(0xFFBBBBBB);
+		}
 
 		// we keep this in onResume because the user might have changed the font in Preferences and come back to Entry
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -176,9 +181,16 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	}
 
 	public void onMoodButtonClicked(View view){
+		if(!dataBase.isEditable(entryId)){
+			Toast toast = Toast.makeText(getBaseContext(), "Grace period for editing ended.", 1000);
+			toast.show();
+			return;
+		}
+		
 		Intent intent = new Intent(this, MoodsActivity.class);
 		intent.putExtra("entryId", entryId);
 		startActivityForResult(intent, MOOD_RESULT_CODE);
+		
 	}
 	
 	public void onShareButtonClicked(View view){
@@ -196,8 +208,15 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	}
 	
 	public void onEditButtonClicked(View view){
+		if(!dataBase.isEditable(entryId)){
+			Toast toast = Toast.makeText(getBaseContext(), "Grace period for editing ended.", 1000);
+			toast.show();
+			return;
+		}
+		
 		EditEntryDialogFragment newFragment = new EditEntryDialogFragment();
 		newFragment.show(getSupportFragmentManager(), "modifyEntry");
+		
 	}
 
 	@Override

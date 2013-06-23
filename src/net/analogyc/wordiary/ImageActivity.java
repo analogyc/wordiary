@@ -8,12 +8,19 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
+import android.widget.TextView;
 import net.analogyc.wordiary.models.DBAdapter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ImageActivity extends Activity {
 	private int dayId;
 	private DBAdapter dataBase;
 	private ImageWebView imageWebView;
+	private TextView dateText;
 	private float scale = 1.f;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +34,7 @@ public class ImageActivity extends Activity {
 
 		dataBase = new DBAdapter(this);
 		imageWebView = (ImageWebView) findViewById(R.id.imageWebView);
+		dateText = (TextView) findViewById(R.id.imageDateText);
 	}
 
 	public void getNext(boolean backwards) {
@@ -51,6 +59,18 @@ public class ImageActivity extends Activity {
 			} else {
 				location = "file://" + c.getString(1);
 			}
+
+			String dateString = c.getString(2);
+			SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);
+			SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.ITALY);
+
+			try {
+				Date date = format_in.parse(dateString);
+				dateText.setText(format_out.format(date));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
 			c.close();
 		}
 
@@ -77,6 +97,14 @@ public class ImageActivity extends Activity {
 				return true;
 			}
 		});
+	}
+
+	public void onNextImageButtonClicked(View view) {
+		getNext(true);
+	}
+
+	public void onPrevImageButtonClicked(View view) {
+		getNext(false);
 	}
 
 	@Override

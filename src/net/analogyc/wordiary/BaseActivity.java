@@ -123,14 +123,16 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
 		String message = edit.getText().toString();
 
-		if(!message.equals("")){
-			text = "Message saved";
+
+		if(message != ""){
+			text = getString(R.string.message_saved);
+
 			dataBase.addEntry(message, 0);
 			if (this instanceof MainActivity) {
 				((MainActivity) this).showEntries();
 			}
 		} else {
-			text = "Message not saved";
+			text = getString(R.string.message_not_saved);
 		}
 
 		Toast toast1 = Toast.makeText(context, text, duration);

@@ -33,5 +33,7 @@
     <string name="action_settings">Impostazioni</string>
     <string name="delete_button">Elimina</string>
     <string name="share_button">Condividi</string>
+    <string name="message_saved">Messaggio salvato</string>
+    <string name="message_not_saved">Messaggio non salvato</string>
 
 </resources>

@@ -28,13 +28,14 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	protected final int TOAST_DURATION_S = 1000;
 
 	protected Uri imageUri;
+	protected boolean saveUri;
 	protected DBAdapter dataBase;
 	protected BitmapWorker bitmapWorker;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
+		saveUri = false;
 		bitmapWorker = BitmapWorker.findOrCreateBitmapWorker(getSupportFragmentManager());
 	}
 
@@ -103,7 +104,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
-				dataBase.addPhoto(imageUri.getPath());
+				saveUri = true;
 				// Image captured and saved to fileUri specified in the Intent
 				Toast.makeText(this, getString(R.string.image_saved) + imageUri, TOAST_DURATION_L).show();
 				bitmapWorker.clearBitmapFromMemCache(imageUri.getPath());
@@ -163,6 +164,12 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	@Override
 	protected void onResume(){
 		dataBase = new DBAdapter(this);
+		if(saveUri && imageUri != null){
+			//save new photo on database
+			dataBase.addPhoto(imageUri.getPath());
+			imageUri = null;
+			saveUri = false;
+		}
 		super.onResume();
 	}
 }

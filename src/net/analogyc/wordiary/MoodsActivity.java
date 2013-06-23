@@ -9,6 +9,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import net.analogyc.wordiary.models.MoodsAdapter;
 
+/**
+ * Shows the list of moods for return to the previous activity
+ */
 public class MoodsActivity extends BaseActivity {
 	//the number of the available moods
 	private int nMoods = 10;

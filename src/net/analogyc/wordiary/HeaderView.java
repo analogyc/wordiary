@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+/**
+ * The blue header that appears through most of the application
+ */
 public class HeaderView extends LinearLayout {
 
 	LayoutInflater inflater;
-	Button homeButton, takePhotoButton, newEntryButton, openGalleryButton, openPreferencesButton;
+	Button takePhotoButton, newEntryButton, openGalleryButton, openPreferencesButton;
 
 	public HeaderView(Context context, AttributeSet attrs) {
 		super(context, attrs);

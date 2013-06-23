@@ -182,7 +182,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
 	}
-	
+
 	private class GDetector extends SimpleOnGestureListener {
 
 		private int id;
@@ -194,7 +194,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	    @Override
 	    public void onLongPress(MotionEvent event) {
-	    	((MainActivity)context).onEntryLongClicked (id);
+	    	((MainActivity)context).onEntryLongClicked(id);
 	    }
 
 	    @Override

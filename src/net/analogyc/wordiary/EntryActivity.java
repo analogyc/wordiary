@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class EntryActivity extends BaseActivity implements EditEntryDialogListener  {
+
 	private final int MOOD_RESULT_CODE = 101;
 	private final int TOAST_DURATION = 1000;
 	private int entryId;
@@ -53,6 +54,13 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		shareEntryButton = (Button) findViewById(R.id.shareEntryButton);
 	}
 
+	/**
+	 * Catch mood result code (101) or send it over to BaseActivity for other codes (currently, photo -> 100)
+	 *
+	 * @param requestCode
+	 * @param resultCode
+	 * @param data
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == MOOD_RESULT_CODE) {
@@ -60,16 +68,15 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 				String moodId = data.getStringExtra("moodId");
 				dataBase.updateMood(entryId, moodId);
 
-			} else if (resultCode == RESULT_CANCELED) {
-				// User cancelled the image capture
-			} else {
-				// Image capture failed, advise user
 			}
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);
 		}
 	}
-	
+
+	/**
+	 * Sets up the view content
+	 */
 	private void setView(){
 		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
 		setNewMoodButton.setTypeface(fontawsm);
@@ -97,6 +104,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			default:
 				messageText.setTypeface(Typeface.SANS_SERIF);
 		}
+
 		int fontSize = Integer.parseInt(preferences.getString("font_size", "2"));
 		switch (fontSize) {
 			case 1:
@@ -110,19 +118,18 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		}
 
   		Cursor c_entry = dataBase.getEntryById(entryId);
-  		if (! c_entry.moveToFirst()) {
+  		if (!c_entry.moveToFirst()) {
 			 throw new RuntimeException("Wrong entry id");
-  			//error! wrong ID, but it won't happen
   		}
   		String message = c_entry.getString(2);
   		messageText.setText(message);
   		String mood = c_entry.getString(3);
-  		if( mood != null){
+
+  		if(mood != null){
   			int identifier = getResources().getIdentifier(mood, "drawable", R.class.getPackage().getName());
 			moodImage.setImageResource(identifier);
   		}
-  		
-  		
+
   		String d_tmp = c_entry.getString(4);
   		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss",Locale.ITALY);
   		SimpleDateFormat format_out = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy",Locale.ITALY);
@@ -131,7 +138,8 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			dateText.setText(format_out.format(date)); //probably a better method to do this exists
 		} catch (ParseException e) {
 			//won't happen if we use only dataBaseHelper.addEntry(...)
-		}  
+		}
+
 		int dayId = c_entry.getInt(1);
 		this.dayId = dayId;
         Bitmap image;
@@ -166,22 +174,30 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 
 		c_entry.close();
 
-
+		// make the image about square
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		DisplayMetrics dm = new DisplayMetrics();
 		display.getMetrics(dm);
 		photoButton.setMaxWidth(dm.widthPixels);
 		photoButton.setMaxHeight(dm.widthPixels);
-
 	}
 
+	/**
+	 * Displays the full image
+	 *
+	 * @param view
+	 */
 	public void onPhotoButtonClicked(View view) {
-
 			Intent intent = new Intent(this, ImageActivity.class);
 			intent.putExtra("dayId", dayId);
 			startActivity(intent);
 	}
 
+	/**
+	 * Displays the mood activity, only if within the grace period
+	 *
+	 * @param view
+	 */
 	public void onMoodButtonClicked(View view){
 		if(!dataBase.isEditable(entryId)){
 			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), TOAST_DURATION);
@@ -192,9 +208,13 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		Intent intent = new Intent(this, MoodsActivity.class);
 		intent.putExtra("entryId", entryId);
 		startActivityForResult(intent, MOOD_RESULT_CODE);
-		
 	}
-	
+
+	/**
+	 * Displays the panel for sharing the text of the entry
+	 *
+	 * @param view
+	 */
 	public void onShareButtonClicked(View view){
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
@@ -203,14 +223,23 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 		startActivity(Intent.createChooser(sharingIntent, "Share via"));
 	}
-	
+
+	/**
+	 * Deletes the entry
+	 *
+	 * @param view
+	 */
 	public void onDeleteButtonClicked(View view){
 		dataBase.deleteEntry(entryId);
 		Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted),TOAST_DURATION);
 		toast.show();
 		finish();
 	}
-	
+
+	/**
+	 * Displays the dialog for editing the entry, only if within the grace period
+	 * @param view
+	 */
 	public void onEditButtonClicked(View view){
 		if(!dataBase.isEditable(entryId)){
 			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), TOAST_DURATION);
@@ -223,29 +252,13 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		args.putString("message", (String) messageText.getText());
 		editFragment.setArguments(args);
 		editFragment.show(getSupportFragmentManager(), "modifyEntry");
-		
 	}
 
-	@Override
-	protected void onSaveInstanceState(Bundle outState){
-		super.onSaveInstanceState(outState);
-		outState.putInt("entryId", entryId);
-	}
-	
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState){
-		super.onRestoreInstanceState(savedInstanceState);
-		if(savedInstanceState.containsKey("entryId")){
-			entryId = savedInstanceState.getInt("entryId");
-		}
-	}
-	
-	@Override
-	protected void onResume(){
-		super.onResume();
-		setView();
-	}
-	
+	/**
+	 * Allows editing the content of the entry
+	 *
+	 * @param dialog
+	 */
 	public void onDialogModifyClick(DialogFragment dialog) {
 		Context context = getApplicationContext();
 		CharSequence text;
@@ -266,4 +279,23 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		toast1.show();
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("entryId", entryId);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState){
+		super.onRestoreInstanceState(savedInstanceState);
+		if(savedInstanceState.containsKey("entryId")){
+			entryId = savedInstanceState.getInt("entryId");
+		}
+	}
+
+	@Override
+	protected void onResume(){
+		super.onResume();
+		setView();
+	}
 }

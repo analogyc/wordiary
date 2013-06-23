@@ -2,13 +2,15 @@ package net.analogyc.wordiary;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import net.analogyc.wordiary.models.PhotoAdapter;
 
+/**
+ * Shows the images on a grid
+ */
 public class GalleryActivity extends BaseActivity {
 
 	private GridView gridView;

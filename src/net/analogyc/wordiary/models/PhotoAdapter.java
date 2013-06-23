@@ -38,7 +38,15 @@ public class PhotoAdapter extends BaseAdapter {
 		database.close();
 		photos_db.close();
 	}
- 
+
+	/**
+	 * Shows each image
+	 *
+	 * @param position
+	 * @param convertView
+	 * @param parent
+	 * @return
+	 */
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View gridView;

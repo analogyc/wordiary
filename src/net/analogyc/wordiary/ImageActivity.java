@@ -17,6 +17,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Displays the full image in a custom WebView to zoom on it
+ */
 public class ImageActivity extends BaseActivity {
 	private int dayId;
 	private String currentImage;

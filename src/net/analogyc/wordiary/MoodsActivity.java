@@ -13,9 +13,7 @@ public class MoodsActivity extends BaseActivity {
 	//the number of the available moods
 	private int nMoods = 10;
 	private String[] moods = new String[nMoods];
-	
-	
-	GridView gridView;
+	private GridView gridView;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +28,8 @@ public class MoodsActivity extends BaseActivity {
 		//get and set the gridview that will show the moods on the screen
 		gridView = (GridView) findViewById(R.id.moodGrid);
 		gridView.setAdapter(new MoodsAdapter(this, moods));
- 
+
+		// returns the mood back to the previous activity
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 				Intent intent = new Intent();

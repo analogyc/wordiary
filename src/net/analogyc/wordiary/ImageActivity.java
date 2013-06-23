@@ -1,6 +1,5 @@
 package net.analogyc.wordiary;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -44,6 +42,11 @@ public class ImageActivity extends BaseActivity {
 		setView();
 	}
 
+	/**
+	 * Opens the next or previous image if available
+	 *
+	 * @param backwards If we actually want a getPrev
+	 */
 	public void getNext(boolean backwards) {
 		Cursor c = dataBase.getNextDay(dayId, backwards);
 		if (c.getCount() == 1) {
@@ -53,6 +56,9 @@ public class ImageActivity extends BaseActivity {
 		}
 	}
 
+	/**
+	 * Prepares the views and loads the image
+	 */
 	public void setView() {
 		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
 		nextButton.setTypeface(fontawsm);
@@ -110,14 +116,29 @@ public class ImageActivity extends BaseActivity {
 		});
 	}
 
+	/**
+	 * Allows opening the next image
+	 *
+	 * @param view
+	 */
 	public void onNextImageButtonClicked(View view) {
 		getNext(true);
 	}
 
+	/**
+	 * Allows opening the previous image
+	 *
+	 * @param view
+	 */
 	public void onPrevImageButtonClicked(View view) {
 		getNext(false);
 	}
 
+	/**
+	 * Allows sharing the current image image
+	 *
+	 * @param view
+	 */
 	public void onShareImageButtonClicked(View view) {
 		Intent share = new Intent(Intent.ACTION_SEND);
 
@@ -133,7 +154,10 @@ public class ImageActivity extends BaseActivity {
 		startActivity(Intent.createChooser(share, "Share Image"));
 	}
 
-		@Override
+	/**
+	 * Goes back if the image is not zoomed, or unzooms the image
+	 */
+	@Override
 	public void onBackPressed() {
 		// we are getting this 2.0 scale because of hdpi phones.
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();

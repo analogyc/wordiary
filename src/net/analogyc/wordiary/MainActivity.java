@@ -23,14 +23,6 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
         //get the the corresponding link for each view object
         entryList = (ExpandableListView) findViewById(R.id.entries);
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
     
     //method used when user clicks on a entry
     public void onEntryClicked(int entryId) {

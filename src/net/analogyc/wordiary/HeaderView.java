@@ -28,10 +28,5 @@ public class HeaderView extends LinearLayout {
 		newEntryButton.setTypeface(fontawsm);
 		openPreferencesButton.setTypeface(fontawsm);
 		openGalleryButton.setTypeface(fontawsm);
-
-		Typeface zapfino = Typeface.createFromAsset(context.getAssets(), "fonts/zapfino.ttf");
-		homeButton = (Button) findViewById(R.id.homeButton);
-		//homeButton.setTypeface(zapfino);
-
 	}
 }

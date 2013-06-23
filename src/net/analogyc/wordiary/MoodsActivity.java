@@ -39,8 +39,6 @@ public class MoodsActivity extends BaseActivity {
 				finish();
 			}
 		});
-		
 	}
-
 }
 

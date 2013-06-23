@@ -33,18 +33,6 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		bitmapWorker = BitmapWorker.findOrCreateBitmapWorker(getSupportFragmentManager());
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
-		switch (item.getItemId()) {
-			case R.id.action_settings:
-				Intent intent = new Intent(this, PreferencesActivity.class);
-				startActivity(intent);
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}
-
 	public void onHomeButtonClicked(View view) {
 		if (!(this instanceof MainActivity)) {
 			Intent intent = new Intent(this, MainActivity.class);

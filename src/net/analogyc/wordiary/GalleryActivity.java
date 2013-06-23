@@ -17,8 +17,7 @@ public class GalleryActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_gallery);
- 
-		
+
 		gridView = (GridView) findViewById(R.id.photoGrid);
 		
 		gridView.setAdapter(new PhotoAdapter(this, bitmapWorker));
@@ -34,12 +33,4 @@ public class GalleryActivity extends BaseActivity {
 		});
 		
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.gallery, menu);
-		return true;
-	}
-
 }

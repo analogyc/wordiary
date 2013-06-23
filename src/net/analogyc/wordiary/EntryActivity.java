@@ -28,6 +28,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	private final int MOOD_RESULT_CODE = 101;
 	private int entryId;
 	private int dayId;
+	private boolean hasImage = false;
 	private TextView messageText, dateText;
     private ImageView photoButton, moodImage;
 	private Button setNewMoodButton, editEntryButton, deleteEntryButton, shareEntryButton;
@@ -141,7 +142,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 				c_photo.moveToFirst();
 				if (!c_photo.getString(1).equals("")) {
 					try {
-
+					hasImage = true;
 					bitmapWorker.createTask(photoButton, c_photo.getString(1))
 						.setDefaultBitmap(BitmapFactory.decodeStream(getAssets().open("default-avatar.jpg")))
 						.setTargetHeight(photoButton.getWidth())
@@ -175,9 +176,11 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	}
 
 	public void onPhotoButtonClicked(View view) {
-		Intent intent = new Intent(this, ImageActivity.class);
-		intent.putExtra("dayId", dayId);
-		startActivity(intent);
+		if (hasImage) {
+			Intent intent = new Intent(this, ImageActivity.class);
+			intent.putExtra("dayId", dayId);
+			startActivity(intent);
+		}
 	}
 
 	public void onMoodButtonClicked(View view){

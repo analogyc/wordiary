@@ -54,8 +54,9 @@ public class PhotoAdapter extends BaseAdapter {
 				.setTargetHeight(256)
 				.setTargetWidth(256)
 				.setCenterCrop(true)
-				.setHighQuality(false)
+				.setHighQuality(true)
 				.setRoundedCorner(15)
+				.setPrefix("gallery_")
 				.execute();
 		} catch (IOException e) {
 			e.printStackTrace();

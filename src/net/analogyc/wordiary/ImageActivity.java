@@ -1,12 +1,16 @@
 package net.analogyc.wordiary;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.*;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,6 +21,7 @@ import java.util.Locale;
 
 public class ImageActivity extends BaseActivity {
 	private int dayId;
+	private String currentImage;
 	private ImageWebView imageWebView;
 	private TextView dateText;
 	private Button nextButton, prevButton, shareButton;
@@ -60,11 +65,13 @@ public class ImageActivity extends BaseActivity {
 		} else {
 			Cursor c = dataBase.getDayById(dayId);
 			c.moveToFirst();
-			if (c.getString(1) == "") {
+			if (c.getString(1).equals("")) {
 				location = "file://android_asset/default-avatar.jpg";
 			} else {
 				location = "file://" + c.getString(1);
 			}
+
+			currentImage = location;
 
 			String dateString = c.getString(2);
 			SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);
@@ -113,7 +120,22 @@ public class ImageActivity extends BaseActivity {
 		getNext(false);
 	}
 
-	@Override
+	public void onShareImageButtonClicked(View view) {
+		Intent share = new Intent(Intent.ACTION_SEND);
+
+		String ext = currentImage.substring(currentImage.length() - 4, currentImage.length()).toLowerCase();
+		Log.e("ext", ext);
+		if (ext.equals(".jpg") || ext.equals("jpeg")) {
+			share.setType("image/jpeg");
+		} else if (ext.equals(".png")) {
+			share.setType("image/png");
+		}
+
+		share.putExtra(Intent.EXTRA_STREAM, Uri.parse(currentImage));
+		startActivity(Intent.createChooser(share, "Share Image"));
+	}
+
+		@Override
 	public void onBackPressed() {
 		// we are getting this 2.0 scale because of hdpi phones.
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();

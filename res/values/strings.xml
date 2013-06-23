@@ -33,5 +33,7 @@
     <string name="image_saved">Image saved</string>
     <string name="message_deleted">Message deleted</string>
     <string name="accepted_values">Only values between 0 and 168 allowed.</string>
+    <string name="delete_button">Delete</string>
+    <string name="share_button">Share</string>
 
 </resources>

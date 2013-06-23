@@ -7,11 +7,12 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 import net.analogyc.wordiary.OptionEntryDialogFragment.OptionEntryDialogListener;
 import net.analogyc.wordiary.models.EntryListAdapter;
+import net.analogyc.wordiary.models.EntryListAdapter.OptionEntryListener;
 
 /**
  * Displays the list of days as parents and entries as children
  */
-public class MainActivity extends BaseActivity implements OptionEntryDialogListener{
+public class MainActivity extends BaseActivity implements OptionEntryDialogListener,OptionEntryListener{
 
 	private ExpandableListView entryList;
 	private EntryListAdapter entryAdapter;

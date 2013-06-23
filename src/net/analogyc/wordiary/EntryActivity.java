@@ -39,7 +39,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		setContentView(R.layout.activity_entry);
 		
 		Intent intent = getIntent();
-		//normally entryId can't be -1
+		//get the id of the selected entry (normally entryId can't be -1)
 		entryId = intent.getIntExtra("entryId", -1);
 
 		messageText = (TextView) findViewById(R.id.messageText);
@@ -118,6 +118,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 
   		Cursor c_entry = dataBase.getEntryById(entryId);
   		if (!c_entry.moveToFirst()) {
+  			//won't happen if MainActivity uses correct entryIds
 			 throw new RuntimeException("Wrong entry id");
   		}
   		String message = c_entry.getString(2);
@@ -136,7 +137,8 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			Date date = format_in.parse(d_tmp);
 			dateText.setText(format_out.format(date)); //probably a better method to do this exists
 		} catch (ParseException e) {
-			//won't happen if we use only dataBaseHelper.addEntry(...)
+			//won't happen if we use only dataBase.addEntry(...)
+			dateText.setText("??.??.????");
 		}
 
 		int dayId = c_entry.getInt(1);
@@ -187,9 +189,9 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * @param view
 	 */
 	public void onPhotoButtonClicked(View view) {
-			Intent intent = new Intent(this, ImageActivity.class);
-			intent.putExtra("dayId", dayId);
-			startActivity(intent);
+		Intent intent = new Intent(this, ImageActivity.class);
+		intent.putExtra("dayId", dayId);
+		startActivity(intent);
 	}
 
 	/**
@@ -232,6 +234,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		dataBase.deleteEntry(entryId);
 		Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted),TOAST_DURATION_S);
 		toast.show();
+		//Now EntryActivity has no reason to be visible
 		finish();
 	}
 

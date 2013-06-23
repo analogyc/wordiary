@@ -46,7 +46,6 @@ public class MoodsAdapter extends BaseAdapter {
 			imageView.setImageResource(identifier);
  
 		} else {
-			//it won't happen
 			gridView = (View) convertView;
 		}
  

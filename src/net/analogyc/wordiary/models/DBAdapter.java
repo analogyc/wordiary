@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -86,21 +85,20 @@ public class DBAdapter {
 	 * @return a Cursor that contains the selected entry, or null
 	 */
 	public Cursor getEntryById(int id) {
-		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry._ID + " = " + id;
+		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry._ID + " = " + id + " LIMIT 1";
 		return getConnection().rawQuery(query, null);
 	}
 	
 	/**
-	 * Get the selected entry
+	 * Get the  entries of the selected day
 	 *
 	 * @param id entry's id
 	 * @return a Cursor that contains the selected entry, or null
 	 */
 	public Cursor getEntryByDay(int id) {
-		String query = "SELECT * FROM " + Entry.TABLE_NAME +
+		String query = 	"SELECT * FROM " + Entry.TABLE_NAME +
 						" WHERE " + Entry.COLUMN_NAME_DAY_ID + " = " + id +
 						" ORDER BY "+ Entry._ID+" DESC";
-		Log.w(null,query);
 		return getConnection().rawQuery(query, null);
 	}
 
@@ -116,10 +114,10 @@ public class DBAdapter {
 		Date now = new Date(System.currentTimeMillis());
 		String DATE_FORMAT = "yyyyMMddHHmmss";
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ITALY);
-		String query =
-				"SELECT * " +
+		String query =	"SELECT * " +
 						"FROM " + Day.TABLE_NAME +
-						" WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + sdf.format(now).substring(0, 8) + "%'";
+						" WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + sdf.format(now).substring(0, 8) + "%'" +
+						" LIMIT 1";
 
 		Cursor c = getConnection().rawQuery(query, null);
 		int photo;
@@ -127,10 +125,10 @@ public class DBAdapter {
 			photo = c.getInt(0);
 		} else {
 			addPhoto("");
-			query =
-				"SELECT * " +
+			query =	"SELECT * " +
 					"FROM " + Day.TABLE_NAME +
-					" WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + sdf.format(now).substring(0, 8) + "%'";
+					" WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + sdf.format(now).substring(0, 8) + "%'" +
+					" LIMIT 1";
 
 			c = getConnection().rawQuery(query, null);
 			c.moveToFirst();
@@ -173,25 +171,25 @@ public class DBAdapter {
 		String date = sdf.format(now);
 
 		//get the id of the day
-		String query =
-			"SELECT * " +
-				" FROM " + Day.TABLE_NAME +
-				" WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + date.substring(0, 8) + "%'";
+		String query =	"SELECT * " +
+						" FROM " + Day.TABLE_NAME +
+						" WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + date.substring(0, 8) + "%'"+
+						" LIMIT 1";
 
 		Cursor c = getConnection().rawQuery(query, null);
 
 		if(c.getCount() > 0) {
 			c.moveToFirst();
 			query = "UPDATE " + Day.TABLE_NAME + " " +
-				"SET " + Day.COLUMN_NAME_FILENAME + " = ?" +
-				"WHERE " + Day._ID + " = ?";
+					"SET " + Day.COLUMN_NAME_FILENAME + " = ?" +
+					"WHERE " + Day._ID + " = ?";
 			getConnection().execSQL(query, new Object[] {filename, c.getInt(0)});
 		} else {
 			//insert the entry
 			query = "INSERT INTO " + Day.TABLE_NAME + " ( " +
-				Day.COLUMN_NAME_FILENAME + " , " +
-				Day.COLUMN_NAME_CREATED +
-				") VALUES (?, ?)";
+					Day.COLUMN_NAME_FILENAME + " , " +
+					Day.COLUMN_NAME_CREATED +
+					") VALUES (?, ?)";
 			getConnection().execSQL(query, new Object[] {filename, date});
 		}
 	}
@@ -203,10 +201,10 @@ public class DBAdapter {
 	 * @return The database row, one or none
 	 */
 	public Cursor getPhotoByDay(String day) {
-		String query =
-			"SELECT * " +
-			"FROM " + Day.TABLE_NAME + " " +
-			"WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + day + "%'";
+		String query =	"SELECT * " +
+						"FROM " + Day.TABLE_NAME + " " +
+						"WHERE " + Day.COLUMN_NAME_CREATED + " LIKE '" + day + "%' "+
+						"LIMIT 1";
 
 		return getConnection().rawQuery(query, null);
 	}
@@ -228,9 +226,9 @@ public class DBAdapter {
 	 * @return Cursor containing the days
 	 */
 	public Cursor getAllPhotos() {
-		String query = "SELECT * FROM " + Day.TABLE_NAME + 
-					" WHERE " + Day.COLUMN_NAME_FILENAME + "<> ''" +
-					" ORDER BY " + Day._ID + " DESC";
+		String query = 	"SELECT * FROM " + Day.TABLE_NAME + 
+						" WHERE " + Day.COLUMN_NAME_FILENAME + "<> ''" +
+						" ORDER BY " + Day._ID + " DESC";
 		return getConnection().rawQuery(query, null);
 	}
 
@@ -241,7 +239,7 @@ public class DBAdapter {
 	 * @return a Cursor that contains the selected entry, or null
 	 */
 	public Cursor getDayById(int id) {
-		String query = "SELECT * FROM " + Day.TABLE_NAME + " WHERE " + Day._ID + " = " + id;
+		String query = "SELECT * FROM " + Day.TABLE_NAME + " WHERE " + Day._ID + " = " + id + " LIMIT 1";
 		return getConnection().rawQuery(query, null);
 	}
 
@@ -252,8 +250,9 @@ public class DBAdapter {
 	 * @param moodId filename of the mood
 	 */
 	public void updateMood(int entryId, String moodId) {
-		String query = "UPDATE " + Entry.TABLE_NAME +
-			" SET "+ Entry.COLUMN_NAME_MOOD +" =  ? WHERE " + Entry._ID + " = ?";
+		String query = 	"UPDATE " + Entry.TABLE_NAME +
+						" SET "+ Entry.COLUMN_NAME_MOOD +" =  ?" + 
+						" WHERE " + Entry._ID + " = ?";
 		getConnection().execSQL(query, new Object[]{moodId,entryId});
 	}
 	
@@ -265,8 +264,9 @@ public class DBAdapter {
 	 * @param message The message to insert
 	 */
 	public void updateMessage(int entryId, String message) {
-		String query = "UPDATE " + Entry.TABLE_NAME +
-			" SET "+ Entry.COLUMN_NAME_MESSAGE +" =  ? WHERE " + Entry._ID + " = ?";
+		String query = 	"UPDATE " + Entry.TABLE_NAME +
+						" SET "+ Entry.COLUMN_NAME_MESSAGE +" =  ?" + 
+						" WHERE " + Entry._ID + " = ?";
 		getConnection().execSQL(query, new Object[]{message,entryId});
 	}
 	
@@ -274,7 +274,6 @@ public class DBAdapter {
 	 * Verify if the selected entry can be modified
 	 *
 	 * @param entryId entry id
-	 * @throws ParseException 
 	 * @return boolean true if is editable, false otherwise
 	 */
 	public boolean isEditable(int entryId){
@@ -284,7 +283,7 @@ public class DBAdapter {
 		String DATE_FORMAT = "yyyyMMddHHmmss";
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ITALY);
 
-		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry._ID + " = " + entryId;
+		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry._ID + " = " + entryId +" LIMIT 1";
 		Cursor c =getConnection().rawQuery(query, null);
 		c.moveToFirst();
 		Date created;
@@ -312,11 +311,11 @@ public class DBAdapter {
 	 * @return The cursor containing the single row or zero rows, with as only column the ID
 	 */
 	public Cursor getNextDay(int currentDay, boolean backwards) {
-		return getConnection().rawQuery("SELECT " + Day._ID + " FROM " + Day.TABLE_NAME + " " +
-			"WHERE " + Day._ID + " " + (backwards ? "<" : ">") + " ? " +
-			"AND " + Day.COLUMN_NAME_FILENAME + " <> ? " +
-			"ORDER BY " + Day._ID + " " + (backwards ? "DESC" : "ASC") + " " +
-			"LIMIT 1",
-			new String[] {Integer.toString(currentDay), "" });
+		String query = "SELECT " + Day._ID + " FROM " + Day.TABLE_NAME + " " +
+				"WHERE " + Day._ID + " " + (backwards ? "<" : ">") + " ? " +
+				"AND " + Day.COLUMN_NAME_FILENAME + " <> ? " +
+				"ORDER BY " + Day._ID + " " + (backwards ? "DESC" : "ASC") + " " +
+				"LIMIT 1";
+		return getConnection().rawQuery(query, new String[] {Integer.toString(currentDay), "" });
 	}
 }

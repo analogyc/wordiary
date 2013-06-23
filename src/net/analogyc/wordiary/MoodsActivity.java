@@ -34,7 +34,7 @@ public class MoodsActivity extends BaseActivity {
 
 		// returns the mood back to the previous activity
 		gridView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			public void onItemClick(AdapterView<?> adpView, View view, int position, long id) {
 				Intent intent = new Intent();
 				intent.putExtra("moodId", moods[position]);
 				setResult(Activity.RESULT_OK,intent);

@@ -10,7 +10,6 @@ import android.view.View.OnTouchListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import net.analogyc.wordiary.MainActivity;
 import net.analogyc.wordiary.R;
 
 import java.io.IOException;
@@ -24,6 +23,11 @@ import java.util.Locale;
  * Adapter to show each day as a parent and each entry as a child of a day
  */
 public class EntryListAdapter extends BaseExpandableListAdapter {
+	
+	public interface OptionEntryListener {
+		public void onEntryLongClicked(int id);
+		public void onEntryClicked(int id);
+	}
 
 	private Context context;
 	private ArrayList<String[]> days = new ArrayList<String[]>();
@@ -186,20 +190,29 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	private class GDetector extends SimpleOnGestureListener {
 
 		private int id;
+		private OptionEntryListener activity;
 		
 		public GDetector(int id){
 			super();
 			this.id = id;
+			
+			
+			try {
+				activity =(OptionEntryListener)context;
+			} catch (ClassCastException e) {
+				// The activity doesn't implement the interface, throw exception
+				throw new ClassCastException(context.toString() + " must implement OptionEntryListener");
+			}
 		}
 
 	    @Override
 	    public void onLongPress(MotionEvent event) {
-	    	((MainActivity)context).onEntryLongClicked(id);
+	    	activity.onEntryLongClicked(id);
 	    }
 
 	    @Override
 	    public boolean onSingleTapConfirmed(MotionEvent event) {
-	    	((MainActivity)context).onEntryClicked(id);
+	    	activity.onEntryClicked(id);
 	        return true;
 	    }
 	}

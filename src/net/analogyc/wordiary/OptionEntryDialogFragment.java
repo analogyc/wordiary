@@ -1,19 +1,14 @@
 package net.analogyc.wordiary;
 
 
-import net.analogyc.wordiary.NewEntryDialogFragment.NewEntryDialogListener;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class OptionEntryDialogFragment extends DialogFragment {
 	
@@ -40,19 +35,32 @@ public class OptionEntryDialogFragment extends DialogFragment {
 		Button shareButton = (Button) view.findViewById(R.id.shareButton);
 		Button deleteButton = (Button) view.findViewById(R.id.deleteButton);
 		
+		//maintaining a reference to this instance for next operations
 		final OptionEntryDialogFragment entryDialog = this;
+		
+		final OptionEntryDialogListener activity;
+		try {
+			activity =(OptionEntryDialogListener)entryDialog.getActivity();
+		} catch (ClassCastException e) {
+			// The activity doesn't implement the interface, throw exception
+			throw new ClassCastException(entryDialog.getActivity().toString() + " must implement OptionEntryDialogListener");
+		}
+		
+		
+		//set the action from share button
 		shareButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				((OptionEntryDialogListener)entryDialog.getActivity()).shareSelectedEntry(entryId);
+			public void onClick(View view) {
+				activity.shareSelectedEntry(entryId);
 				entryDialog.dismiss();
 			}	
 		});
 		
+		//set the action from delete button
 		deleteButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				((OptionEntryDialogListener)entryDialog.getActivity()).deleteSelectedEntry(entryId);
+			public void onClick(View view) {
+				activity.deleteSelectedEntry(entryId);
 				entryDialog.dismiss();
 			}	
 		});

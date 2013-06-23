@@ -27,9 +27,9 @@ public class GalleryActivity extends BaseActivity {
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+			public void onItemClick(AdapterView<?> adpView, View view, int position,long id) {
 				Intent intent = new Intent(GalleryActivity.this, ImageActivity.class);
-				intent.putExtra("dayId", (int)arg3);
+				intent.putExtra("dayId", (int)id);
 				startActivity(intent);
 			}
 		});

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.Button;
 import android.widget.TextView;
+import net.analogyc.wordiary.models.DBAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,8 +42,6 @@ public class ImageActivity extends BaseActivity {
 		nextButton = (Button) findViewById(R.id.nextImageButton);
 		prevButton = (Button) findViewById(R.id.prevImageButton);
 		shareButton = (Button) findViewById(R.id.shareImageButton);
-
-		setView();
 	}
 
 	/**
@@ -122,7 +121,7 @@ public class ImageActivity extends BaseActivity {
 				Log.e("velocityX", ""+velocityX);
 				Log.e("scale", ""+imageWebView.getScale());
 
-				if ((dm.densityDpi > 300 && imageWebView.getScale() < 3.0f) || dm.densityDpi <= 300 && imageWebView.getScale() < 1.5f) {
+				if ((dm.densityDpi > 300 && imageWebView.getScale() == 2.0f) || dm.densityDpi <= 300 && imageWebView.getScale() == 1.0f) {
 					if (velocityX > 1000f) {
 						getNext(false);
 					} else if (velocityX < -1000f) {
@@ -204,5 +203,11 @@ public class ImageActivity extends BaseActivity {
 		if(savedInstanceState.containsKey("dayId")){
 			dayId = savedInstanceState.getInt("dayId");
 		}
+	}
+
+	@Override
+	protected void onResume(){
+		super.onResume();
+		setView();
 	}
 }

@@ -43,16 +43,16 @@ public class PhotoAdapter extends BaseAdapter {
 		View gridView;
 		
 		// get layout from mobile.xml
-		gridView = inflater.inflate(R.layout.moods_style, null);
+		gridView = inflater.inflate(R.layout.image_style, null);
 
 		// set image based on selected text
-		ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
+		ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_gallery);
 
 		try {
 			bitmapWorker.createTask(imageView, photos.get(position)[1])
 				.setDefaultBitmap(BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg")))
-				.setTargetHeight(256)
-				.setTargetWidth(256)
+				.setTargetHeight(128)
+				.setTargetWidth(128)
 				.setCenterCrop(true)
 				.setHighQuality(true)
 				.setRoundedCorner(15)

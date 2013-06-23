@@ -314,7 +314,7 @@ public class BitmapWorker extends Fragment {
 			}
 
 			if (targetWidth != 0 && highQuality) {
-				bmp = Bitmap.createScaledBitmap(bmp, targetWidth, targetHeight, true);
+				bmp = Bitmap.createScaledBitmap(bmp, targetWidth, targetHeight, false);
 			}
 
 			if (roundedCorner != 0) {

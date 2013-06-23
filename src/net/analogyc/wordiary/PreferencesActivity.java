@@ -8,10 +8,8 @@ import android.preference.PreferenceActivity;
 import android.view.Menu;
 import android.widget.Toast;
 
-public class PreferencesActivity extends PreferenceActivity{
+public class PreferencesActivity extends PreferenceActivity {
 	
-
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,13 +39,4 @@ public class PreferencesActivity extends PreferenceActivity{
 				}
 			});
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.user_preferences, menu);
-		return true;
-	}
-	
-
 }

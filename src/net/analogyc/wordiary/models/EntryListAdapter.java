@@ -148,10 +148,10 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			if (!info[1].equals("")) {
 				bitmapWorker.createTask(imageView, info[1])
 					.setDefaultBitmap(image)
-					.setTargetHeight(256)
-					.setTargetWidth(256)
+					.setTargetHeight(128)
+					.setTargetWidth(128)
 					.setCenterCrop(true)
-					.setHighQuality(false)
+					.setHighQuality(true)
 					.setRoundedCorner(15)
 					.execute();
 			}

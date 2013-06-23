@@ -27,7 +27,6 @@ import java.util.Locale;
 public class EntryActivity extends BaseActivity implements EditEntryDialogListener  {
 
 	private final int MOOD_RESULT_CODE = 101;
-	private final int TOAST_DURATION = 1000;
 	private int entryId;
 	private int dayId;
 	private TextView messageText, dateText;
@@ -200,7 +199,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 */
 	public void onMoodButtonClicked(View view){
 		if(!dataBase.isEditable(entryId)){
-			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), TOAST_DURATION);
+			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), TOAST_DURATION_S);
 			toast.show();
 			return;
 		}
@@ -231,7 +230,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 */
 	public void onDeleteButtonClicked(View view){
 		dataBase.deleteEntry(entryId);
-		Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted),TOAST_DURATION);
+		Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted),TOAST_DURATION_S);
 		toast.show();
 		finish();
 	}
@@ -242,7 +241,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 */
 	public void onEditButtonClicked(View view){
 		if(!dataBase.isEditable(entryId)){
-			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), TOAST_DURATION);
+			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), TOAST_DURATION_S);
 			toast.show();
 			return;
 		}
@@ -262,7 +261,6 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	public void onDialogModifyClick(DialogFragment dialog) {
 		Context context = getApplicationContext();
 		CharSequence text;
-		int duration = Toast.LENGTH_SHORT;
 
 		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
 		String message = edit.getText().toString();
@@ -275,8 +273,8 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			text = getString(R.string.message_not_saved);
 		}
 
-		Toast toast1 = Toast.makeText(context, text, duration);
-		toast1.show();
+		Toast toast = Toast.makeText(context, text, TOAST_DURATION_S);
+		toast.show();
 	}
 
 	@Override

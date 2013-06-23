@@ -123,29 +123,15 @@ public class BitmapWorker extends Fragment {
 		protected boolean highQuality = true;
 		protected int roundedCorner;
 		protected String prefix = "";
-
-		/**
-		 * @return The default bitmap
-		 */
 		public Bitmap getDefaultBitmap() {
 			return defaultBitmap;
 		}
 
-		/**
-		 * Set a placeholder to display while the edited image isn't yet ready
-		 *
-		 * @param defaultBitmap The placeholder
-		 * @return The builder
-		 */
 		public BitmapWorkerTaskBuilder setDefaultBitmap(Bitmap defaultBitmap) {
 			this.defaultBitmap = defaultBitmap;
 			return this;
 		}
 
-		/**
-		 *
-		 * @return
-		 */
 		public int getTargetWidth() {
 			return targetWidth;
 		}
@@ -201,11 +187,13 @@ public class BitmapWorker extends Fragment {
 			return this;
 		}
 
+
 		public String getPrefix() {
 			return prefix;
 		}
 
 		public BitmapWorkerTask execute() {
+			// stop the previous task if we're going to use this drawable with another Bitmap
 			if (imageView.getDrawable() instanceof AsyncDrawable) {
 				BitmapWorkerTask oldTask = ((AsyncDrawable) imageView.getDrawable()).getBitmapWorkerTask();
 				if (oldTask != null) {
@@ -221,6 +209,9 @@ public class BitmapWorker extends Fragment {
 		}
 	}
 
+	/**
+	 * Support class that we use to bind a task to the drawable in order to know if it was occupied by another task
+	 */
 	class AsyncDrawable extends BitmapDrawable {
 		private final WeakReference<BitmapWorkerTask> bitmapWorkerTaskReference;
 
@@ -234,6 +225,9 @@ public class BitmapWorker extends Fragment {
 		}
 	}
 
+	/**
+	 * The actual task in charge of editing the image
+	 */
 	public class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
 		private final WeakReference<ImageView> imageViewReference;
 		private final String path;
@@ -256,7 +250,9 @@ public class BitmapWorker extends Fragment {
 			this.prefix = prefix;
 		}
 
-		// Resize image in background.
+		/**
+		 * Resize image in background
+		 */
 		@Override
 		protected Bitmap doInBackground(Integer... params) {
 			Bitmap image = getBitmapFromMemCache("models.EntryAdapter.thumbnails." + prefix + path);
@@ -327,10 +323,10 @@ public class BitmapWorker extends Fragment {
 		/**
 		 * Applies rounded corners
 		 * Sets background color to black and blurs image borders
-		 * Inspired from: http://stackoverflow.com/a/3292810/644504
+		 * Inspired by: http://stackoverflow.com/a/3292810/644504
 		 *
 		 * @param bitmap
-		 * @return
+		 * @return Bitmap with rounded corners
 		 */
 		public Bitmap getRoundedCornerBitmap(Bitmap bitmap, int roundedPixels) {
 			Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
@@ -352,6 +348,11 @@ public class BitmapWorker extends Fragment {
 			return output;
 		}
 
+		/**
+		 * Returns the edited image unless the imageView has been occupied by another image
+		 *
+		 * @param bitmap
+		 */
 		@Override
 		protected void onPostExecute(Bitmap bitmap) {
 			if (!isCancelled() && imageViewReference != null && bitmap != null) {

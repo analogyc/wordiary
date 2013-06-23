@@ -11,11 +11,13 @@ import android.widget.ZoomButtonsController;
 
 import java.lang.reflect.Field;
 
+/**
+ * A WebView specialized for displaying images
+ */
 public class ImageWebView extends WebView {
 
 	private Context context;
 	private GestureDetector gestureDetector;
-
 	private OnFlingListener flingListener;
 
 	public ImageWebView(Context context) {
@@ -39,10 +41,9 @@ public class ImageWebView extends WebView {
 		setup();
 	}
 
-	public GestureDetector getGestureDetector() {
-		return gestureDetector;
-	}
-
+	/**
+	 * Sets up the actual view
+	 */
 	public void setup() {
 		WebSettings set = getSettings();
 		set.setAllowFileAccess(true);
@@ -71,11 +72,20 @@ public class ImageWebView extends WebView {
 		overrideZoom();
 	}
 
+	/**
+	 * We override the zoomIn since every time the MaxZoomScale is reset
+	 *
+	 * @return Whether the zoom was applied
+	 */
+	@Override
 	public boolean zoomIn() {
 		overrideZoom();
 		return super.zoomIn();
 	}
 
+	/**
+	 * Modifies the private variables of WebView in order to achieve more zoom than the limit imposed
+	 */
 	public void overrideZoom() {
 		Class<?> webViewClass = this.getClass().getSuperclass();
 
@@ -129,6 +139,11 @@ public class ImageWebView extends WebView {
 		}
 	}
 
+	/**
+	 * Sets the image within the HTML
+	 *
+	 * @param location Uri to the image on the device
+	 */
 	public void setImage(String location) {
 		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		DisplayMetrics dm = new DisplayMetrics();
@@ -157,14 +172,28 @@ public class ImageWebView extends WebView {
 		overrideZoom();
 	}
 
+	/**
+	 * Overriding the onTouchEvent to use double-tap and allowing extending onFling
+	 *
+	 * @param event
+	 * @return
+	 */
 	public boolean onTouchEvent(MotionEvent event) {
 		return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
 	}
 
+	/**
+	 * Set an action onFling
+	 *
+	 * @param fl
+	 */
 	public void setOnFlingListener(OnFlingListener fl) {
 		flingListener = fl;
 	}
 
+	/**
+	 * Custom onFling to apply to the ImageWebView
+	 */
 	public interface OnFlingListener {
 		public boolean onFling(View view, MotionEvent e1, MotionEvent motionEvent, float velocityX, float velocityY);
 	}

@@ -1,4 +1,3 @@
-
 package net.analogyc.wordiary;
 
 import net.analogyc.wordiary.models.BitmapWorker;
@@ -172,4 +171,5 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		}
 		super.onResume();
 	}
+
 }

@@ -8,9 +8,11 @@ import android.widget.Toast;
 import net.analogyc.wordiary.OptionEntryDialogFragment.OptionEntryDialogListener;
 import net.analogyc.wordiary.models.EntryListAdapter;
 
+/**
+ * Displays the list of days as parents and entries as children
+ */
 public class MainActivity extends BaseActivity implements OptionEntryDialogListener{
 
-	//view links
 	private ExpandableListView entryList;
 	private EntryListAdapter entryAdapter;
 
@@ -22,21 +24,32 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
         //get the the corresponding link for each view object
         entryList = (ExpandableListView) findViewById(R.id.entries);
     }
-    
-    //method used when user clicks on a entry
-    public void onEntryClicked(int entryId) {
+
+	/**
+	 * Reloads the list of entries
+	 */
+	protected void showEntries(){
+		entryAdapter = new EntryListAdapter(this, bitmapWorker);
+		entryList.setAdapter(entryAdapter);
+	}
+
+	/**
+	 * Opens the entry in a new activity
+	 *
+	 * @param id The entry id
+	 */
+    public void onEntryClicked(int id) {
         //open Entry Activity
         Intent intent = new Intent(MainActivity.this, EntryActivity.class);
-    	intent.putExtra("entryId", entryId);
+    	intent.putExtra("entryId", id);
     	startActivity(intent);
     }
 
-	@Override
-	protected void onResume(){
-		super.onResume();
-		showEntries();
-	}
-
+	/**
+	 * Gives two commands: Delete entry and Share entry
+	 *
+	 * @param id The entry id
+	 */
 	public void onEntryLongClicked(int id){
 		OptionEntryDialogFragment editFragment = new OptionEntryDialogFragment();
 		Bundle args = new Bundle();
@@ -45,11 +58,11 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		editFragment.show(getSupportFragmentManager(), "editEntry");
 	}
 
-	protected void showEntries(){
-		entryAdapter = new EntryListAdapter(this, bitmapWorker);
-		entryList.setAdapter(entryAdapter);
-	}
-
+	/**
+	 * Removes the entry and reloads the entry list
+	 *
+	 * @param id The id of the entry to delete
+	 */
 	@Override
 	public void deleteSelectedEntry(int id) {
 		dataBase.deleteEntry(id);
@@ -58,6 +71,11 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		toast.show();
 	}
 
+	/**
+	 * Allows sharing the text of the entry
+	 *
+	 * @param id The id of the entry
+	 */
 	@Override
 	public void shareSelectedEntry(int id) {
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -69,5 +87,11 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wordiary");
 		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 		startActivity(Intent.createChooser(sharingIntent, "Share via"));
+	}
+
+	@Override
+	protected void onResume(){
+		super.onResume();
+		showEntries();
 	}
 }

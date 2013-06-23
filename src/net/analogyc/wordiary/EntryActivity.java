@@ -252,12 +252,12 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
 		String message = edit.getText().toString();
 
-		if(message != ""){
-			text = "Message modified";
+		if(!message.equals("")){
+			text = getString(R.string.message_saved);
 			dataBase.updateMessage(entryId, message);
 			setView();
 		} else {
-			text = "Message not modified";
+			text = getString(R.string.message_not_saved);
 		}
 
 		Toast toast = Toast.makeText(context, text, TOAST_DURATION_S);

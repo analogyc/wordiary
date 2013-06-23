@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Allows editing an Entry
+ */
 public class EditEntryDialogFragment extends DialogFragment{
-
 
 	public interface EditEntryDialogListener {
 		public void onDialogModifyClick(DialogFragment dialog);
@@ -29,8 +31,7 @@ public class EditEntryDialogFragment extends DialogFragment{
 			mListener = (EditEntryDialogListener) activity;
 		} catch (ClassCastException e) {
 			// The activity doesn't implement the interface, throw exception
-			throw new ClassCastException(activity.toString()
-					+ " must implement NewEntryDialogListener");
+			throw new ClassCastException(activity.toString() + " must implement NewEntryDialogListener");
 		}
 	}
 
@@ -54,6 +55,7 @@ public class EditEntryDialogFragment extends DialogFragment{
 					}
 				})
 				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						EditEntryDialogFragment.this.getDialog().cancel();
 					}

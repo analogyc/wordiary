@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 
+/**
+ * Allows creating a new entry
+ */
 public class NewEntryDialogFragment extends DialogFragment {
-
 
 	public interface NewEntryDialogListener {
 		public void onDialogPositiveClick(DialogFragment dialog);
@@ -27,8 +29,7 @@ public class NewEntryDialogFragment extends DialogFragment {
 			mListener = (NewEntryDialogListener) activity;
 		} catch (ClassCastException e) {
 			// The activity doesn't implement the interface, throw exception
-			throw new ClassCastException(activity.toString()
-					+ " must implement NewEntryDialogListener");
+			throw new ClassCastException(activity.toString() + " must implement NewEntryDialogListener");
 		}
 	}
 
@@ -54,8 +55,8 @@ public class NewEntryDialogFragment extends DialogFragment {
 						NewEntryDialogFragment.this.getDialog().cancel();
 					}
 				});
-		return builder.create();
 
+		return builder.create();
 	}
 
 }

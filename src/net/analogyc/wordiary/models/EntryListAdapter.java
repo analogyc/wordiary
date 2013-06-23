@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-
+/**
+ * Adapter to show each day as a parent and each entry as a child of a day
+ */
 public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	private Context context;
@@ -189,50 +191,15 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			super();
 			this.id = id;
 		}
-		
-		
-	    @Override
-	    public boolean onDown(MotionEvent event) { 
-	        return true;
-	    }
-
-	    @Override
-	    public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
-	        return true;
-	    }
 
 	    @Override
 	    public void onLongPress(MotionEvent event) {
 	    	((MainActivity)context).onEntryLongClicked (id);
 	    }
-	    
-	    @Override
-	    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,float distanceY) {
-	        return true;
-	    }
-
-	    @Override
-	    public void onShowPress(MotionEvent event) {
-	    }
-
-	    @Override
-	    public boolean onSingleTapUp(MotionEvent event) {
-	        return true;
-	    }
-
-	    @Override
-	    public boolean onDoubleTap(MotionEvent event) {
-	        return true;
-	    }
-
-	    @Override
-	    public boolean onDoubleTapEvent(MotionEvent event) {
-	        return true;
-	    }
 
 	    @Override
 	    public boolean onSingleTapConfirmed(MotionEvent event) {
-	    	((MainActivity)context).onEntryClicked (id);
+	    	((MainActivity)context).onEntryClicked(id);
 	        return true;
 	    }
 	}

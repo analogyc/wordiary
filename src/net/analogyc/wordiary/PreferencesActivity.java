@@ -1,13 +1,14 @@
 package net.analogyc.wordiary;
 
-
-
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.view.Menu;
 import android.widget.Toast;
 
+/**
+ * Displays the preferences: font size, font family, grace period
+ */
 public class PreferencesActivity extends PreferenceActivity {
 	
 	@Override
@@ -15,7 +16,8 @@ public class PreferencesActivity extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		
 		addPreferencesFromResource(R.xml.preferences); 
-		
+
+		// grace_period must be a number and must be below 168
 		findPreference("grace_period").setOnPreferenceChangeListener(
 			new Preference.OnPreferenceChangeListener() {
 				

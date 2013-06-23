@@ -17,7 +17,15 @@ public class MoodsAdapter extends BaseAdapter {
 		this.context = context;
 		this.moods = moods;
 	}
- 
+
+	/**
+	 * Each view contains one mood from the res directory
+	 *
+	 * @param position
+	 * @param convertView
+	 * @param parent
+	 * @return
+	 */
 	public View getView(int position, View convertView, ViewGroup parent) {
  
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,12 +52,16 @@ public class MoodsAdapter extends BaseAdapter {
  
 		return gridView;
 	}
- 
+
+	/**
+	 * Get the amount of moods
+	 * @return
+	 */
 	@Override
 	public int getCount() {
 		return moods.length;
 	}
- 
+
 	@Override
 	public Object getItem(int position) {
 		return null;

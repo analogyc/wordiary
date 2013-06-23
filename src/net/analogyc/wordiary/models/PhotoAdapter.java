@@ -11,8 +11,10 @@ import net.analogyc.wordiary.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
- 
- 
+
+/**
+ * Adapter to show each entry in the gallery
+ */
 public class PhotoAdapter extends BaseAdapter {
 	private Context context;
 	private ArrayList<String[]> photos = new ArrayList<String[]>();

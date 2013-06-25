@@ -20,7 +20,7 @@
     <string name="confirm">Conferma</string>
     <string name="cancel">Cancella</string>
     <string name="go">Vai</string>
-    <string name="title_activity_mood">MoodActivity</string>
+    <string name="title_activity_mood">Come va?</string>
     <string name="font_size">Dimensione del font per i post</string>
     <string name="preferences">Preferenze</string>
     <string name="grace_period">Imposta il tempo limite di modifica per i post</string>

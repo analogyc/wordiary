@@ -24,7 +24,7 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="go">Go</string>
-    <string name="title_activity_mood">MoodActivity</string>
+    <string name="title_activity_mood">How are you?</string>
     <string name="font_size">Font size for entries</string>
     <string name="preferences">Preferences</string>
     <string name="grace_period">Set editing grace period</string>

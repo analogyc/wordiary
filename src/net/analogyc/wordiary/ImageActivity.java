@@ -113,8 +113,8 @@ public class ImageActivity extends BaseActivity {
 			setCurrentImage(location);
 
 			String dateString = c.getString(2);
-			SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);
-			SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.ITALY);
+			SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+			SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
 			try {
 				Date date = format_in.parse(dateString);

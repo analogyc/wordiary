@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.*;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
@@ -93,7 +92,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		}
 		((TextView) view.findViewById(R.id.entryMessage)).setText(info[1]);
 		
-		 final GestureDetector gestureDetector = new GestureDetector(context,new GDetector(Integer.parseInt(info[0])));
+		 final GestureDetector gestureDetector = new GestureDetector(context,new EntryGDetector(Integer.parseInt(info[0])));
 
 		 view.setOnTouchListener(new OnTouchListener() {
 			 @Override
@@ -107,7 +106,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 				 }
 				 
 				 gestureDetector.onTouchEvent(event);
-				 return true;
+				 return false;
 	            }
 	        });
 		
@@ -143,11 +142,12 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getGroupView(int groupPosition, boolean isLastChild, View view, ViewGroup parent) {
 		String[] info = (String[]) getGroup(groupPosition);
+		Boolean hasImage = true;
 		if (view == null) {
 			LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = inf.inflate(R.layout.day_style, null);
 		}
-
+		
 		Bitmap image;
 		ImageView imageView = (ImageView) view.findViewById(R.id.dayImage);
 
@@ -166,6 +166,9 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 					.setRoundedCorner(15)
 					.execute();
 			}
+			else{
+				hasImage = false;
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -179,15 +182,14 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			//won't happen if we use only dataBaseHelper.addEntry(...)
 		}
 		
-		final int groupId = (int) getGroupId(groupPosition);
+		final GestureDetector gestureDetector = new GestureDetector(context,new DayGDetector(Integer.parseInt(info[0]),hasImage));
 		
-		view.setOnLongClickListener(new OnLongClickListener(){
-			@Override
-			public boolean onLongClick(View view) {
-				((OptionDayListener)context).onDayLongClicked(groupId);
-				return true;
-			}
-			
+		imageView.setOnTouchListener(new OnTouchListener() {
+			 @Override
+			 public boolean onTouch(View v, MotionEvent event) {				 
+				 gestureDetector.onTouchEvent(event);
+				 return true;
+			 }
 		});
 		
 		return view;
@@ -203,16 +205,15 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		return true;
 	}
 
-	private class GDetector extends SimpleOnGestureListener {
+	private class EntryGDetector extends SimpleOnGestureListener {
 
 		private int id;
 		private OptionEntryListener activity;
 		
-		public GDetector(int id){
+		
+		public EntryGDetector(int id){
 			super();
-			this.id = id;
-			
-			
+			this.id = id;		
 			try {
 				activity =(OptionEntryListener)context;
 			} catch (ClassCastException e) {
@@ -231,6 +232,34 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	    	activity.onEntryClicked(id);
 	        return true;
 	    }
+	}
+	
+	private class DayGDetector extends SimpleOnGestureListener {
+
+		private int id;
+		private OptionDayListener activity;
+		private boolean longClickEnabled;
+		
+		
+		public DayGDetector(int id, boolean longClickEnabled){
+			super();
+			this.id = id;
+			this.longClickEnabled = longClickEnabled;
+			try {
+				activity =(OptionDayListener)context;
+			} catch (ClassCastException e) {
+				// The activity doesn't implement the interface, throw exception
+				throw new ClassCastException(context.toString() + " must implement OptionEntryListener");
+			}
+		}
+
+	    @Override
+	    public void onLongPress(MotionEvent event) {
+	    	if(longClickEnabled){
+	    		activity.onDayLongClicked(id);
+	    	}
+	    }    
+	    
 	}
 	
 	

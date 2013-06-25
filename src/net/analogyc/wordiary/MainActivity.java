@@ -7,12 +7,14 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 import net.analogyc.wordiary.OptionEntryDialogFragment.OptionEntryDialogListener;
 import net.analogyc.wordiary.models.EntryListAdapter;
+import net.analogyc.wordiary.models.EntryListAdapter.OptionDayListener;
+
 import net.analogyc.wordiary.models.EntryListAdapter.OptionEntryListener;
 
 /**
  * Displays the list of days as parents and entries as children
  */
-public class MainActivity extends BaseActivity implements OptionEntryDialogListener,OptionEntryListener{
+public class MainActivity extends BaseActivity implements OptionEntryDialogListener,OptionEntryListener,OptionDayListener{
 
 	private ExpandableListView entryList;
 	private EntryListAdapter entryAdapter;
@@ -32,6 +34,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	protected void showEntries(){
 		entryAdapter = new EntryListAdapter(this, bitmapWorker);
 		entryList.setAdapter(entryAdapter);
+			
 	}
 
 	/**
@@ -57,6 +60,17 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		args.putInt("entryId", id);
 		editFragment.setArguments(args);
 		editFragment.show(getSupportFragmentManager(), "editEntry");
+	}
+	
+	/**
+	 * Opens the selected image in fullscreen
+	 *
+	 * @param id The entry id
+	 */
+	public void onDayLongClicked(int id){
+		Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+    	intent.putExtra("dayId",id);
+    	startActivity(intent);
 	}
 
 	/**

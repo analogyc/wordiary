@@ -6,12 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.*;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.analogyc.wordiary.R;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,12 +24,16 @@ import java.util.Locale;
  */
 public class EntryListAdapter extends BaseExpandableListAdapter {
 	
+	public interface OptionDayListener {
+		public void onDayLongClicked(int id);
+	}
+	
 	public interface OptionEntryListener {
 		public void onEntryLongClicked(int id);
 		public void onEntryClicked(int id);
 	}
 
-	private Context context;
+	private final Context context;
 	private ArrayList<String[]> days = new ArrayList<String[]>();
 	private BitmapWorker bitmapWorker;
 
@@ -49,6 +53,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		database.close();
 		day.close();
 	}
+	
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
@@ -173,6 +178,17 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		} catch (ParseException e) {
 			//won't happen if we use only dataBaseHelper.addEntry(...)
 		}
+		
+		final int groupId = (int) getGroupId(groupPosition);
+		
+		view.setOnLongClickListener(new OnLongClickListener(){
+			@Override
+			public boolean onLongClick(View view) {
+				((OptionDayListener)context).onDayLongClicked(groupId);
+				return true;
+			}
+			
+		});
 		
 		return view;
 	}

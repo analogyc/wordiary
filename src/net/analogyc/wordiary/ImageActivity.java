@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.*;
 import android.widget.Button;
 import android.widget.TextView;
@@ -114,8 +113,8 @@ public class ImageActivity extends BaseActivity {
 			setCurrentImage(location);
 
 			String dateString = c.getString(2);
-			SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);
-			SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.ITALY);
+			SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+			SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
 			try {
 				Date date = format_in.parse(dateString);
@@ -136,7 +135,6 @@ public class ImageActivity extends BaseActivity {
 	 * @param view
 	 */
 	public void onNextImageButtonClicked(View view) {
-		Log.e("onNext", "next");
 		getNext(true);
 	}
 
@@ -146,7 +144,6 @@ public class ImageActivity extends BaseActivity {
 	 * @param view
 	 */
 	public void onPrevImageButtonClicked(View view) {
-		Log.e("onPrev", "prev");
 		getNext(false);
 	}
 
@@ -159,7 +156,6 @@ public class ImageActivity extends BaseActivity {
 		Intent share = new Intent(Intent.ACTION_SEND);
 
 		String ext = currentImage.substring(currentImage.length() - 4, currentImage.length()).toLowerCase();
-		Log.e("ext", ext);
 		if (ext.equals(".jpg") || ext.equals("jpeg")) {
 			share.setType("image/jpeg");
 		} else if (ext.equals(".png")) {

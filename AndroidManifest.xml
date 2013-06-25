@@ -36,10 +36,12 @@
         </activity>
         <activity
             android:name="net.analogyc.wordiary.MoodsActivity"
+            android:theme="@android:style/Theme.Dialog"
             android:label="@string/title_activity_mood" >
         </activity>
         <activity
             android:name="net.analogyc.wordiary.PreferencesActivity"
+            android:theme="@android:style/Theme.Light"
             android:label="@string/preferences" >
         </activity>
         <activity

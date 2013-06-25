@@ -4,17 +4,11 @@
     android:layout_height="match_parent"
     tools:context=".MoodsActivity" >
 
-	<net.analogyc.wordiary.HeaderView
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
-		android:id="@+id/HeaderViewLayout"/>
-
     <GridView
         android:id="@+id/moodGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-		android:layout_below="@+id/HeaderViewLayout"
         android:numColumns="2" >
     </GridView>
 

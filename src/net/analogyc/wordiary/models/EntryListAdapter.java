@@ -170,8 +170,8 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			e.printStackTrace();
 		}
 
-		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);
-		SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.ITALY);
+		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+		SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 		try {
 			Date date = format_in.parse(info[2]);
 			((TextView) view.findViewById(R.id.dayDate)).setText(format_out.format(date));

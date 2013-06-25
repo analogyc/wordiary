@@ -47,7 +47,6 @@ public class ImageWebView extends WebView {
 	public void setup() {
 		WebSettings set = getSettings();
 		set.setAllowFileAccess(true);
-		set.setJavaScriptEnabled(true);
 		set.setBuiltInZoomControls(true);
 		set.setLoadWithOverviewMode(true);
 		set.setUseWideViewPort(true);

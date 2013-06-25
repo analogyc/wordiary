@@ -1,6 +1,7 @@
 package net.analogyc.wordiary;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -31,5 +32,9 @@ public class HeaderView extends LinearLayout {
 		newEntryButton.setTypeface(fontawsm);
 		openPreferencesButton.setTypeface(fontawsm);
 		openGalleryButton.setTypeface(fontawsm);
+		
+		if (!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+			takePhotoButton.setTextColor(0x77FFFFFF);
+		}
 	}
 }

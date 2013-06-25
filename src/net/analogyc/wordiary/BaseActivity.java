@@ -5,8 +5,11 @@ import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.Photo;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StatFs;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
@@ -89,6 +92,19 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	 * @param view
 	 */
 	public void onTakePhotoClicked(View view){
+		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+			Toast.makeText(this, getString(R.string.camera_not_available), TOAST_DURATION_L).show();
+			return;
+		}
+		
+		StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
+		long megabytes = ((long) stat.getBlockSize() * (long) stat.getBlockCount()) / (1024 * 1024);
+		
+		if (megabytes < 5) {
+			Toast.makeText(this, getString(R.string.sd_full), TOAST_DURATION_L).show();
+			return;
+		}
+		
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		imageUri = Uri.fromFile(Photo.getOutputMediaFile(1));
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);

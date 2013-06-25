@@ -222,7 +222,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		String shareBody = (String) messageText.getText();
 		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wordiary");
 		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-		startActivity(Intent.createChooser(sharingIntent, "Share via"));
+		startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
 	}
 
 	/**

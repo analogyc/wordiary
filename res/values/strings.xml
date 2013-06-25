@@ -38,5 +38,8 @@
     <string name="share_button">Share</string>
     <string name="message_saved">Message saved</string>
     <string name="message_not_saved">Message not saved</string>
-
+    <string name="share_via">Share via</string>
+    <string name="camera_not_available">Camera not available</string>
+    <string name="sd_full">The SD card is full</string>
+    
 </resources>

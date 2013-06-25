@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	public void deleteSelectedEntry(int id) {
 		dataBase.deleteEntry(id);
 		showEntries();
-		Toast toast = Toast.makeText(this, "Message deleted", TOAST_DURATION_S);
+		Toast toast = Toast.makeText(this, getString(R.string.message_deleted), TOAST_DURATION_S);
 		toast.show();
 	}
 
@@ -101,7 +101,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		entry.close();
 		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wordiary");
 		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-		startActivity(Intent.createChooser(sharingIntent, "Share via"));
+		startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
 	}
 
 	@Override

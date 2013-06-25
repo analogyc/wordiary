@@ -6,11 +6,9 @@
 			  android:layout_height="match_parent" >
 
 	<net.analogyc.wordiary.ImageWebView
-		android:background="#000000"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:id="@+id/imageWebView"
-		android:layout_gravity="center"
 		android:layout_marginBottom="40dp"/>
 
 	<LinearLayout

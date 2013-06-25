@@ -28,22 +28,6 @@ public class ImageActivity extends BaseActivity {
 	private TextView dateText;
 	private Button nextButton, prevButton, shareButton;
 
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_image);
-
-		if (dayId == 0) {
-			Intent intent = getIntent();
-			dayId = intent.getIntExtra("dayId", -1);
-		}
-
-		imageWebView = (ImageWebView) findViewById(R.id.imageWebView);
-		dateText = (TextView) findViewById(R.id.imageDateText);
-		nextButton = (Button) findViewById(R.id.nextImageButton);
-		prevButton = (Button) findViewById(R.id.prevImageButton);
-		shareButton = (Button) findViewById(R.id.shareImageButton);
-	}
-
 	/**
 	 * Opens the next or previous image if available
 	 *
@@ -56,6 +40,7 @@ public class ImageActivity extends BaseActivity {
 			dayId = c.getInt(0);
 			setView();
 		}
+		c.close();
 	}
 
 	/**
@@ -75,6 +60,40 @@ public class ImageActivity extends BaseActivity {
 	 * Prepares the views and loads the image
 	 */
 	public void setView() {
+		// reload the entire view since on android 2.x it will fail to reload the html
+		setContentView(R.layout.activity_image);
+
+		if (dayId == 0) {
+			Intent intent = getIntent();
+			dayId = intent.getIntExtra("dayId", -1);
+		}
+
+		imageWebView = (ImageWebView) findViewById(R.id.imageWebView);
+		dateText = (TextView) findViewById(R.id.imageDateText);
+		nextButton = (Button) findViewById(R.id.nextImageButton);
+		prevButton = (Button) findViewById(R.id.prevImageButton);
+		shareButton = (Button) findViewById(R.id.shareImageButton);
+		
+		// all custom onFlingListener for ImageWebView
+		imageWebView.setOnFlingListener(new ImageWebView.OnFlingListener() {
+			@Override
+			public boolean onFling(View view, MotionEvent e1, MotionEvent motionEvent, float velocityX, float velocityY) {
+				Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+				DisplayMetrics dm = new DisplayMetrics();
+				display.getMetrics(dm);
+
+				if ((dm.densityDpi > 300 && imageWebView.getScale() == 2.0f) || dm.densityDpi <= 300 && imageWebView.getScale() == 1.0f) {
+					if (velocityX > 800f) {
+						getNext(false);
+					} else if (velocityX < -800f) {
+						getNext(true);
+					}
+				}
+
+				return true;
+			}
+		});
+		
 		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
 		nextButton.setTypeface(fontawsm);
 		prevButton.setTypeface(fontawsm);
@@ -107,31 +126,8 @@ public class ImageActivity extends BaseActivity {
 
 			c.close();
 		}
-
+		
 		imageWebView.setImage(location);
-
-		// all custom onFlingListener for ImageWebView
-		imageWebView.setOnFlingListener(new ImageWebView.OnFlingListener() {
-			@Override
-			public boolean onFling(View view, MotionEvent e1, MotionEvent motionEvent, float velocityX, float velocityY) {
-				Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-				DisplayMetrics dm = new DisplayMetrics();
-				display.getMetrics(dm);
-
-				Log.e("velocityX", ""+velocityX);
-				Log.e("scale", ""+imageWebView.getScale());
-
-				if ((dm.densityDpi > 300 && imageWebView.getScale() == 2.0f) || dm.densityDpi <= 300 && imageWebView.getScale() == 1.0f) {
-					if (velocityX > 1000f) {
-						getNext(false);
-					} else if (velocityX < -1000f) {
-						getNext(true);
-					}
-				}
-
-				return true;
-			}
-		});
 	}
 
 	/**

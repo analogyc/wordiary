@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.*;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,6 +20,7 @@ public class ImageWebView extends WebView {
 	private Context context;
 	private GestureDetector gestureDetector;
 	private OnFlingListener flingListener;
+	private int reload;
 
 	public ImageWebView(Context context) {
 		super(context);
@@ -57,7 +59,7 @@ public class ImageWebView extends WebView {
 
 		gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
 			@Override
-			public boolean onDoubleTap(MotionEvent e) {
+			public boolean onSingleTapUp(MotionEvent e) {
 				ImageWebView.this.zoomIn();
 				return true;
 			}
@@ -168,7 +170,7 @@ public class ImageWebView extends WebView {
 				"</body>" +
 				"</html>";
 
-		loadDataWithBaseURL("", html, "text/html", "utf-8", "");
+		loadDataWithBaseURL(location, html, "text/html", "utf-8", location);
 		overrideZoom();
 	}
 

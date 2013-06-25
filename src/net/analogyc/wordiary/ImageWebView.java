@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.*;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -20,7 +19,6 @@ public class ImageWebView extends WebView {
 	private Context context;
 	private GestureDetector gestureDetector;
 	private OnFlingListener flingListener;
-	private int reload;
 
 	public ImageWebView(Context context) {
 		super(context);

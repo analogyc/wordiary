@@ -54,7 +54,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	}
 
 	/**
-	 * Displays the preferences panel, instead of using the ••• button
+	 * Displays the preferences panel, instead of using the preferences button
 	 *
 	 * @param view
 	 */

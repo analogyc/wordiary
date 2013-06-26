@@ -106,7 +106,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 				 }
 				 
 				 gestureDetector.onTouchEvent(event);
-				 return false;
+				 return true;
 	            }
 	        });
 		

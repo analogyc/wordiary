@@ -148,6 +148,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 			dataBase.addEntry(message, 0);
 			if (this instanceof MainActivity) {
 				((MainActivity) this).showEntries();
+				((MainActivity) this).restoreListState();
 			}
 		} else {
 			text = getString(R.string.message_not_saved);
@@ -166,10 +167,10 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	}
 
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState){
-		super.onRestoreInstanceState(savedInstanceState);
-		if(savedInstanceState.containsKey("cameraImageUri")){
-			imageUri = Uri.parse(savedInstanceState.getString("cameraImageUri"));
+	protected void onRestoreInstanceState(Bundle savedState){
+		super.onRestoreInstanceState(savedState);
+		if(savedState.containsKey("cameraImageUri")){
+			imageUri = Uri.parse(savedState.getString("cameraImageUri"));
 		}
 	}
 
@@ -177,10 +178,5 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	protected void onPause(){
 		dataBase.close();
 		super.onPause();
-	}
-
-	@Override
-	protected void onResume(){
-		super.onResume();
 	}
 }

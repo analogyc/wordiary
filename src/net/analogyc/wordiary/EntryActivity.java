@@ -231,7 +231,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * @param view
 	 */
 	public void onDeleteButtonClicked(View view){
-		dataBase.deleteEntry(entryId);
+		dataBase.deleteEntryById(entryId);
 		Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted),TOAST_DURATION_S);
 		toast.show();
 		//Now EntryActivity has no reason to be visible

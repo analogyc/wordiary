@@ -147,15 +147,52 @@ public class DBAdapter {
 	}
 
 	/**
-	 * Delete a entry
+	 * Delete an entry
 	 *
 	 * @param id the message id
 	 */
-	public void deleteEntry(int id) {
+	public void deleteEntryById(int id) {
 		//delete the entry
+		Cursor entry = getEntryById(id);
+		entry.moveToFirst();
+		int day_id = entry.getInt(1);
+		entry.close();
+		Cursor day = getDayById(day_id);
+		Cursor day_entries = getEntryByDay(day_id);
+		day.moveToFirst();
+		String filename = day.getString(1);
+		if(filename.equals("") && day_entries.getCount() <= 1){
+			deleteDay(day_id, false);
+		}
+		day.close();
+		day_entries.close();
 		String query = "DELETE FROM " + Entry.TABLE_NAME + " WHERE " + Entry._ID + " = " + id;
 		getConnection().execSQL(query);
 	}
+	
+	/**
+	 * Delete a day, this method maintains the consistency of the data stored, so a day can be deleted only if
+	 *  it has no entry
+	 *
+	 * @param id the day id
+	 * @param consistency true if method has to make sure about data consistency
+	 * @return 0 if the selected day is correctly deleted from db, the number of relative entries
+	 *  otherwise (in this case db isn't modified)
+	 */
+	public int deleteDay(int id, boolean consistency) {
+		Cursor c = getEntryByDay(id);
+		int count = c.getCount();
+		if(count <= 0 || !consistency){
+			//delete the entry
+			String query = "DELETE FROM " + Day.TABLE_NAME + " WHERE " + Day._ID + " = " + id;
+			getConnection().execSQL(query);
+		}
+		c.close();
+		return count;
+	}
+	
+
+	
 
 
 	/**

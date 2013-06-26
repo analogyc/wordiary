@@ -28,15 +28,16 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 
         //get the the corresponding link for each view object
         entryList = (ExpandableListView) findViewById(R.id.entries);
+        
+		EntryListAdapter entryAdapter = new EntryListAdapter(this, bitmapWorker);
+		entryList.setAdapter(entryAdapter);
     }
 
 	/**
 	 * Reloads the list of entries
 	 */
 	protected void showEntries(){
-		EntryListAdapter entryAdapter = new EntryListAdapter(this, bitmapWorker);
-		entryList.setAdapter(entryAdapter);
-			
+		((EntryListAdapter)( entryList.getExpandableListAdapter())).notifyDataSetChanged();						
 	}
 
 	/**

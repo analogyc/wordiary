@@ -66,7 +66,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			if (resultCode == RESULT_OK) {
 				String moodId = data.getStringExtra("moodId");
 				dataBase.updateMood(entryId, moodId);
-
+				setView();
 			}
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);

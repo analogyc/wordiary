@@ -29,6 +29,7 @@
     <string name="grace_period_ended">Il tempo limite di modifica per il post è scaduto.</string>
     <string name="image_saved">Immagine salvata</string>
     <string name="message_deleted">Messaggio eliminato</string>
+    <string name="photo_deleted">Foto eliminata</string>
     <string name="accepted_values">Accettati solo valori tra 0 e 168.</string>
     <string name="action_settings">Impostazioni</string>
     <string name="delete_button">Elimina</string>

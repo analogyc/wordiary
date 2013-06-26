@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.*;
 import net.analogyc.wordiary.EditEntryDialogFragment.EditEntryDialogListener;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -83,7 +84,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		deleteEntryButton.setTypeface(fontawsm);
 		shareEntryButton.setTypeface(fontawsm);
 		
-		if(!dataBase.isEditable(entryId)){
+		if(!dataBase.isEditableEntry(entryId)){
 			setNewMoodButton.setTextColor(0xFFBBBBBB);
 			editEntryButton.setTextColor(0xFFBBBBBB);
 		}
@@ -167,6 +168,9 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 					image_stream = getAssets().open("default-avatar.jpg");
 					image = BitmapFactory.decodeStream(image_stream);
 					photoButton.setImageBitmap(image);
+					
+					
+					this.findViewById(R.id.button1).setClickable(false); //this need to be done with the definitive button
 				}
 			}
         } catch (IOException e) {
@@ -200,7 +204,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * @param view
 	 */
 	public void onMoodButtonClicked(View view){
-		if(!dataBase.isEditable(entryId)){
+		if(!dataBase.isEditableEntry(entryId)){
 			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), TOAST_DURATION_S);
 			toast.show();
 			return;
@@ -237,13 +241,40 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		//Now EntryActivity has no reason to be visible
 		finish();
 	}
+	
+	/**
+	 * Deletes the entry
+	 *
+	 * @param view
+	 */
+	public void onPhotoDelete(View view){
+		Cursor day = dataBase.getDayByEntry(entryId);
+		day.moveToFirst();
+		int id = day.getInt(0);
+		String filename = day.getString(1);
+		day.close();
+		
+		if (dataBase.isEditableDay(id)){
+			File photo = new File(filename);
+			if(photo.delete()){
+				dataBase.deletePhoto(id);
+				Toast toast = Toast.makeText(getBaseContext(), R.string.photo_deleted ,TOAST_DURATION_S);
+				toast.show();
+			}
+			setView();
+		}
+		else{
+			Toast toast = Toast.makeText(getBaseContext(), R.string.grace_period_ended ,TOAST_DURATION_S);
+			toast.show();
+		}
+	}
 
 	/**
 	 * Displays the dialog for editing the entry, only if within the grace period
 	 * @param view
 	 */
 	public void onEditButtonClicked(View view){
-		if(!dataBase.isEditable(entryId)){
+		if(!dataBase.isEditableEntry(entryId)){
 			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), TOAST_DURATION_S);
 			toast.show();
 			return;

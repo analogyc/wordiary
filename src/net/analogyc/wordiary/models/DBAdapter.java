@@ -192,24 +192,32 @@ public class DBAdapter {
 	}
 	
 	/**
+	 * Get the  entries of the selected day
+	 *
+	 * @param id entry's id
+	 * @return a Cursor that contains the selected day, or null
+	 */
+	public Cursor getDayByEntry(int id) {
+		Cursor c = this.getEntryById(id);
+		c.moveToFirst();
+		int day = c.getInt(1);
+		c.close();
+		return getDayById(day);
+	}
+	
+	/**
 	 * Delete the selected photo
 	 *
 	 * @param int the day id
 	 * @return the filename deleted
 	 * 
 	 */
-	public String deletePhoto(int id) {
-		Cursor c = getEntryByDay(id);
-		c.moveToFirst();
-		String filename = c.getString(1);
-
+	public void deletePhoto(int id) {
 		//delete the filename
 		String query =	"UPDATE " + Day.TABLE_NAME + " " +
 						"SET " + Day.COLUMN_NAME_FILENAME + " = ''" +
-						"WHERE " + Day._ID + " = ?";
+						"WHERE " + Day._ID + " = "+ id;
 		getConnection().execSQL(query);
-		c.close();
-		return filename;
 	}
 	
 
@@ -332,7 +340,7 @@ public class DBAdapter {
 	 * @param entryId entry id
 	 * @return boolean true if is editable, false otherwise
 	 */
-	public boolean isEditable(int entryId){
+	public boolean isEditableEntry(int entryId){
 		 int grace_period = Integer.parseInt(preferences.getString("grace_period", "1"));
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
@@ -357,6 +365,38 @@ public class DBAdapter {
 		long diff = now_mil - created_mil;
 		return diff < grace_period * 60 * 60 * 1000;
 
+	}
+	
+	/**
+	 * Verify if the selected entry can be modified
+	 *
+	 * @param entryId entry id
+	 * @return boolean true if is editable, false otherwise
+	 */
+	public boolean isEditableDay(int dayId){
+		 int grace_period = 24; // this could be stored in other way
+		//create the current timestamp
+		Date now = new Date(System.currentTimeMillis());
+		String DATE_FORMAT = "yyyyMMddHHmmss";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+
+		String query = "SELECT * FROM " + Day.TABLE_NAME + " WHERE " + Day._ID + " = " + dayId +" LIMIT 1";
+		Cursor c =getConnection().rawQuery(query, null);
+		c.moveToFirst();
+		Date created;
+		try {
+			created = sdf.parse(c.getString(2));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return false;
+		}
+		c.close();
+
+		long now_mil = now.getTime();
+		long created_mil = created.getTime();
+		
+		long diff = now_mil - created_mil;
+		return diff < grace_period * 60 * 60 * 1000;
 	}
 
 	/**

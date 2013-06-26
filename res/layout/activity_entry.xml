@@ -136,6 +136,16 @@
 				android:adjustViewBounds="true"
 				android:scaleType="fitCenter" />
 
+			<Button
+			    android:id="@+id/button1"
+			    style="?android:attr/buttonStyleSmall"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignLeft="@+id/EntryButtonsLayout"
+			    android:layout_alignParentBottom="true"
+			    android:onClick="onPhotoDelete"
+			    android:text="DeletePhoto" />
+
 		</RelativeLayout>
 	</ScrollView>
 </RelativeLayout>

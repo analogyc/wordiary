@@ -126,6 +126,9 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 				// Image captured and saved to fileUri specified in the Intent
 				Toast.makeText(this, getString(R.string.image_saved) + imageUri, TOAST_DURATION_L).show();
 				bitmapWorker.clearBitmapFromMemCache(imageUri.getPath());
+				if (this instanceof MainActivity) {
+					((MainActivity) this).showEntries();
+				}
 			}
 		}
 	}

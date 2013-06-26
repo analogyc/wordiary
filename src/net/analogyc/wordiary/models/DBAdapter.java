@@ -191,7 +191,26 @@ public class DBAdapter {
 		return count;
 	}
 	
+	/**
+	 * Delete the selected photo
+	 *
+	 * @param int the day id
+	 * @return the filename deleted
+	 * 
+	 */
+	public String deletePhoto(int id) {
+		Cursor c = getEntryByDay(id);
+		c.moveToFirst();
+		String filename = c.getString(1);
 
+		//delete the filename
+		String query =	"UPDATE " + Day.TABLE_NAME + " " +
+						"SET " + Day.COLUMN_NAME_FILENAME + " = ''" +
+						"WHERE " + Day._ID + " = ?";
+		getConnection().execSQL(query);
+		c.close();
+		return filename;
+	}
 	
 
 

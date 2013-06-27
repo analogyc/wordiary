@@ -375,7 +375,6 @@ public class DBAdapter {
 	 * @return boolean true if is editable, false otherwise
 	 */
 	public boolean isEditableDay(int dayId){
-		 int grace_period = 24; // this could be stored in other way
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
 		String DATE_FORMAT = "yyyyMMddHHmmss";
@@ -384,20 +383,10 @@ public class DBAdapter {
 		String query = "SELECT * FROM " + Day.TABLE_NAME + " WHERE " + Day._ID + " = " + dayId +" LIMIT 1";
 		Cursor c =getConnection().rawQuery(query, null);
 		c.moveToFirst();
-		Date created;
-		try {
-			created = sdf.parse(c.getString(2));
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return false;
-		}
+		String created_date = c.getString(2).substring(0, 8);
 		c.close();
-
-		long now_mil = now.getTime();
-		long created_mil = created.getTime();
-		
-		long diff = now_mil - created_mil;
-		return diff < grace_period * 60 * 60 * 1000;
+		String current_date = sdf.format(now).substring(0, 8);
+		return created_date.equals(current_date);
 	}
 
 	/**

@@ -337,4 +337,20 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		super.onStart();
 		setView();
 	}
+	
+	public void setNextEntry(View view){
+		Cursor nextEntry = dataBase.getNextEntry(entryId, false);
+		int next = nextEntry.getInt(0);
+		entryId = next;
+		nextEntry.close();
+		setView();
+	}
+	
+	public void setPrevEntry(View view){
+		Cursor prevEntry = dataBase.getNextEntry(entryId, true);
+		int next = prevEntry.getInt(0);
+		entryId = next;
+		prevEntry.close();
+		setView();
+	}
 }

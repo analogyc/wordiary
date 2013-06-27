@@ -49,6 +49,7 @@ public class DBAdapter {
 			database = null;
 		}
 	}
+	
 
 	/**
 	 * Get all the entries in the db
@@ -414,4 +415,46 @@ public class DBAdapter {
 				"LIMIT 1";
 		return getConnection().rawQuery(query, new String[] {Integer.toString(currentDay), "" });
 	}
+	
+	/**
+	 * Gets the next or the previous entry id
+	 *
+	 * @param currentDay The id of the current day opened
+	 * @param backwards If it should look for the previous image
+	 * @return The cursor containing the single row or zero rows, with as only column the ID
+	 */
+	public Cursor getNextEntry(int currentEntry, boolean backwards) {
+		String query = 	"SELECT " + Entry._ID + " FROM " + Entry.TABLE_NAME + " " +
+						"WHERE " + Entry._ID + " " + (backwards ? "<" : ">") + currentEntry +
+						"ORDER BY " + Day._ID + " " + (backwards ? "DESC" : "ASC") + " " +
+						"LIMIT 1";
+		Cursor result = getConnection().rawQuery(query, null);
+		if(result.getCount() <=0){
+			result.close();
+			return getEntryById(currentEntry);
+		}
+		else{
+			return result;
+		}
+	}
+	
+	/**
+	 * Determine if entry has a next ( or the previous) entry
+	 *
+	 * @param currentDay The id of the current day opened
+	 * @param backwards If it should look for the previous image
+	 * @return true is it has a next or previous, false otherwise
+	 */
+	public boolean hasNextEntry(int currentEntry, boolean backwards) {
+		String query = 	"SELECT " + Entry._ID + " FROM " + Entry.TABLE_NAME + " " +
+						"WHERE " + Entry._ID + " " + (backwards ? "<" : ">") + currentEntry +
+						"ORDER BY " + Day._ID + " " + (backwards ? "DESC" : "ASC") + " " +
+						"LIMIT 1";
+		Cursor result = getConnection().rawQuery(query, null);
+		boolean hasNext = result.getCount() > 0;
+		result.close();
+		return hasNext;
+	}
+	
+	
 }

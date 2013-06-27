@@ -10,8 +10,9 @@ import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.Button;
 import android.widget.TextView;
-import net.analogyc.wordiary.models.DBAdapter;
+import android.widget.Toast;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +26,7 @@ public class ImageActivity extends BaseActivity {
 	private String currentImage;
 	private ImageWebView imageWebView;
 	private TextView dateText;
-	private Button nextButton, prevButton, shareButton;
+	private Button nextButton, prevButton, shareButton, deleteButton;
 
 	/**
 	 * Opens the next or previous image if available
@@ -72,7 +73,8 @@ public class ImageActivity extends BaseActivity {
 		nextButton = (Button) findViewById(R.id.nextImageButton);
 		prevButton = (Button) findViewById(R.id.prevImageButton);
 		shareButton = (Button) findViewById(R.id.shareImageButton);
-		
+		deleteButton = (Button) findViewById(R.id.deleteImageButton);
+
 		// all custom onFlingListener for ImageWebView
 		imageWebView.setOnFlingListener(new ImageWebView.OnFlingListener() {
 			@Override
@@ -97,35 +99,26 @@ public class ImageActivity extends BaseActivity {
 		nextButton.setTypeface(fontawsm);
 		prevButton.setTypeface(fontawsm);
 		shareButton.setTypeface(fontawsm);
+		deleteButton.setTypeface(fontawsm);
 
-		String location;
-		if (dayId == -1) {
-			location = "file://android_asset/default-avatar.jpg";
-		} else {
-			Cursor c = dataBase.getDayById(dayId);
-			c.moveToFirst();
-			if (c.getString(1).equals("")) {
-				location = "file://android_asset/default-avatar.jpg";
-			} else {
-				location = "file://" + c.getString(1);
-			}
+		Cursor c = dataBase.getDayById(dayId);
+		c.moveToFirst();
+		String location = "file://" + c.getString(1);
+		setCurrentImage(location);
 
-			setCurrentImage(location);
+		String dateString = c.getString(2);
+		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+		SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
-			String dateString = c.getString(2);
-			SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
-			SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-
-			try {
-				Date date = format_in.parse(dateString);
-				dateText.setText(format_out.format(date));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-
-			c.close();
+		try {
+			Date date = format_in.parse(dateString);
+			dateText.setText(format_out.format(date));
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
-		
+
+		c.close();
+
 		imageWebView.setImage(location);
 	}
 

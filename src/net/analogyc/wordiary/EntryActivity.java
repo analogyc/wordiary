@@ -32,7 +32,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	private int dayId;
 	private TextView messageText, dateText;
     private ImageView photoButton, moodImage;
-	private Button setNewMoodButton, editEntryButton, deleteEntryButton, shareEntryButton;
+	private Button setNewMoodButton, editEntryButton, deleteEntryButton, shareEntryButton, photoDeleteButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		editEntryButton = (Button) findViewById(R.id.editEntryButton);
 		deleteEntryButton = (Button) findViewById(R.id.deleteEntryButton);
 		shareEntryButton = (Button) findViewById(R.id.shareEntryButton);
+		photoDeleteButton = (Button) findViewById(R.id.photoDeleteButton);
 	}
 
 	/**
@@ -83,7 +84,8 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		editEntryButton.setTypeface(fontawsm);
 		deleteEntryButton.setTypeface(fontawsm);
 		shareEntryButton.setTypeface(fontawsm);
-		
+		photoDeleteButton.setTypeface(fontawsm);
+
 		if(!dataBase.isEditableEntry(entryId)){
 			setNewMoodButton.setTextColor(0xFFBBBBBB);
 			editEntryButton.setTextColor(0xFFBBBBBB);
@@ -170,7 +172,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 					photoButton.setImageBitmap(image);
 					
 					
-					this.findViewById(R.id.button1).setClickable(false); //this need to be done with the definitive button
+					//this.findViewById(R.id.button1).setClickable(false); //this need to be done with the definitive button
 				}
 			}
         } catch (IOException e) {

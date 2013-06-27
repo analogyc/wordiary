@@ -137,14 +137,15 @@
 				android:scaleType="fitCenter" />
 
 			<Button
-			    android:id="@+id/button1"
-			    style="?android:attr/buttonStyleSmall"
+			    android:id="@+id/photoDeleteButton"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
-			    android:layout_alignLeft="@+id/EntryButtonsLayout"
-			    android:layout_alignParentBottom="true"
+			    android:layout_alignRight="@+id/photoButton"
+			    android:layout_alignTop="@+id/photoButton"
 			    android:onClick="onPhotoDelete"
-			    android:text="DeletePhoto" />
+				android:background="#bb555555"
+				android:textColor="#eeeeee"
+			    android:text="@string/button_deleteImage" />
 
 		</RelativeLayout>
 	</ScrollView>

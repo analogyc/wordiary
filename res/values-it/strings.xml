@@ -39,5 +39,7 @@
     <string name="share_via">Condividi via</string>
     <string name="camera_not_available">Fotocamera non disponibile</string>
     <string name="sd_full">La SD card è piena</string>
+	<string name="title_confirm">Procedere?</string>
+    
     
 </resources>

@@ -15,6 +15,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.*;
+import net.analogyc.wordiary.ConfirmDialogFragment.ConfirmDialogListener;
 import net.analogyc.wordiary.EditEntryDialogFragment.EditEntryDialogListener;
 
 import java.io.File;
@@ -25,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class EntryActivity extends BaseActivity implements EditEntryDialogListener  {
+public class EntryActivity extends BaseActivity implements EditEntryDialogListener, ConfirmDialogListener  {
 
 	private final int MOOD_RESULT_CODE = 101;
 	private int entryId;
@@ -235,6 +236,12 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * @param view
 	 */
 	public void onDeleteButtonClicked(View view){
+		ConfirmDialogFragment newFragment = new ConfirmDialogFragment();
+		newFragment.show(getSupportFragmentManager(), "Confirm");
+		
+	}
+	
+	public void onConfirmedClick(DialogFragment dialog) {
 		dataBase.deleteEntryById(entryId);
 		Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted),TOAST_DURATION_S);
 		toast.show();

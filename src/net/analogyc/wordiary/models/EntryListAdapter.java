@@ -36,9 +36,16 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	private ArrayList<String[]> days = new ArrayList<String[]>();
 	private BitmapWorker bitmapWorker;
 
+	private Bitmap defaultBitmap;
+
 	public EntryListAdapter(Context context, BitmapWorker bitmapWorker) {
 		this.context = context;
 		this.bitmapWorker = bitmapWorker;
+		try {
+			defaultBitmap = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		DBAdapter database = new DBAdapter(context);
 		Cursor day = database.getAllDays();
 		String[] info;
@@ -148,29 +155,21 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			view = inf.inflate(R.layout.day_style, null);
 		}
 		
-		Bitmap image;
 		ImageView imageView = (ImageView) view.findViewById(R.id.dayImage);
 
-		// set a default picture if an image wasn't already set from cache
-		try {
-			image = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
-			imageView.setImageBitmap(image);
-
-			if (!info[1].equals("")) {
-				bitmapWorker.createTask(imageView, info[1])
-					.setDefaultBitmap(image)
-					.setTargetHeight(128)
-					.setTargetWidth(128)
-					.setCenterCrop(true)
-					.setHighQuality(true)
-					.setRoundedCorner(15)
-					.execute();
-			}
-			else{
-				hasImage = false;
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!info[1].equals("")) {
+			bitmapWorker.createTask(imageView, info[1])
+				.setDefaultBitmap(defaultBitmap)
+				.setTargetHeight(128)
+				.setTargetWidth(128)
+				.setCenterCrop(true)
+				.setHighQuality(true)
+				.setRoundedCorner(15)
+				.execute();
+		}
+		else{
+			imageView.setImageBitmap(defaultBitmap);
+			hasImage = false;
 		}
 
 		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());

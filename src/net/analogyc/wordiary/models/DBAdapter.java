@@ -214,11 +214,15 @@ public class DBAdapter {
 	 * 
 	 */
 	public void deletePhoto(int id) {
-		//delete the filename
-		String query =	"UPDATE " + Day.TABLE_NAME + " " +
-						"SET " + Day.COLUMN_NAME_FILENAME + " = ''" +
-						"WHERE " + Day._ID + " = "+ id;
-		getConnection().execSQL(query);
+		int entries = this.deleteDay(id, true);
+		
+		if(entries > 0){
+			//delete the filename
+			String query =	"UPDATE " + Day.TABLE_NAME + " " +
+							"SET " + Day.COLUMN_NAME_FILENAME + " = ''" +
+							"WHERE " + Day._ID + " = "+ id;
+			getConnection().execSQL(query);
+		}
 	}
 	
 

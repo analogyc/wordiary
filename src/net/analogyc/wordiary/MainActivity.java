@@ -1,8 +1,11 @@
 package net.analogyc.wordiary;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 import net.analogyc.wordiary.OptionEntryDialogFragment.OptionEntryDialogListener;
@@ -37,6 +40,35 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	 */
 	protected void showEntries(){
 		EntryListAdapter entryAdapter = new EntryListAdapter(this, bitmapWorker);
+		
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		int typefaceInt = Integer.parseInt(preferences.getString("typeface", "1"));
+		Typeface typeface;
+		switch (typefaceInt) {
+			case 2:
+				typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
+				break;
+			case 3:
+				typeface = Typeface.createFromAsset(getAssets(), "fonts/stanhand.ttf");
+				break;
+			default:
+				typeface = Typeface.SANS_SERIF;
+		}
+
+		int fontSize = Integer.parseInt(preferences.getString("font_size", "2"));
+		int textSize;
+		switch (fontSize) {
+			case 1:
+				textSize = 14;
+				break;
+			case 3:
+				textSize = 24;
+				break;
+			default:
+				textSize = 18;
+		}
+		entryAdapter.setChildFont(typeface, textSize);
+		
 		entryList.setAdapter(entryAdapter);
 	}
 

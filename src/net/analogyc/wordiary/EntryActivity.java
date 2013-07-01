@@ -92,7 +92,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			editEntryButton.setTextColor(0xFFBBBBBB);
 		}
 
-		// we keep this in onResume because the user might have changed the font in Preferences and come back to Entry
+		// we keep this in onStart because the user might have changed the font in Preferences and come back to Entry
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		int typefaceInt = Integer.parseInt(preferences.getString("typeface", "1"));
 		switch (typefaceInt) {

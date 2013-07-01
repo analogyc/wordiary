@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.view.*;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnTouchListener;
@@ -36,12 +37,21 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	private final Context context;
 	private ArrayList<String[]> days = new ArrayList<String[]>();
 	private BitmapWorker bitmapWorker;
+	private int childTextSize;
+	private Typeface childTypeface;
+	
 
 	private Bitmap defaultBitmap;
 
 	public EntryListAdapter(Context context, BitmapWorker bitmapWorker) {
 		this.context = context;
 		this.bitmapWorker = bitmapWorker;
+		
+		//these explicit assignments make clear how setView works with these variables
+		childTypeface =  null;
+		childTextSize = 0;
+		
+		
 		try {
 			defaultBitmap = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
 		} catch (IOException e) {
@@ -98,7 +108,16 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = infalInflater.inflate(R.layout.entry_style, null);
 		}
-		((TextView) view.findViewById(R.id.entryMessage)).setText(info[1]);
+		TextView  message = ((TextView) view.findViewById(R.id.entryMessage));
+		message.setText(info[1]);
+		
+		//set a custom look for message if asked
+		if(childTextSize != 0)	{
+			message.setTextSize(childTextSize);
+		}
+		if(childTypeface != null) {
+			message.setTypeface(childTypeface);
+		}
 		
 		 final GestureDetector gestureDetector = new GestureDetector(context,new EntryGDetector(Integer.parseInt(info[0])));
 
@@ -117,7 +136,6 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 				 return true;
 	            }
 	        });
-		
 		return view;
 	}
 
@@ -194,6 +212,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		
 		return view;
 	}
+	
 
 	@Override
 	public boolean hasStableIds() {
@@ -204,6 +223,12 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
 	}
+	
+	public void setChildFont (Typeface typeface, int textSize){
+		childTypeface = typeface;
+		childTextSize = textSize;
+	}
+	
 
 	private class EntryGDetector extends SimpleOnGestureListener {
 

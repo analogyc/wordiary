@@ -4,9 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.*;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import net.analogyc.wordiary.R;
 
 import java.io.IOException;
@@ -19,6 +21,7 @@ public class PhotoAdapter extends BaseAdapter {
 	private Context context;
 	private ArrayList<String[]> photos = new ArrayList<String[]>();
 	private BitmapWorker bitmapWorker;
+	private ImageView imageView;
  
 	public PhotoAdapter(Context context, BitmapWorker bitmapWorker) {
 		this.context = context;
@@ -49,26 +52,22 @@ public class PhotoAdapter extends BaseAdapter {
 	 */
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View gridView;
-		
-		// get layout from mobile.xml
-		gridView = inflater.inflate(R.layout.image_style, null);
+		View gridView = inflater.inflate(R.layout.image_style, null);
 
 		// set image based on selected text
-		ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_gallery);
+		final ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_gallery);
+		final String photoPath = photos.get(position)[1];
+		int size = 256;
 
-		int size = 128;
-
-		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		DisplayMetrics dm = new DisplayMetrics();
-		display.getMetrics(dm);
-
-		if (dm.densityDpi > 300) {
-			size = 256;
-		}
+		imageView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+			public boolean onPreDraw() {
+				imageView.setMaxHeight(imageView.getMeasuredWidth());
+				return true;
+			}
+		});
 
 		try {
-			bitmapWorker.createTask(imageView, photos.get(position)[1])
+			bitmapWorker.createTask(imageView, photoPath)
 				.setDefaultBitmap(BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg")))
 				.setTargetHeight(size)
 				.setTargetWidth(size)

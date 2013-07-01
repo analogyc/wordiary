@@ -147,16 +147,37 @@ public class ImageActivity extends BaseActivity {
 	 */
 	public void onShareImageButtonClicked(View view) {
 		Intent share = new Intent(Intent.ACTION_SEND);
-
-		String ext = currentImage.substring(currentImage.length() - 4, currentImage.length()).toLowerCase();
-		if (ext.equals(".jpg") || ext.equals("jpeg")) {
-			share.setType("image/jpeg");
-		} else if (ext.equals(".png")) {
-			share.setType("image/png");
-		}
-
+		share.setType("image/*");
 		share.putExtra(Intent.EXTRA_STREAM, Uri.parse(currentImage));
-		startActivity(Intent.createChooser(share, "Share Image"));
+		startActivity(Intent.createChooser(share, getString(R.string.share_via)));
+	}
+
+	/**
+	 * Deletes the image
+	 *
+	 * @param view
+	 */
+	public void onDeleteImageButtonClicked(View view){
+		Cursor day = dataBase.getDayById(dayId);
+		day.moveToFirst();
+		int id = day.getInt(0);
+		String filename = day.getString(1);
+		day.close();
+
+		if (dataBase.isEditableDay(id)){
+			File photo = new File(filename);
+			if(photo.delete()){
+				dataBase.deletePhoto(id);
+				Toast toast = Toast.makeText(getBaseContext(), R.string.photo_deleted ,TOAST_DURATION_S);
+				toast.show();
+			}
+
+			finish();
+		}
+		else{
+			Toast toast = Toast.makeText(getBaseContext(), R.string.grace_period_ended ,TOAST_DURATION_S);
+			toast.show();
+		}
 	}
 
 	/**
@@ -177,13 +198,13 @@ public class ImageActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState){
+	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt("dayId", dayId);
 	}
 
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState){
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		if(savedInstanceState.containsKey("dayId")){
 			dayId = savedInstanceState.getInt("dayId");
@@ -191,7 +212,7 @@ public class ImageActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void onResume(){
+	protected void onResume() {
 		super.onResume();
 		setView();
 	}

@@ -171,9 +171,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 					image_stream = getAssets().open("default-avatar.jpg");
 					image = BitmapFactory.decodeStream(image_stream);
 					photoButton.setImageBitmap(image);
-					
-					
-					//this.findViewById(R.id.button1).setClickable(false); //this need to be done with the definitive button
+					photoDeleteButton.setVisibility(View.INVISIBLE);
 				}
 			}
         } catch (IOException e) {

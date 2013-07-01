@@ -134,13 +134,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		{
 			InputStream in = context.getAssets().open("testing_images/" + image);
 			File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-				+ "/MyCameraApp/");
+				+ "/Wordiary/");
 			File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) 
-					+ "/MyCameraApp/" + image);
+					+ "/Wordiary/" + image);
 
 			if (! dir.exists()){
 				if (! dir.mkdirs()){
-					Log.d("MyCameraApp", "failed to create directory");
+					Log.d("Wordiary", "failed to create directory");
 					throw new RuntimeException();
 				}
 			}
@@ -161,8 +161,5 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		}
 		
 		return "";
-
 	}
-			
-	
 }

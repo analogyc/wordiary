@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.Toast;
 import net.analogyc.wordiary.models.PhotoAdapter;
 
 /**
@@ -18,12 +19,16 @@ public class GalleryActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setView();
+	}
+
+	protected void setView() {
 		setContentView(R.layout.activity_gallery);
 
 		gridView = (GridView) findViewById(R.id.photoGrid);
-		
+
 		gridView.setAdapter(new PhotoAdapter(this, bitmapWorker));
- 
+
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -33,6 +38,5 @@ public class GalleryActivity extends BaseActivity {
 				startActivity(intent);
 			}
 		});
-		
 	}
 }

@@ -52,6 +52,8 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	public void onHomeButtonClicked(View view) {
 		if (!(this instanceof MainActivity)) {
 			Intent intent = new Intent(this, MainActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		}
 	}
@@ -82,8 +84,10 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	 * @param view
 	 */
 	public void onOpenGalleryClicked(View view){
-		Intent intent = new Intent(this, GalleryActivity.class);
-		startActivity(intent);
+		if (!(this instanceof GalleryActivity)) {
+			Intent intent = new Intent(this, GalleryActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	/**
@@ -124,10 +128,15 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 			if (resultCode == RESULT_OK) {
 				dataBase.addPhoto(imageUri.getPath());
 				// Image captured and saved to fileUri specified in the Intent
-				Toast.makeText(this, getString(R.string.image_saved) + imageUri, TOAST_DURATION_L).show();
+				Toast.makeText(this, getString(R.string.image_saved), TOAST_DURATION_L).show();
 				bitmapWorker.clearBitmapFromMemCache(imageUri.getPath());
+				bitmapWorker.clearBitmapFromMemCache("gallery_" + imageUri.getPath());
+
 				if (this instanceof MainActivity) {
 					((MainActivity) this).showEntries();
+				}
+				if (this instanceof GalleryActivity) {
+					((GalleryActivity) this).setView();
 				}
 			}
 		}

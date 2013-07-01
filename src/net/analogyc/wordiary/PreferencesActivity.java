@@ -3,7 +3,6 @@ package net.analogyc.wordiary;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.view.Menu;
 import android.widget.Toast;
 
 /**

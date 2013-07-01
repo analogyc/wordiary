@@ -1,8 +1,5 @@
 package net.analogyc.wordiary;
 
-import net.analogyc.wordiary.models.BitmapWorker;
-import net.analogyc.wordiary.models.DBAdapter;
-import net.analogyc.wordiary.models.Photo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,6 +14,9 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import net.analogyc.wordiary.models.BitmapWorker;
+import net.analogyc.wordiary.models.DBAdapter;
+import net.analogyc.wordiary.models.Photo;
 
 /**
  * Allows having the header in every page extending it

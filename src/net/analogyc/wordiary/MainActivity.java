@@ -1,7 +1,5 @@
 package net.analogyc.wordiary;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,8 +8,9 @@ import android.widget.Toast;
 import net.analogyc.wordiary.OptionEntryDialogFragment.OptionEntryDialogListener;
 import net.analogyc.wordiary.models.EntryListAdapter;
 import net.analogyc.wordiary.models.EntryListAdapter.OptionDayListener;
-
 import net.analogyc.wordiary.models.EntryListAdapter.OptionEntryListener;
+
+import java.util.ArrayList;
 
 /**
  * Displays the list of days as parents and entries as children

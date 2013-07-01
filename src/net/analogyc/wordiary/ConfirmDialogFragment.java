@@ -1,10 +1,10 @@
 package net.analogyc.wordiary;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 public class ConfirmDialogFragment extends DialogFragment {

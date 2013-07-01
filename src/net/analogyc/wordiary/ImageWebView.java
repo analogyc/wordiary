@@ -7,7 +7,6 @@ import android.util.DisplayMetrics;
 import android.view.*;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ZoomButtonsController;
 
 import java.lang.reflect.Field;
 

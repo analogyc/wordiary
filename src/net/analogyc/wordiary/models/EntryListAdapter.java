@@ -1,9 +1,12 @@
 package net.analogyc.wordiary.models;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.view.*;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnTouchListener;
@@ -98,26 +101,56 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = infalInflater.inflate(R.layout.entry_style, null);
 		}
-		((TextView) view.findViewById(R.id.entryMessage)).setText(info[1]);
-		
-		 final GestureDetector gestureDetector = new GestureDetector(context,new EntryGDetector(Integer.parseInt(info[0])));
 
-		 view.setOnTouchListener(new OnTouchListener() {
-			 @Override
-			 public boolean onTouch(View v, MotionEvent event) {
-				 
-				 if(event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_MOVE || event.getAction() == MotionEvent.ACTION_HOVER_MOVE){
-			        	v.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
-				 }
-				 else if(event.getAction() == MotionEvent.ACTION_DOWN){
-				    	v.setBackgroundColor(0xFFFFFFFF);
-				 }
-				 
-				 gestureDetector.onTouchEvent(event);
-				 return true;
-	            }
-	        });
+		TextView entryMessage = (TextView) view.findViewById(R.id.entryMessage);
+		entryMessage.setText(info[1]);
+
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+		int typefaceInt = Integer.parseInt(preferences.getString("typeface", "1"));
+		switch (typefaceInt) {
+			case 2:
+				Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/animeace2.ttf");
+				entryMessage.setTypeface(typeface);
+				break;
+			case 3:
+				Typeface typeface3 = Typeface.createFromAsset(context.getAssets(), "fonts/stanhand.ttf");
+				entryMessage.setTypeface(typeface3);
+				break;
+			default:
+				entryMessage.setTypeface(Typeface.SANS_SERIF);
+		}
+
+		int fontSize = Integer.parseInt(preferences.getString("font_size", "2"));
+		switch (fontSize) {
+			case 1:
+				entryMessage.setTextSize(14);
+				break;
+			case 3:
+				entryMessage.setTextSize(24);
+				break;
+			default:
+				entryMessage.setTextSize(18);
+		}
+
 		
+		final GestureDetector gestureDetector = new GestureDetector(context, new EntryGDetector(Integer.parseInt(info[0])));
+
+		view.setOnTouchListener(new OnTouchListener() {
+		 @Override
+		 public boolean onTouch(View v, MotionEvent event) {
+
+			 if(event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_MOVE || event.getAction() == MotionEvent.ACTION_HOVER_MOVE){
+					v.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+			 }
+			 else if(event.getAction() == MotionEvent.ACTION_DOWN){
+					v.setBackgroundColor(0xFFFFFFFF);
+			 }
+
+			 gestureDetector.onTouchEvent(event);
+			 return true;
+			}
+		});
+
 		return view;
 	}
 

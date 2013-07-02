@@ -152,8 +152,8 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 
     @Override
     protected void onPause() {
-        super.onPause();
         expandedIds = getExpandedIds();
+        super.onPause();
     }
 	
 	@Override

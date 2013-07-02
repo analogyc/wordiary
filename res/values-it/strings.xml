@@ -5,14 +5,6 @@
     <string name="hello_world">Ciao, mondo!</string>
     <string name="title_activity_day">Giorno</string>
     <string name="title_activity_settings">SettingsActivity</string>
-	<string name="button_takePhoto">&#xf030;</string>
-	<string name="button_openGallery">&#xf03e;</string>
-    <string name="button_newEntry">&#xf10e;</string>
-	<string name="button_openPreferences">&#xf013;</string>
-	<string name="button_changeMood">&#xf118;</string>
-	<string name="button_editEntry">&#xf044;</string>
-	<string name="button_shareEntry">&#xf045;</string>
-	<string name="button_deleteEntry">&#xf00d;</string>
     <string name="title_activity_entry">EntryActivity</string>
     <string name="dialog_new_entry">Nuovo post</string>
     <string name="dialog_edit_entry">Editare il post</string>

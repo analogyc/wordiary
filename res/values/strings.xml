@@ -14,6 +14,8 @@
 	<string name="button_editEntry">&#xf044;</string>
 	<string name="button_shareEntry">&#xf045;</string>
 	<string name="button_deleteEntry">&#xf00d;</string>
+	<string name="button_prevEntry">&#xf053;</string>
+	<string name="button_nextEntry">&#xf054;</string>
 	<string name="button_prevImage">&#xf053;</string>
 	<string name="button_nextImage">&#xf054;</string>
 	<string name="button_shareImage">&#xf045;</string>

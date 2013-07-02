@@ -20,6 +20,36 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
+			<LinearLayout
+				android:id="@+id/PrevNextEntryButtonsLayout"
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="10dp"
+				android:background="#dddddd" >
+				<net.analogyc.wordiary.AwesomeButtonView
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:layout_weight="0.20"
+					android:text="@string/button_prevEntry"
+					android:id="@+id/prevEntryButton"
+					android:paddingTop="10dp"
+					android:paddingBottom="10dp"
+					android:background="#dddddd"
+					android:onClick="prevEntryButtonClicked"/>
+
+				<net.analogyc.wordiary.AwesomeButtonView
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:layout_weight="0.20"
+					android:text="@string/button_nextEntry"
+					android:id="@+id/nextEntryButton"
+					android:paddingTop="10dp"
+					android:paddingBottom="10dp"
+					android:background="#dddddd"
+					android:onClick="nextEntryButtonClicked"/>
+			</LinearLayout>
+
 			<TextView
 				android:id="@+id/messageText"
 				android:layout_width="match_parent"
@@ -28,8 +58,8 @@
 				android:layout_marginLeft="10dp"
 				android:layout_marginRight="10dp"
 				android:layout_alignParentLeft="true"
-				android:layout_alignParentTop="true"
 				android:layout_alignParentRight="true"
+				android:layout_below="@+id/PrevNextEntryButtonsLayout"
 				android:textColor="#222222"
 				android:textSize="25dp" />
 

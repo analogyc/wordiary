@@ -77,7 +77,19 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	/**
 	 * Sets up the view content
 	 */
-	public void setView(){
+	protected void setView(){		
+		setContentView(R.layout.activity_entry);
+
+
+		messageText = (TextView) findViewById(R.id.messageText);
+		dateText = (TextView) findViewById(R.id.dateText);
+        photoButton = (ImageView) findViewById(R.id.photoButton);
+        moodImage = (ImageView) findViewById(R.id.moodImage);
+
+		setNewMoodButton = (Button) findViewById(R.id.setNewMoodButton);
+		editEntryButton = (Button) findViewById(R.id.editEntryButton);
+		photoDeleteButton = (Button) findViewById(R.id.photoDeleteButton);
+		
 		if(!dataBase.isEditableEntry(entryId)){
 			setNewMoodButton.setTextColor(0xFFBBBBBB);
 			editEntryButton.setTextColor(0xFFBBBBBB);
@@ -169,6 +181,17 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		}
 
 		c_entry.close();
+		
+		
+		//check if this entry has a previous and a next 
+		if(!dataBase.hasNextEntry(entryId, true)){
+			Button nextB = (Button)this.findViewById(R.id.nextEntryButton);
+			nextB.setTextColor(0xFFBBBBBB);
+		}
+		if(!dataBase.hasNextEntry(entryId, false)){
+			Button prevB = (Button)this.findViewById(R.id.prevEntryButton);
+			prevB.setTextColor(0xFFBBBBBB);
+		}
 	}
 
 	/**
@@ -321,16 +344,18 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		setView();
 	}
 	
-	public void setNextEntry(View view){
-		Cursor nextEntry = dataBase.getNextEntry(entryId, false);
+	public void nextEntryButtonClicked(View view){
+		Cursor nextEntry = dataBase.getNextEntry(entryId, true);
+		nextEntry.moveToFirst();
 		int next = nextEntry.getInt(0);
 		entryId = next;
 		nextEntry.close();
 		setView();
 	}
 	
-	public void setPrevEntry(View view){
-		Cursor prevEntry = dataBase.getNextEntry(entryId, true);
+	public void prevEntryButtonClicked(View view){
+		Cursor prevEntry = dataBase.getNextEntry(entryId, false);
+		prevEntry.moveToFirst();
 		int next = prevEntry.getInt(0);
 		entryId = next;
 		prevEntry.close();

@@ -49,6 +49,7 @@ public class ImageWebView extends WebView {
 		set.setBuiltInZoomControls(true);
 		set.setLoadWithOverviewMode(true);
 		set.setUseWideViewPort(true);
+		set.setCacheMode(WebSettings.LOAD_NO_CACHE);
 		setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		setScrollbarFadingEnabled(true);
 		setBackgroundColor(Color.BLACK);

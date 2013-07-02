@@ -75,20 +75,28 @@ public class BitmapWorker extends Fragment {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 
+		Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		DisplayMetrics dm = new DisplayMetrics();
+		display.getMetrics(dm);
+		density = dm.density < 1.0f ? 1.0f : (Math.round(dm.density * 100f)) / 100f;
+
 		try {
 			String[] avatar_paths = getActivity().getAssets().list("avatars");
 			avatars = new Bitmap[avatar_paths.length];
 			for (int i = 0; i < avatar_paths.length; i++) {
-				avatars[i] = BitmapFactory.decodeStream(getActivity().getAssets().open("avatars/" + avatar_paths[i]));
+				avatars[i] = BitmapFactory
+					.decodeStream(getActivity().getAssets().open("avatars/" + avatar_paths[i]));
+
+				// reduce ram usage on devices with ldpi
+				if (dm.density < 1.5f) {
+					avatars[i] = Bitmap.createScaledBitmap(avatars[i], 256, 256, false);
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		DisplayMetrics dm = new DisplayMetrics();
-		display.getMetrics(dm);
-		density =  dm.density < 1.0f ? 1.0f : (Math.round(dm.density * 100f)) / 100f;
+
 	}
 
 	/**
@@ -315,7 +323,7 @@ public class BitmapWorker extends Fragment {
 			Bitmap bmp;
 
 			// just use lower inSampleSize
-			if (bwtb.getTargetWidth() != 0) {
+			if (bwtb.getTargetWidth() > 0) {
 				// get the image width and height without loading it in memory
 				BitmapFactory.Options options = new BitmapFactory.Options();
 				options.inJustDecodeBounds = true;
@@ -326,7 +334,7 @@ public class BitmapWorker extends Fragment {
 				// reduce the amount of data allocated in memory with higher inSampleSize
 				options = new BitmapFactory.Options();
 				options.inSampleSize = 1;
-				if (height > bwtb.getTargetHeight() || width > bwtb.getTargetWidth()) {
+				if (height > bwtb.getTargetHeight() && width > bwtb.getTargetWidth()) {
 					final int heightRatio = Math.round((float) height / (float) bwtb.getTargetHeight());
 					final int widthRatio = Math.round((float) width / (float) bwtb.getTargetWidth());
 					options.inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
@@ -361,7 +369,7 @@ public class BitmapWorker extends Fragment {
 			}
 
 			if (bwtb.getTargetWidth() != 0 && bwtb.isHighQuality()) {
-				bmp = Bitmap.createScaledBitmap(bmp, bwtb.getTargetWidth(), bwtb.getTargetHeight(), false);
+				bmp = Bitmap.createScaledBitmap(bmp, bwtb.getTargetWidth(), bwtb.getTargetHeight(), true);
 			}
 
 			if (bwtb.getRoundedCorner() != 0) {

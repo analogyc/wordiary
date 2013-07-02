@@ -138,8 +138,13 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 
 		int dayId = c_entry.getInt(1);
 		this.dayId = dayId;
-        Bitmap image;
-        InputStream image_stream;
+
+		// make the image about square
+		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		DisplayMetrics dm = new DisplayMetrics();
+		display.getMetrics(dm);
+		photoButton.setMaxWidth(dm.widthPixels);
+		photoButton.setMaxHeight(dm.widthPixels);
 
 		if (dayId != -1) {
 			Cursor c_photo = dataBase.getDayById(dayId);
@@ -155,8 +160,8 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 
 			bitmapWorker.createTask(photoButton, path)
 				.setShowDefault(dayId)
-				.setTargetHeight(photoButton.getWidth())
-				.setTargetWidth(photoButton.getWidth())
+				.setTargetHeight(dm.widthPixels)
+				.setTargetWidth(dm.widthPixels)
 				.setHighQuality(true)
 				.setCenterCrop(true)
 				.execute();
@@ -164,13 +169,6 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		}
 
 		c_entry.close();
-
-		// make the image about square
-		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		DisplayMetrics dm = new DisplayMetrics();
-		display.getMetrics(dm);
-		photoButton.setMaxWidth(dm.widthPixels);
-		photoButton.setMaxHeight(dm.widthPixels);
 	}
 
 	/**

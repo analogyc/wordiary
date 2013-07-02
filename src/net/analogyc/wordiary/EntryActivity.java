@@ -77,7 +77,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	/**
 	 * Sets up the view content
 	 */
-	private void setView(){		
+	protected void setView(){		
 		setContentView(R.layout.activity_entry);
 
 
@@ -89,7 +89,6 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		setNewMoodButton = (Button) findViewById(R.id.setNewMoodButton);
 		editEntryButton = (Button) findViewById(R.id.editEntryButton);
 		photoDeleteButton = (Button) findViewById(R.id.photoDeleteButton);
-		
 		
 		if(!dataBase.isEditableEntry(entryId)){
 			setNewMoodButton.setTextColor(0xFFBBBBBB);

@@ -3,6 +3,7 @@ package net.analogyc.wordiary.models;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,7 @@ public class PhotoAdapter extends BaseAdapter {
 	private Context context;
 	private ArrayList<String[]> photos = new ArrayList<String[]>();
 	private BitmapWorker bitmapWorker;
-	private ImageView imageView;
- 
+
 	public PhotoAdapter(Context context, BitmapWorker bitmapWorker) {
 		this.context = context;
 		this.bitmapWorker = bitmapWorker;
@@ -56,8 +56,9 @@ public class PhotoAdapter extends BaseAdapter {
 
 		// set image based on selected text
 		final ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_gallery);
-		final String photoPath = photos.get(position)[1];
-		int size = 256;
+		String photoPath = photos.get(position)[1];
+		int dayId = Integer.parseInt(photos.get(position)[0]);
+		int size = 128;
 
 		imageView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 			public boolean onPreDraw() {
@@ -66,19 +67,15 @@ public class PhotoAdapter extends BaseAdapter {
 			}
 		});
 
-		try {
-			bitmapWorker.createTask(imageView, photoPath)
-				.setDefaultBitmap(BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg")))
-				.setTargetHeight(size)
-				.setTargetWidth(size)
-				.setCenterCrop(true)
-				.setHighQuality(true)
-				.setRoundedCorner(15)
-				.setPrefix("gallery_")
-				.execute();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		bitmapWorker.createTask(imageView, photoPath)
+			.setShowDefault(dayId)
+			.setTargetHeight(size)
+			.setTargetWidth(size)
+			.setCenterCrop(true)
+			.setHighQuality(true)
+			.setRoundedCorner(15)
+			.setPrefix("gallery_")
+			.execute();
 
 		return gridView;
 	}

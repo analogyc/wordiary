@@ -149,34 +149,28 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		this.dayId = dayId;
         Bitmap image;
         InputStream image_stream;
-        try {
-            if (dayId != -1) {
-				Cursor c_photo = dataBase.getDayById(dayId);
-				c_photo.moveToFirst();
-				if (!c_photo.getString(1).equals("")) {
-					try {
-					bitmapWorker.createTask(photoButton, c_photo.getString(1))
-						.setDefaultBitmap(BitmapFactory.decodeStream(getAssets().open("default-avatar.jpg")))
-						.setTargetHeight(photoButton.getWidth())
-						.setTargetWidth(photoButton.getWidth())
-						.setHighQuality(true)
-						.setCenterCrop(true)
-						.execute();
-						c_photo.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} else {
-					photoButton.setClickable(false);
-					image_stream = getAssets().open("default-avatar.jpg");
-					image = BitmapFactory.decodeStream(image_stream);
-					photoButton.setImageBitmap(image);
-					photoDeleteButton.setVisibility(View.INVISIBLE);
-				}
+
+		if (dayId != -1) {
+			Cursor c_photo = dataBase.getDayById(dayId);
+			c_photo.moveToFirst();
+
+			String path = null;
+			if (!c_photo.getString(1).equals("")) {
+				path = c_photo.getString(1);
+			} else {
+				photoButton.setClickable(false);
+				photoDeleteButton.setVisibility(View.INVISIBLE);
 			}
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+			bitmapWorker.createTask(photoButton, path)
+				.setShowDefault(dayId)
+				.setTargetHeight(photoButton.getWidth())
+				.setTargetWidth(photoButton.getWidth())
+				.setHighQuality(true)
+				.setCenterCrop(true)
+				.execute();
+				c_photo.close();
+		}
 
 		c_entry.close();
 

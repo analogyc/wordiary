@@ -39,9 +39,6 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	private BitmapWorker bitmapWorker;
 	private int childTextSize;
 	private Typeface childTypeface;
-	
-
-	private Bitmap defaultBitmap;
 
 	public EntryListAdapter(Context context, BitmapWorker bitmapWorker) {
 		this.context = context;
@@ -50,13 +47,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		//these explicit assignments make clear how setView works with these variables
 		childTypeface =  null;
 		childTextSize = 0;
-		
-		
-		try {
-			defaultBitmap = BitmapFactory.decodeStream(context.getAssets().open("default-avatar.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 		DBAdapter database = new DBAdapter(context);
 		Cursor day = database.getAllDays();
 		String[] info;
@@ -176,20 +167,21 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		
 		ImageView imageView = (ImageView) view.findViewById(R.id.dayImage);
 
+		String path = null;
 		if (!info[1].equals("")) {
-			bitmapWorker.createTask(imageView, info[1])
-				.setDefaultBitmap(defaultBitmap)
-				.setTargetHeight(128)
-				.setTargetWidth(128)
-				.setCenterCrop(true)
-				.setHighQuality(true)
-				.setRoundedCorner(15)
-				.execute();
-		}
-		else{
-			imageView.setImageBitmap(defaultBitmap);
+			path = info[1];
+		} else {
 			hasImage = false;
 		}
+
+		bitmapWorker.createTask(imageView, path)
+			.setShowDefault(Integer.parseInt(info[0]))
+			.setTargetHeight(128)
+			.setTargetWidth(128)
+			.setCenterCrop(true)
+			.setHighQuality(true)
+			.setRoundedCorner(15)
+			.execute();
 
 		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
 		SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());

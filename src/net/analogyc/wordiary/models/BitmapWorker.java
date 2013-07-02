@@ -9,14 +9,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.LruCache;
+import android.util.Log;
 import android.widget.ImageView;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 public class BitmapWorker extends Fragment {
 
 	private static final String TAG = "BitmapWorker";
 	private LruCache<String, Bitmap> mMemoryCache;
+
+	private Bitmap[] avatars;
 
 	/**
 	 * Sets the max memory usage for the LRU cache
@@ -65,6 +69,16 @@ public class BitmapWorker extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
+
+		try {
+			String[] avatar_paths = getActivity().getAssets().list("avatars");
+			avatars = new Bitmap[avatar_paths.length];
+			for (int i = 0; i < avatar_paths.length; i++) {
+				avatars[i] = BitmapFactory.decodeStream(getActivity().getAssets().open("avatars/"+avatar_paths[i]));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -116,7 +130,7 @@ public class BitmapWorker extends Fragment {
 
 		protected ImageView imageView;
 		protected String path;
-		protected Bitmap defaultBitmap;
+		protected int showDefault;
 		protected int targetWidth;
 		protected int targetHeight;
 		protected boolean centerCrop = false;
@@ -136,7 +150,7 @@ public class BitmapWorker extends Fragment {
 		 */
 		protected BitmapWorkerTaskBuilder(BitmapWorkerTaskBuilder b) {
 			path = b.getPath();
-			defaultBitmap = b.getDefaultBitmap();
+			showDefault = b.getShowDefault();
 			targetWidth = b.getTargetWidth();
 			targetHeight = b.getTargetHeight();
 			centerCrop = b.isCenterCrop();
@@ -149,12 +163,12 @@ public class BitmapWorker extends Fragment {
 			return path;
 		}
 
-		public Bitmap getDefaultBitmap() {
-			return defaultBitmap;
+		public int getShowDefault() {
+			return showDefault;
 		}
 
-		public BitmapWorkerTaskBuilder setDefaultBitmap(Bitmap defaultBitmap) {
-			this.defaultBitmap = defaultBitmap;
+		public BitmapWorkerTaskBuilder setShowDefault(int showDefault) {
+			this.showDefault = showDefault;
 			return this;
 		}
 
@@ -221,15 +235,21 @@ public class BitmapWorker extends Fragment {
 					oldTask.cancel(true);
 
 					// don't reload the image if it's the same as in the drawable
-					if (getPath().equals(oldTask.getBuilderCopy().getPath())) {
+					if (getPath() != null && getPath().equals(oldTask.getBuilderCopy().getPath())) {
 						return;
 					}
 				}
 			}
 
-			BitmapWorkerTask task = new BitmapWorkerTask(imageView, this);
-			imageView.setImageDrawable(new AsyncDrawable(getResources(), defaultBitmap, task));
-			task.execute();
+			Bitmap avatar = avatars[getShowDefault() % avatars.length];
+
+			if (getPath() == null) {
+				imageView.setImageBitmap(avatar);
+			} else {
+				BitmapWorkerTask task = new BitmapWorkerTask(imageView, this);
+				imageView.setImageDrawable(new AsyncDrawable(getResources(), avatar, task));
+				task.execute();
+			}
 		}
 	}
 

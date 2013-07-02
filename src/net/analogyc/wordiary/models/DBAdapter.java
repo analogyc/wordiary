@@ -250,7 +250,7 @@ public class DBAdapter {
 	 */
 	public Cursor getNextEntry(int currentEntry, boolean backwards) {
 		String query = 	"SELECT " + Entry._ID + " FROM " + Entry.TABLE_NAME + " " +
-						"WHERE " + Entry._ID + " " + (backwards ? "<" : ">") + currentEntry +
+						"WHERE " + Entry._ID + " " + (backwards ? "<" : ">") + currentEntry + " " +
 						"ORDER BY " + Day._ID + " " + (backwards ? "DESC" : "ASC") + " " +
 						"LIMIT 1";
 		Cursor result = getConnection().rawQuery(query, null);
@@ -272,9 +272,9 @@ public class DBAdapter {
 	 */
 	public boolean hasNextEntry(int currentEntry, boolean backwards) {
 		String query = 	"SELECT " + Entry._ID + " FROM " + Entry.TABLE_NAME + " " +
-						"WHERE " + Entry._ID + " " + (backwards ? "<" : ">") + currentEntry +
-						"ORDER BY " + Day._ID + " " + (backwards ? "DESC" : "ASC") + " " +
-						"LIMIT 1";
+				"WHERE " + Entry._ID + " " + (backwards ? "<" : ">") + currentEntry + " " +
+				"ORDER BY " + Day._ID + " " + (backwards ? "DESC" : "ASC") + " " +
+				"LIMIT 1";
 		Cursor result = getConnection().rawQuery(query, null);
 		boolean hasNext = result.getCount() > 0;
 		result.close();

@@ -77,7 +77,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	/**
 	 * Sets up the view content
 	 */
-	private void setView(){
+	public void setView(){
 		if(!dataBase.isEditableEntry(entryId)){
 			setNewMoodButton.setTextColor(0xFFBBBBBB);
 			editEntryButton.setTextColor(0xFFBBBBBB);

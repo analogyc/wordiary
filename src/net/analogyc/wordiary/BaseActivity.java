@@ -96,7 +96,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	 * @param view
 	 */
 	public void onTakePhotoClicked(View view){
-		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
 			Toast.makeText(this, getString(R.string.camera_not_available), TOAST_DURATION_L).show();
 			return;
 		}
@@ -137,6 +137,9 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 				}
 				if (this instanceof GalleryActivity) {
 					((GalleryActivity) this).setView();
+				}
+				if (this instanceof EntryActivity) {
+					((EntryActivity) this).setView();
 				}
 			}
 		}

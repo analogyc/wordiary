@@ -24,7 +24,7 @@ public class HeaderView extends LinearLayout {
 
 		takePhotoButton = (Button) findViewById(R.id.takePhotoButton);
 
-		if (!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+		if (!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
 			takePhotoButton.setTextColor(0x77FFFFFF);
 		}
 	}

@@ -18,6 +18,11 @@ public class GalleryActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
 		setView();
 	}
 

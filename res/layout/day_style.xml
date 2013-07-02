@@ -7,22 +7,36 @@
 	android:paddingRight="3dp"
 	android:paddingTop="3dp">
 
-    <TextView
-        android:id="@+id/dayDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/dayImage"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:text="TextView" />
-
     <ImageView
         android:id="@+id/dayImage"
         android:layout_width="60dip"
         android:layout_height="60dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="54dp" />
+        android:layout_marginLeft="54dp"
+        android:contentDescription="" />
+
+    <TextView
+        android:id="@+id/dayDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dayImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/dayCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/dayDate"
+        android:layout_alignBottom="@+id/dayDate"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="34dp"
+        android:textColor="#FFFFFF"
+        android:paddingTop="2sp"
+        android:paddingBottom="2sp"
+        android:paddingLeft="5sp"
+        android:paddingRight="5sp"
+        android:background="#CCCCCC" />
 
 </RelativeLayout>

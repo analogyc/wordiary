@@ -2,8 +2,6 @@ package net.analogyc.wordiary.models;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.view.*;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -12,8 +10,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.analogyc.wordiary.R;
-
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -165,7 +161,12 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			view = inf.inflate(R.layout.day_style, null);
 		}
 		
+		
 		ImageView imageView = (ImageView) view.findViewById(R.id.dayImage);
+		
+		int entries = getChildrenCount(groupPosition);
+		TextView v =(TextView) view.findViewById(R.id.dayCount);
+		v.setText(""+entries);
 
 		String path = null;
 		if (!info[1].equals("")) {
@@ -191,6 +192,9 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		} catch (ParseException e) {
 			//won't happen if we use only dataBaseHelper.addEntry(...)
 		}
+		
+		
+		
 		
 		final GestureDetector gestureDetector = new GestureDetector(context,new DayGDetector(Integer.parseInt(info[0]),hasImage));
 		

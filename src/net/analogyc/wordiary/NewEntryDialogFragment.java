@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Allows creating a new entry
@@ -41,7 +43,8 @@ public class NewEntryDialogFragment extends DialogFragment {
 
 		// Inflate and set the layout for the dialog
 		// Pass null as the parent view because its going in the dialog layout
-		builder.setView(inflater.inflate(R.layout.dialog_custom, null))
+		View view = inflater.inflate(R.layout.dialog_custom, null);
+		builder.setView(view)
 				.setTitle(R.string.dialog_new_entry)
 				// Add action buttons
 				.setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
@@ -56,7 +59,17 @@ public class NewEntryDialogFragment extends DialogFragment {
 					}
 				});
 
-		return builder.create();
-	}
+		final AlertDialog dialog = builder.create();
 
+		view.findViewById(R.id.newMessage).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
+					dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+				}
+			}
+		});
+
+		return dialog;
+	}
 }

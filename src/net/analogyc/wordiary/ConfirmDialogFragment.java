@@ -10,10 +10,16 @@ import android.support.v4.app.DialogFragment;
 public class ConfirmDialogFragment extends DialogFragment {
 
 	public interface ConfirmDialogListener {
-		public void onConfirmedClick(DialogFragment dialog);
+		public void onConfirmedClick(DialogFragment dialog, int id);
 	}
 
 	protected ConfirmDialogListener mListener;
+	protected int id;
+	
+	
+	public void setId (int id){
+		this.id = id;
+	}
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -31,13 +37,14 @@ public class ConfirmDialogFragment extends DialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		final int callId = this.id;
 
 		builder.setTitle(R.string.title_confirm)
 				// Add action buttons
 				.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
-						mListener.onConfirmedClick(ConfirmDialogFragment.this);
+						mListener.onConfirmedClick(ConfirmDialogFragment.this, callId);
 					}
 				})
 				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

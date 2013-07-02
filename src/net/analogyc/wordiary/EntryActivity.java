@@ -186,10 +186,12 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		//check if this entry has a previous and a next 
 		if(!dataBase.hasNextEntry(entryId, true)){
 			Button nextB = (Button)this.findViewById(R.id.nextEntryButton);
+			nextB.setClickable(false);
 			nextB.setTextColor(0xFFBBBBBB);
 		}
 		if(!dataBase.hasNextEntry(entryId, false)){
 			Button prevB = (Button)this.findViewById(R.id.prevEntryButton);
+			prevB.setClickable(false);
 			prevB.setTextColor(0xFFBBBBBB);
 		}
 	}
@@ -243,16 +245,34 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 */
 	public void onDeleteButtonClicked(View view){
 		ConfirmDialogFragment newFragment = new ConfirmDialogFragment();
+		newFragment.setId(0);
 		newFragment.show(getSupportFragmentManager(), "Confirm");
 		
 	}
 	
-	public void onConfirmedClick(DialogFragment dialog) {
-		dataBase.deleteEntryById(entryId);
-		Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted),TOAST_DURATION_S);
-		toast.show();
-		//Now EntryActivity has no reason to be visible
-		finish();
+	public void onConfirmedClick(DialogFragment dialog, int id) {
+		
+		// 0 = deleteEntry, 1 = DeletePhoto
+		switch (id){
+			case 0:	dataBase.deleteEntryById(entryId);
+					Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted),TOAST_DURATION_S);
+					toast.show();
+					//Now EntryActivity has no reason to be visible
+					finish();
+					break;
+			case 1:	Cursor day = dataBase.getDayByEntry(entryId);
+					day.moveToFirst();
+					int dayId = day.getInt(0);
+					String filename = day.getString(1);
+					day.close();
+					File photo = new File(filename);
+					if(photo.delete()){
+						dataBase.deletePhoto(dayId);
+						Toast toast1 = Toast.makeText(getBaseContext(), R.string.photo_deleted ,TOAST_DURATION_S);
+						toast1.show();
+					}
+					setView();
+		}
 	}
 	
 	/**
@@ -263,18 +283,11 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	public void onPhotoDelete(View view){
 		Cursor day = dataBase.getDayByEntry(entryId);
 		day.moveToFirst();
-		int id = day.getInt(0);
-		String filename = day.getString(1);
-		day.close();
-		
-		if (dataBase.isEditableDay(id)){
-			File photo = new File(filename);
-			if(photo.delete()){
-				dataBase.deletePhoto(id);
-				Toast toast = Toast.makeText(getBaseContext(), R.string.photo_deleted ,TOAST_DURATION_S);
-				toast.show();
-			}
-			setView();
+		int dayId = day.getInt(0);
+		if (dataBase.isEditableDay(dayId)){
+			ConfirmDialogFragment newFragment = new ConfirmDialogFragment();
+			newFragment.setId(1);
+			newFragment.show(getSupportFragmentManager(), "Confirm");
 		}
 		else{
 			Toast toast = Toast.makeText(getBaseContext(), R.string.grace_period_ended ,TOAST_DURATION_S);

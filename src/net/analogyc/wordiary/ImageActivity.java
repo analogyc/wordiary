@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -22,10 +23,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import net.analogyc.wordiary.ConfirmDialogFragment.ConfirmDialogListener;
+
 /**
  * Displays the full image in a custom WebView to zoom on it
  */
-public class ImageActivity extends BaseActivity {
+public class ImageActivity extends BaseActivity implements ConfirmDialogListener {
 	private int dayId;
 	private String currentImage;
 	private ImageWebView imageWebView;
@@ -147,24 +150,35 @@ public class ImageActivity extends BaseActivity {
 	public void onDeleteImageButtonClicked(View view){
 		Cursor day = dataBase.getDayById(dayId);
 		day.moveToFirst();
-		int id = day.getInt(0);
+		int dayId = day.getInt(0);
 		String filename = day.getString(1);
 		day.close();
 
-		if (dataBase.isEditableDay(id)){
-			File photo = new File(filename);
-			if(photo.delete()){
-				dataBase.deletePhoto(id);
-				Toast toast = Toast.makeText(getBaseContext(), R.string.photo_deleted ,TOAST_DURATION_S);
-				toast.show();
-			}
-
-			finish();
+		if (dataBase.isEditableDay(dayId)){
+			ConfirmDialogFragment newFragment = new ConfirmDialogFragment();
+			newFragment.setId(0);
+			newFragment.show(getSupportFragmentManager(), "Confirm");
 		}
 		else{
 			Toast toast = Toast.makeText(getBaseContext(), R.string.grace_period_ended, TOAST_DURATION_S);
 			toast.show();
 		}
+	}
+	
+	public void onConfirmedClick(DialogFragment dialog, int id) {
+		Cursor day = dataBase.getDayById(dayId);
+		day.moveToFirst();
+		int dayId = day.getInt(0);
+		String filename = day.getString(1);
+		day.close();
+		File photo = new File(filename);
+		if(photo.delete()){
+			dataBase.deletePhoto(dayId);
+			Toast toast = Toast.makeText(getBaseContext(), R.string.photo_deleted ,TOAST_DURATION_S);
+			toast.show();
+		}
+		finish();
+		
 	}
 
 	/**

@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -82,16 +83,10 @@ public class ImageActivity extends BaseActivity {
 		imageWebView.setOnFlingListener(new ImageWebView.OnFlingListener() {
 			@Override
 			public boolean onFling(View view, MotionEvent e1, MotionEvent motionEvent, float velocityX, float velocityY) {
-				Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-				DisplayMetrics dm = new DisplayMetrics();
-				display.getMetrics(dm);
-
-				if ((dm.densityDpi > 300 && imageWebView.getScale() == 2.0f) || dm.densityDpi <= 300 && imageWebView.getScale() == 1.0f) {
-					if (velocityX > 800f) {
-						getNext(false);
-					} else if (velocityX < -800f) {
-						getNext(true);
-					}
+				if (velocityX > 800f * imageWebView.getWebDensity()) {
+					getNext(false);
+				} else if (velocityX < -800f) {
+					getNext(true);
 				}
 
 				return true;
@@ -178,7 +173,7 @@ public class ImageActivity extends BaseActivity {
 			finish();
 		}
 		else{
-			Toast toast = Toast.makeText(getBaseContext(), R.string.grace_period_ended ,TOAST_DURATION_S);
+			Toast toast = Toast.makeText(getBaseContext(), R.string.grace_period_ended, TOAST_DURATION_S);
 			toast.show();
 		}
 	}
@@ -188,12 +183,7 @@ public class ImageActivity extends BaseActivity {
 	 */
 	@Override
 	public void onBackPressed() {
-		// we are getting this 2.0 scale because of hdpi phones.
-		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		DisplayMetrics dm = new DisplayMetrics();
-		display.getMetrics(dm);
-
-		if ((dm.densityDpi > 300 && imageWebView.getScale() == 2.0f) || dm.densityDpi <= 300 && imageWebView.getScale() == 1.0f) {
+		if (imageWebView.getScale() == imageWebView.getWebDensity()) {
 			super.onBackPressed();
 		} else {
 			setView();

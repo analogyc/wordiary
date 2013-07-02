@@ -137,6 +137,13 @@ public class ImageWebView extends WebView {
 		}
 	}
 
+	public float getWebDensity() {
+		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		DisplayMetrics dm = new DisplayMetrics();
+		display.getMetrics(dm);
+		return dm.density < 1.0f ? 1.0f : (Math.round(dm.density * 100f)) / 100f;
+	}
+
 	/**
 	 * Sets the image within the HTML
 	 *
@@ -148,9 +155,7 @@ public class ImageWebView extends WebView {
 		display.getMetrics(dm);
 
 		// for some reason higher DPI must screw with the width of WebView
-		if (dm.densityDpi > 300) {
-			dm.widthPixels /= 2;
-		}
+		dm.widthPixels /= getWebDensity();
 
 		String html =
 			"<html>" +

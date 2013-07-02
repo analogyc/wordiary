@@ -376,7 +376,7 @@ public class BitmapWorker extends Fragment {
 		 */
 		@Override
 		protected void onPostExecute(Bitmap bitmap) {
-			if (!isCancelled() && imageViewReference != null && bitmap != null) {
+			if (!isCancelled() && isAdded() && imageViewReference != null && bitmap != null) {
 				addBitmapToMemoryCache("models.EntryAdapter.thumbnails."  + bwtb.getPrefix() + bwtb.getPath(), bitmap);
 				final ImageView imageView = imageViewReference.get();
 				if (imageView != null) {

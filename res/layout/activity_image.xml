@@ -19,7 +19,7 @@
 		android:background="#88000000"
 		>
 
-		<Button
+		<net.analogyc.wordiary.AwesomeButtonView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/button_prevImage"
@@ -43,7 +43,7 @@
 			android:paddingTop="2sp"
 			android:paddingBottom="2sp"/>
 
-		<Button
+		<net.analogyc.wordiary.AwesomeButtonView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/button_deleteImage"
@@ -56,7 +56,7 @@
 			android:textSize="24sp"
 			android:paddingBottom="2sp"/>
 
-		<Button
+		<net.analogyc.wordiary.AwesomeButtonView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/button_shareImage"
@@ -69,7 +69,7 @@
 			android:textSize="24sp"
 			android:paddingBottom="2sp"/>
 
-		<Button
+		<net.analogyc.wordiary.AwesomeButtonView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/button_nextImage"

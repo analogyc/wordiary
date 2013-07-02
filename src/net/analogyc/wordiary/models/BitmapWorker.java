@@ -1,5 +1,6 @@
 package net.analogyc.wordiary.models;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,7 +10,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.LruCache;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import java.io.IOException;
@@ -21,6 +25,7 @@ public class BitmapWorker extends Fragment {
 	private LruCache<String, Bitmap> mMemoryCache;
 
 	private Bitmap[] avatars;
+	private float density;
 
 	/**
 	 * Sets the max memory usage for the LRU cache
@@ -74,11 +79,16 @@ public class BitmapWorker extends Fragment {
 			String[] avatar_paths = getActivity().getAssets().list("avatars");
 			avatars = new Bitmap[avatar_paths.length];
 			for (int i = 0; i < avatar_paths.length; i++) {
-				avatars[i] = BitmapFactory.decodeStream(getActivity().getAssets().open("avatars/"+avatar_paths[i]));
+				avatars[i] = BitmapFactory.decodeStream(getActivity().getAssets().open("avatars/" + avatar_paths[i]));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		DisplayMetrics dm = new DisplayMetrics();
+		display.getMetrics(dm);
+		density =  dm.density < 1.0f ? 1.0f : (Math.round(dm.density * 100f)) / 100f;
 	}
 
 	/**
@@ -177,7 +187,7 @@ public class BitmapWorker extends Fragment {
 		}
 
 		public BitmapWorkerTaskBuilder setTargetWidth(int targetWidth) {
-			this.targetWidth = targetWidth;
+			this.targetWidth = Math.round(targetWidth * density);
 			return this;
 		}
 
@@ -186,7 +196,7 @@ public class BitmapWorker extends Fragment {
 		}
 
 		public BitmapWorkerTaskBuilder setTargetHeight(int targetHeight) {
-			this.targetHeight = targetHeight;
+			this.targetHeight = Math.round(targetHeight * density);
 			return this;
 		}
 

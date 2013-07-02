@@ -33,7 +33,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	private int dayId;
 	private TextView messageText, dateText;
     private ImageView photoButton, moodImage;
-	private Button setNewMoodButton, editEntryButton, deleteEntryButton, shareEntryButton, photoDeleteButton;
+	private Button setNewMoodButton, editEntryButton, photoDeleteButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,8 +51,6 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 
 		setNewMoodButton = (Button) findViewById(R.id.setNewMoodButton);
 		editEntryButton = (Button) findViewById(R.id.editEntryButton);
-		deleteEntryButton = (Button) findViewById(R.id.deleteEntryButton);
-		shareEntryButton = (Button) findViewById(R.id.shareEntryButton);
 		photoDeleteButton = (Button) findViewById(R.id.photoDeleteButton);
 	}
 
@@ -80,13 +78,6 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * Sets up the view content
 	 */
 	private void setView(){
-		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
-		setNewMoodButton.setTypeface(fontawsm);
-		editEntryButton.setTypeface(fontawsm);
-		deleteEntryButton.setTypeface(fontawsm);
-		shareEntryButton.setTypeface(fontawsm);
-		photoDeleteButton.setTypeface(fontawsm);
-
 		if(!dataBase.isEditableEntry(entryId)){
 			setNewMoodButton.setTextColor(0xFFBBBBBB);
 			editEntryButton.setTextColor(0xFFBBBBBB);

@@ -68,7 +68,7 @@
 				android:layout_below="@+id/DataAndMoodLayout"
 				android:layout_margin="10dp"
 				android:background="#dddddd" >
-					<Button
+					<net.analogyc.wordiary.AwesomeButtonView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="0.20"
@@ -81,7 +81,7 @@
 						android:background="#dddddd"
 						android:onClick="onMoodButtonClicked"/>
 
-					<Button
+					<net.analogyc.wordiary.AwesomeButtonView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="0.20"
@@ -94,7 +94,7 @@
 						android:background="#dddddd"
 						android:onClick="onEditButtonClicked"/>
 
-					<Button
+					<net.analogyc.wordiary.AwesomeButtonView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="0.20"
@@ -107,7 +107,7 @@
 						android:background="#dddddd"
 						android:onClick="onDeleteButtonClicked"/>
 
-					<Button
+					<net.analogyc.wordiary.AwesomeButtonView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="0.20"
@@ -136,7 +136,7 @@
 				android:adjustViewBounds="true"
 				android:scaleType="fitCenter" />
 
-			<Button
+			<net.analogyc.wordiary.AwesomeButtonView
 			    android:id="@+id/photoDeleteButton"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
@@ -145,6 +145,7 @@
 			    android:onClick="onPhotoDelete"
 				android:background="#bb999999"
 				android:textColor="#eeeeee"
+				android:padding="10dp"
 			    android:text="@string/button_deleteImage" />
 
 		</RelativeLayout>

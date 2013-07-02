@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 public class HeaderView extends LinearLayout {
 
 	LayoutInflater inflater;
-	Button takePhotoButton, newEntryButton, openGalleryButton, openPreferencesButton;
+	Button takePhotoButton;
 
 	public HeaderView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -22,17 +22,8 @@ public class HeaderView extends LinearLayout {
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.header, this, true);
 
-		Typeface fontawsm = Typeface.createFromAsset(context.getAssets(), "fonts/fontawesome-webfont.ttf");
 		takePhotoButton = (Button) findViewById(R.id.takePhotoButton);
-		newEntryButton = (Button) findViewById(R.id.newEntryButton);
-		openPreferencesButton = (Button) findViewById(R.id.openPreferencesButton);
-		openGalleryButton = (Button) findViewById(R.id.openGalleryButton);
 
-		takePhotoButton.setTypeface(fontawsm);
-		newEntryButton.setTypeface(fontawsm);
-		openPreferencesButton.setTypeface(fontawsm);
-		openGalleryButton.setTypeface(fontawsm);
-		
 		if (!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
 			takePhotoButton.setTextColor(0x77FFFFFF);
 		}

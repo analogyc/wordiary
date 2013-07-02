@@ -58,7 +58,7 @@ public class PhotoAdapter extends BaseAdapter {
 		final ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_gallery);
 		String photoPath = photos.get(position)[1];
 		int dayId = Integer.parseInt(photos.get(position)[0]);
-		int size = 128;
+		int size = 192;
 
 		imageView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 			public boolean onPreDraw() {

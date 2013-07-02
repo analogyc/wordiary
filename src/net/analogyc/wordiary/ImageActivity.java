@@ -30,7 +30,6 @@ public class ImageActivity extends BaseActivity {
 	private String currentImage;
 	private ImageWebView imageWebView;
 	private TextView dateText;
-	private Button nextButton, prevButton, shareButton, deleteButton;
 
 	/**
 	 * Opens the next or previous image if available
@@ -74,10 +73,6 @@ public class ImageActivity extends BaseActivity {
 
 		imageWebView = (ImageWebView) findViewById(R.id.imageWebView);
 		dateText = (TextView) findViewById(R.id.imageDateText);
-		nextButton = (Button) findViewById(R.id.nextImageButton);
-		prevButton = (Button) findViewById(R.id.prevImageButton);
-		shareButton = (Button) findViewById(R.id.shareImageButton);
-		deleteButton = (Button) findViewById(R.id.deleteImageButton);
 
 		// all custom onFlingListener for ImageWebView
 		imageWebView.setOnFlingListener(new ImageWebView.OnFlingListener() {
@@ -92,12 +87,6 @@ public class ImageActivity extends BaseActivity {
 				return true;
 			}
 		});
-		
-		Typeface fontawsm = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
-		nextButton.setTypeface(fontawsm);
-		prevButton.setTypeface(fontawsm);
-		shareButton.setTypeface(fontawsm);
-		deleteButton.setTypeface(fontawsm);
 
 		Cursor c = dataBase.getDayById(dayId);
 		c.moveToFirst();

@@ -75,7 +75,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
 		DBAdapter database = new DBAdapter(context);
-		Cursor entries = database.getEntryByDay((int)getGroupId(groupPosition));
+		Cursor entries = database.getEntriesByDay((int)getGroupId(groupPosition));
 		String[] info = new String[4];
 		entries.moveToFirst();
 		if(entries.moveToPosition(childPosition)){
@@ -142,7 +142,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		DBAdapter database = new DBAdapter(context);
-		Cursor entries = database.getEntryByDay((int)getGroupId(groupPosition));
+		Cursor entries = database.getEntriesByDay((int)getGroupId(groupPosition));
 		int size = entries.getCount();
 		database.close();
 		entries.close();

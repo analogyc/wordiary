@@ -43,7 +43,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		this.context = context;
 		this.bitmapWorker = bitmapWorker;
 		
-		//these explicit assignments make clear how setView works with these variables
+		//these explicit assignments make clear how setView(...) works with these variables
 		childTypeface =  null;
 		childTextSize = 0;
 
@@ -52,9 +52,9 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		String[] info;
 		while(day.moveToNext()){
 			info = new String[3];
-			info[0] = day.getString(0);
-			info[1] = day.getString(1);
-			info[2] = day.getString(2);
+			info[0] = day.getString(0);		//id
+			info[1] = day.getString(1);		//filename
+			info[2] = day.getString(2);		//data
 			days.add(info);
 		}
 		database.close();
@@ -65,20 +65,16 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
 		DBAdapter database = new DBAdapter(context);
+		
+		//get all entries associated to the day given
 		Cursor entries = database.getEntriesByDay((int)getGroupId(groupPosition));
 		String[] info = new String[4];
 		entries.moveToFirst();
 		if(entries.moveToPosition(childPosition)){
-			info[0] = entries.getString(0);
-			info[1] = entries.getString(2);
-			info[2] = entries.getString(3);
-			info[3] = entries.getString(4);
-		}
-		else{
-			info[0] = "";
-			info[1] = "";
-			info[2] = "";
-			info[3] = "";
+			info[0] = entries.getString(0);		//id
+			info[1] = entries.getString(2);		//message
+			info[2] = entries.getString(3);		//mood
+			info[3] = entries.getString(4);		//data
 		}
 		database.close();
 		entries.close();
@@ -109,23 +105,22 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			message.setTypeface(childTypeface);
 		}
 		
-		 final GestureDetector gestureDetector = new GestureDetector(context,new EntryGDetector(Integer.parseInt(info[0])));
-
-		 view.setOnTouchListener(new OnTouchListener() {
-			 @Override
-			 public boolean onTouch(View v, MotionEvent event) {
+		final GestureDetector gestureDetector = new GestureDetector(context,new EntryGDetector(Integer.parseInt(info[0])));
+		view.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
 				 
-				 if(event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_MOVE || event.getAction() == MotionEvent.ACTION_HOVER_MOVE){
-			        	v.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
-				 }
-				 else if(event.getAction() == MotionEvent.ACTION_DOWN){
-				    	v.setBackgroundColor(0xFFFFFFFF);
-				 }
+				if(event.getAction() == MotionEvent.ACTION_DOWN){
+					v.setBackgroundColor(0xFFFFFFFF);
+				}
+				else{
+					v.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+				}
 				 
-				 gestureDetector.onTouchEvent(event);
-				 return true;
-	            }
-	        });
+				gestureDetector.onTouchEvent(event);
+				return true;
+			}
+		});
 		return view;
 	}
 
@@ -273,7 +268,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 				activity =(OptionDayListener)context;
 			} catch (ClassCastException e) {
 				// The activity doesn't implement the interface, throw exception
-				throw new ClassCastException(context.toString() + " must implement OptionEntryListener");
+				throw new ClassCastException(context.toString() + " must implement OptionDayListener");
 			}
 		}
 

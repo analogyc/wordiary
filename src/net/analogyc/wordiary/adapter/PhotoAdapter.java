@@ -21,6 +21,12 @@ public class PhotoAdapter extends BaseAdapter {
 	private ArrayList<String[]> photos = new ArrayList<String[]>();
 	private BitmapWorker bitmapWorker;
 
+	/**
+	 * Create a new photoAdapter
+	 * 
+	 * @param context the activity context
+	 * @param bitmapWorker a bitmapWorker to manage image loading
+	 */
 	public PhotoAdapter(Context context, BitmapWorker bitmapWorker) {
 		this.context = context;
 		this.bitmapWorker = bitmapWorker;
@@ -40,14 +46,7 @@ public class PhotoAdapter extends BaseAdapter {
 		photos_db.close();
 	}
 
-	/**
-	 * Shows each image
-	 *
-	 * @param position
-	 * @param convertView
-	 * @param parent
-	 * @return
-	 */
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View gridView = inflater.inflate(R.layout.image_style, null);
@@ -85,7 +84,7 @@ public class PhotoAdapter extends BaseAdapter {
  
 	@Override
 	public Object getItem(int position) {
-		return null;
+		return photos.get(position);
 	}
  
 	@Override

@@ -334,7 +334,39 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		Toast toast = Toast.makeText(context, text, TOAST_DURATION_S);
 		toast.show();
 	}
-
+	
+	/**
+	 * Shows next entry
+	 * 
+	 * @param view
+	 */
+	public void nextEntryButtonClicked(View view){
+		moveNext(true);
+	}
+	
+	/**
+	 * Shows previous entry
+	 * 
+	 * @param view
+	 */
+	public void prevEntryButtonClicked(View view){
+		moveNext(false);
+	}
+	
+	/**
+	 * Provides and shows the informations of previous/next entry
+	 * 
+	 * @param backwards false to go back, true otherwise
+	 */
+	public void moveNext(boolean backwards){
+		Cursor nextEntry = dataBase.getNextEntry(entryId, backwards);
+		nextEntry.moveToFirst();
+		int next = nextEntry.getInt(0);
+		entryId = next;
+		nextEntry.close();
+		setView();
+	}
+	
 	@Override
 	protected void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
@@ -352,24 +384,6 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	@Override
 	protected void onStart(){
 		super.onStart();
-		setView();
-	}
-	
-	public void nextEntryButtonClicked(View view){
-		Cursor nextEntry = dataBase.getNextEntry(entryId, true);
-		nextEntry.moveToFirst();
-		int next = nextEntry.getInt(0);
-		entryId = next;
-		nextEntry.close();
-		setView();
-	}
-	
-	public void prevEntryButtonClicked(View view){
-		Cursor prevEntry = dataBase.getNextEntry(entryId, false);
-		prevEntry.moveToFirst();
-		int next = prevEntry.getInt(0);
-		entryId = next;
-		prevEntry.close();
 		setView();
 	}
 }

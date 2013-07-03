@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 import net.analogyc.wordiary.adapter.EntryListAdapter;
@@ -22,7 +26,7 @@ import java.util.ArrayList;
 public class MainActivity extends BaseActivity implements OptionEntryDialogListener,OptionEntryListener,OptionDayListener{
 
 	private ExpandableListView entryList;
-	private long[] expandedIds;
+	protected long[] expandedIds;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,12 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		entryAdapter.setChildFont(typeface, textSize);
 		
 		entryList.setAdapter(entryAdapter);
+		
+		//restore previous list state
+		if (expandedIds != null) {
+        	restoreListState();
+        }
+		
 	}
 
 	/**
@@ -91,6 +101,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	 * @param id The entry id
 	 */
 	public void onEntryLongClicked(int id){
+		expandedIds = getExpandedIds();
 		OptionEntryDialogFragment editFragment = new OptionEntryDialogFragment();
 		Bundle args = new Bundle();
 		args.putInt("entryId", id);
@@ -120,7 +131,6 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		Toast toast = Toast.makeText(this, getString(R.string.message_deleted), TOAST_DURATION_S);
 		toast.show();
 		showEntries();
-
 	}
 
 	/**
@@ -146,15 +156,12 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
     protected void onStart() {
         super.onStart();
         showEntries();
-        if (expandedIds != null) {
-        	restoreListState();
-        }
     }
 
     @Override
     protected void onPause() {
-        expandedIds = getExpandedIds();
         super.onPause();
+        expandedIds = getExpandedIds();
     }
 	
 	@Override
@@ -170,12 +177,11 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		
 		if (savedState.containsKey("ExpandedIds")) {
 			expandedIds = savedState.getLongArray("ExpandedIds");
-			restoreListState();
 		}
 	}
 	
 	
-	private long[] getExpandedIds() {
+	protected long[] getExpandedIds() {
 			EntryListAdapter adapter = (EntryListAdapter)(entryList.getExpandableListAdapter());
 			int length = adapter.getGroupCount();
 			ArrayList<Long> ids = new ArrayList<Long>();
@@ -192,7 +198,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	        return expandedIds;
 	}
 	
-	public void restoreListState() {
+	private void restoreListState() {
 		EntryListAdapter adapter = (EntryListAdapter)(entryList.getExpandableListAdapter());
 		long id;
 		if (expandedIds != null && adapter != null) {

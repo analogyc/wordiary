@@ -75,6 +75,10 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	 * @param view
 	 */
 	public void onNewEntryButtonClicked(View view){
+		if (this instanceof MainActivity) {
+			((MainActivity) this).expandedIds  = ((MainActivity) this).getExpandedIds();
+		}
+		
 		NewEntryDialogFragment newFragment = new NewEntryDialogFragment();
 		newFragment.show(getSupportFragmentManager(), "newEntry");
 	}
@@ -165,7 +169,6 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 			dataBase.addEntry(message, 0);
 			if (this instanceof MainActivity) {
 				((MainActivity) this).showEntries();
-				((MainActivity) this).restoreListState();
 			}
 		} else {
 			text = getString(R.string.message_not_saved);

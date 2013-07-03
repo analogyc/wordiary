@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import net.analogyc.wordiary.models.MoodsAdapter;
+import net.analogyc.wordiary.adapter.MoodsAdapter;
 
 /**
  * Shows the list of moods for return to the previous activity

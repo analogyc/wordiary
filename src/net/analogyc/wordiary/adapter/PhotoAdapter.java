@@ -1,9 +1,7 @@
-package net.analogyc.wordiary.models;
+package net.analogyc.wordiary.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +9,8 @@ import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import net.analogyc.wordiary.R;
-
-import java.io.IOException;
+import net.analogyc.wordiary.database.DBAdapter;
+import net.analogyc.wordiary.models.BitmapWorker;
 import java.util.ArrayList;
 
 /**

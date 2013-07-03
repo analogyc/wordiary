@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import net.analogyc.wordiary.models.PhotoAdapter;
+import net.analogyc.wordiary.adapter.PhotoAdapter;
 
 /**
  * Shows the images on a grid

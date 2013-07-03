@@ -14,8 +14,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import net.analogyc.wordiary.database.DBAdapter;
 import net.analogyc.wordiary.models.BitmapWorker;
-import net.analogyc.wordiary.models.DBAdapter;
 import net.analogyc.wordiary.models.Photo;
 
 /**

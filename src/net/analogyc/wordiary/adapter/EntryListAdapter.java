@@ -1,4 +1,4 @@
-package net.analogyc.wordiary.models;
+package net.analogyc.wordiary.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +10,9 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.analogyc.wordiary.R;
+import net.analogyc.wordiary.database.DBAdapter;
+import net.analogyc.wordiary.models.BitmapWorker;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -9,9 +9,9 @@ import android.preference.PreferenceManager;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 import net.analogyc.wordiary.OptionEntryDialogFragment.OptionEntryDialogListener;
-import net.analogyc.wordiary.models.EntryListAdapter;
-import net.analogyc.wordiary.models.EntryListAdapter.OptionDayListener;
-import net.analogyc.wordiary.models.EntryListAdapter.OptionEntryListener;
+import net.analogyc.wordiary.adapter.EntryListAdapter;
+import net.analogyc.wordiary.adapter.EntryListAdapter.OptionDayListener;
+import net.analogyc.wordiary.adapter.EntryListAdapter.OptionEntryListener;
 
 import java.util.ArrayList;
 

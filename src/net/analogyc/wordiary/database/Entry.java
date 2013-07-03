@@ -1,4 +1,4 @@
-package net.analogyc.wordiary.models;
+package net.analogyc.wordiary.database;
 
 
 public class Entry {

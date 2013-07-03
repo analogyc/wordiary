@@ -1,4 +1,4 @@
-package net.analogyc.wordiary.models;
+package net.analogyc.wordiary.database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 
 /**
  * Aggregator for all the database queries

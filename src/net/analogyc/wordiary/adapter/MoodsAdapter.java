@@ -1,4 +1,4 @@
-package net.analogyc.wordiary.models;
+package net.analogyc.wordiary.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -46,5 +46,7 @@
     <string name="camera_not_available">Camera not available</string>
     <string name="sd_full">The SD card is full</string>
     <string name="title_confirm">Proceed?</string>
+    <string name="no_entry">No entry</string>
+    <string name="no_photo">No photo</string>
     
 </resources>

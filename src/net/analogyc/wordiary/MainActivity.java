@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import net.analogyc.wordiary.adapter.EntryListAdapter;
 import net.analogyc.wordiary.adapter.EntryListAdapter.OptionDayListener;
@@ -31,10 +34,8 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         //get the the corresponding link for each view object
-        entryList = (ExpandableListView) findViewById(R.id.entries);
         
     }
 
@@ -44,6 +45,9 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	 * 
 	 */
 	protected void showEntries(){
+		setContentView(R.layout.activity_main);
+        entryList = (ExpandableListView) findViewById(R.id.entries);
+
 		EntryListAdapter entryAdapter = new EntryListAdapter(this, bitmapWorker);
 		
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -80,6 +84,18 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		if (expandedIds != null) {
         	restoreListState();
         }
+		
+		if(entryAdapter.getGroupCount() <= 0){
+			
+			RelativeLayout layout =(RelativeLayout) findViewById(R.id.mainLayout);
+			TextView tv = new TextView(this);
+			tv.setText(R.string.no_entry);
+			tv.setTextColor(0xFFBBBBBB);
+			tv.setTextSize(34);
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
+			params.addRule(RelativeLayout.BELOW, R.id.HeaderViewLayout);
+			layout.addView(tv, params);
+		}
 		
 	}
 

@@ -2,7 +2,6 @@ package net.analogyc.wordiary;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.Button;

@@ -1,28 +1,19 @@
 package net.analogyc.wordiary;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
 import net.analogyc.wordiary.ConfirmDialogFragment.ConfirmDialogListener;
 
 /**
@@ -151,7 +142,6 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 		Cursor day = dataBase.getDayById(dayId);
 		day.moveToFirst();
 		int dayId = day.getInt(0);
-		String filename = day.getString(1);
 		day.close();
 
 		if (dataBase.isEditableDay(dayId)){

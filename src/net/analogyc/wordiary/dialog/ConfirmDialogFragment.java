@@ -1,5 +1,6 @@
-package net.analogyc.wordiary;
+package net.analogyc.wordiary.dialog;
 
+import net.analogyc.wordiary.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -17,6 +18,11 @@ public class ConfirmDialogFragment extends DialogFragment {
 	protected int id;
 	
 	
+	/**
+	 * Set the dialog id, this will be used to identify the confirmation at onConfirmedClick
+	 * 
+	 * @param id the id of the dialog
+	 */
 	public void setId (int id){
 		this.id = id;
 	}
@@ -30,15 +36,16 @@ public class ConfirmDialogFragment extends DialogFragment {
 			mListener = (ConfirmDialogListener) activity;
 		} catch (ClassCastException e) {
 			// The activity doesn't implement the interface, throw exception
-			throw new ClassCastException(activity.toString() + " must implement NewEntryDialogListener");
+			throw new ClassCastException(activity.toString() + " must implement ConfirmDialogListener");
 		}
 	}
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		
 		final int callId = this.id;
-
+		
 		builder.setTitle(R.string.title_confirm)
 				// Add action buttons
 				.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {

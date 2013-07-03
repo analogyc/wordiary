@@ -13,8 +13,11 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.*;
-import net.analogyc.wordiary.ConfirmDialogFragment.ConfirmDialogListener;
-import net.analogyc.wordiary.EditEntryDialogFragment.EditEntryDialogListener;
+import net.analogyc.wordiary.dialog.ConfirmDialogFragment;
+import net.analogyc.wordiary.dialog.EditEntryDialogFragment;
+import net.analogyc.wordiary.dialog.ConfirmDialogFragment.ConfirmDialogListener;
+import net.analogyc.wordiary.dialog.EditEntryDialogFragment.EditEntryDialogListener;
+
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -8,10 +8,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
-import net.analogyc.wordiary.OptionEntryDialogFragment.OptionEntryDialogListener;
 import net.analogyc.wordiary.adapter.EntryListAdapter;
 import net.analogyc.wordiary.adapter.EntryListAdapter.OptionDayListener;
 import net.analogyc.wordiary.adapter.EntryListAdapter.OptionEntryListener;
+import net.analogyc.wordiary.dialog.OptionEntryDialogFragment;
+import net.analogyc.wordiary.dialog.OptionEntryDialogFragment.OptionEntryDialogListener;
 
 import java.util.ArrayList;
 

@@ -14,7 +14,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import net.analogyc.wordiary.ConfirmDialogFragment.ConfirmDialogListener;
+
+import net.analogyc.wordiary.dialog.ConfirmDialogFragment;
+import net.analogyc.wordiary.dialog.ConfirmDialogFragment.ConfirmDialogListener;
 
 /**
  * Displays the full image in a custom WebView to zoom on it

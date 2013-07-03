@@ -1,6 +1,7 @@
-package net.analogyc.wordiary;
+package net.analogyc.wordiary.dialog;
 
 
+import net.analogyc.wordiary.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -31,7 +32,7 @@ public class EditEntryDialogFragment extends DialogFragment{
 			mListener = (EditEntryDialogListener) activity;
 		} catch (ClassCastException e) {
 			// The activity doesn't implement the interface, throw exception
-			throw new ClassCastException(activity.toString() + " must implement NewEntryDialogListener");
+			throw new ClassCastException(activity.toString() + " must implement EditEntryDialogListener");
 		}
 	}
 
@@ -40,7 +41,8 @@ public class EditEntryDialogFragment extends DialogFragment{
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		// Get the layout inflater
 		LayoutInflater inflater = getActivity().getLayoutInflater();
-		String message = this.getArguments().getString("message");
+		//get the current entry message
+		String message = getArguments().getString("message");
 		
 		// Inflate and set the layout for the dialog
 		// Pass null as the parent view because its going in the dialog layout
@@ -60,9 +62,12 @@ public class EditEntryDialogFragment extends DialogFragment{
 						EditEntryDialogFragment.this.getDialog().cancel();
 					}
 				});
-		((TextView)view.findViewById(R.id.newMessage)).setText(message);
+		
+		if(message != null){
+			((TextView)view.findViewById(R.id.newMessage)).setText(message);
+		}
+		
 		return builder.create();
-
 	}
 
 }

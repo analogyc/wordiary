@@ -1,6 +1,7 @@
-package net.analogyc.wordiary;
+package net.analogyc.wordiary.dialog;
 
 
+import net.analogyc.wordiary.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;

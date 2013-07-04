@@ -44,6 +44,28 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		//get an instance of database
 		dataBase = new DBAdapter(this);
 	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		if(imageUri != null){
+			outState.putString("cameraImageUri", imageUri.toString());
+		}
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedState){
+		super.onRestoreInstanceState(savedState);
+		if(savedState.containsKey("cameraImageUri")){
+			imageUri = Uri.parse(savedState.getString("cameraImageUri"));
+		}
+	}
+
+	@Override
+	protected void onPause(){
+		dataBase.close();
+		super.onPause();
+	}
 
 	/**
 	 * Brings back to the home page
@@ -159,27 +181,5 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 
 		Toast toast1 = Toast.makeText(context, text, TOAST_DURATION_S);
 		toast1.show();
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState){
-		super.onSaveInstanceState(outState);
-		if(imageUri != null){
-			outState.putString("cameraImageUri", imageUri.toString());
-		}
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedState){
-		super.onRestoreInstanceState(savedState);
-		if(savedState.containsKey("cameraImageUri")){
-			imageUri = Uri.parse(savedState.getString("cameraImageUri"));
-		}
-	}
-
-	@Override
-	protected void onPause(){
-		dataBase.close();
-		super.onPause();
 	}
 }

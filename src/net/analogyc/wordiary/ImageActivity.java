@@ -26,6 +26,27 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 	private String currentImage;
 	private ImageWebView imageWebView;
 	private TextView dateText;
+	
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt("dayId", dayId);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		if(savedInstanceState.containsKey("dayId")){
+			dayId = savedInstanceState.getInt("dayId");
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		setView();
+	}
 
 	/**
 	 * Opens the next or previous image if available
@@ -145,8 +166,9 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 		day.moveToFirst();
 		int dayId = day.getInt(0);
 		day.close();
-
+		//control if photo is editable
 		if (dataBase.isEditableDay(dayId)){
+			//ask if user really wants to proceed
 			ConfirmDialogFragment newFragment = new ConfirmDialogFragment();
 			newFragment.setId(0);
 			newFragment.show(getSupportFragmentManager(), "Confirm");
@@ -157,12 +179,21 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 		}
 	}
 	
+	/**
+	 * If user confirms the operation delete the photo
+	 * 
+	 * @param dialog
+	 * @param id the dialog id
+	 * 
+	 */
 	public void onConfirmedClick(DialogFragment dialog, int id) {
+		//get photo filename
 		Cursor day = dataBase.getDayById(dayId);
 		day.moveToFirst();
 		int dayId = day.getInt(0);
 		String filename = day.getString(1);
 		day.close();
+		//delete photo
 		File photo = new File(filename);
 		if(photo.delete()){
 			dataBase.deletePhoto(dayId);
@@ -185,23 +216,4 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 		}
 	}
 
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt("dayId", dayId);
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		if(savedInstanceState.containsKey("dayId")){
-			dayId = savedInstanceState.getInt("dayId");
-		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		setView();
-	}
 }

@@ -16,7 +16,6 @@ import android.widget.Toast;
 import net.analogyc.wordiary.adapter.EntryListAdapter;
 import net.analogyc.wordiary.adapter.EntryListAdapter.OptionDayListener;
 import net.analogyc.wordiary.adapter.EntryListAdapter.OptionEntryListener;
-import net.analogyc.wordiary.dialog.NewEntryDialogFragment;
 import net.analogyc.wordiary.dialog.OptionEntryDialogFragment;
 import net.analogyc.wordiary.dialog.OptionEntryDialogFragment.OptionEntryDialogListener;
 
@@ -30,18 +29,49 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	private ExpandableListView entryList;
 	protected long[] expandedIds;
 
+	
+	@Override
+    protected void onStart() {
+        super.onStart();
+        showEntries();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        setExpandedIds();
+    }
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		//store expanded days
+		setExpandedIds();
+		outState.putLongArray("ExpandedIds", expandedIds);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedState) {
+		super.onRestoreInstanceState(savedState);
+		
+		if (savedState.containsKey("ExpandedIds")) {
+			expandedIds = savedState.getLongArray("ExpandedIds");
+		}
+	}
 
 	/**
-	 * Reloads the list of entries
+	 * Reloads the list of entries and restore list state if possible
 	 * 
 	 * 
 	 */
 	protected void showEntries(){
+		//set a new content view
 		setContentView(R.layout.activity_main);
+		
         entryList = (ExpandableListView) findViewById(R.id.entries);
-
 		EntryListAdapter entryAdapter = new EntryListAdapter(this, bitmapWorker);
 		
+		//set the typeface and font size
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		int typefaceInt = Integer.parseInt(preferences.getString("typeface", "1"));
 		Typeface typeface;
@@ -69,7 +99,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 				textSize = 18;
 		}
 		entryAdapter.setChildFont(typeface, textSize);
-		
+
 		entryList.setAdapter(entryAdapter);
 		
 		//restore previous list state
@@ -77,8 +107,8 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
         	restoreListState();
         }
 		
+		//show a message if there's no entry/photo
 		if(entryAdapter.getGroupCount() <= 0){
-			
 			RelativeLayout layout =(RelativeLayout) findViewById(R.id.mainLayout);
 			TextView tv = new TextView(this);
 			tv.setText(R.string.no_entry);
@@ -97,7 +127,6 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	 * @param id The entry id
 	 */
     public void onEntryClicked(int id) {
-        //open Entry Activity
         Intent intent = new Intent(MainActivity.this, EntryActivity.class);
     	intent.putExtra("entryId", id);
     	startActivity(intent);
@@ -110,7 +139,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	 * @param id The entry id
 	 */
 	public void onEntryLongClicked(int id){
-		//Dialog fragment don't pause the activity, so something needs to be saved manually
+		//Dialog fragment don't pause the activity, so list state needs to be saved manually
 		setExpandedIds();
 		
 		OptionEntryDialogFragment editFragment = new OptionEntryDialogFragment();
@@ -163,35 +192,6 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	}
 	
 	
-	@Override
-    protected void onStart() {
-        super.onStart();
-        showEntries();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        setExpandedIds();
-    }
-	
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		//store expanded days
-		setExpandedIds();
-		outState.putLongArray("ExpandedIds", expandedIds);
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedState) {
-		super.onRestoreInstanceState(savedState);
-		
-		if (savedState.containsKey("ExpandedIds")) {
-			expandedIds = savedState.getLongArray("ExpandedIds");
-		}
-	}
-	
 	/**
 	 * Set expandableId to the current state, need to be called to restore list state
 	 * 
@@ -200,12 +200,13 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		EntryListAdapter adapter = (EntryListAdapter)(entryList.getExpandableListAdapter());
 		int length = adapter.getGroupCount();
 		ArrayList<Long> ids = new ArrayList<Long>();
-		
+		//get expandable ids
 		for(int i=0; i < length; i++) {
 			if(entryList.isGroupExpanded(i)) {
 				ids.add(adapter.getGroupId(i));
 			}
 		}
+		//get a long[] array from ids
 		long[] expandedIds = new long[ids.size()];
         int i = 0;
         for (Long e : ids){
@@ -230,7 +231,6 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 						break;
 					}
 				}
-
 			}
 		}
 	}

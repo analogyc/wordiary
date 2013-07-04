@@ -24,24 +24,25 @@ public class GalleryActivity extends BaseActivity {
 	}
 
 	protected void setView() {
+		//set a new content view
 		setContentView(R.layout.activity_gallery);
 
 		gridView = (GridView) findViewById(R.id.photoGrid);
-
 		gridView.setAdapter(new PhotoAdapter(this, bitmapWorker));
 
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> adpView, View view, int position,long id) {
+				//open the image in fullscreen mode
 				Intent intent = new Intent(GalleryActivity.this, ImageActivity.class);
 				intent.putExtra("dayId", (int)id);
 				startActivity(intent);
 			}
 		});
 		
+		//if there's no photo show a message
 		if(gridView.getAdapter().getCount() <= 0){
-			
 			RelativeLayout layout =(RelativeLayout) findViewById(R.id.galleryLayout);
 			TextView tv = new TextView(this);
 			tv.setText(R.string.no_photo);

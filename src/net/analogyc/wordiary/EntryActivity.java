@@ -37,11 +37,30 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_entry);
 		
 		Intent intent = getIntent();
 		//get the id of the selected entry (normally entryId can't be -1)
 		entryId = intent.getIntExtra("entryId", -1);
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putInt("entryId", entryId);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState){
+		super.onRestoreInstanceState(savedInstanceState);
+		if(savedInstanceState.containsKey("entryId")){
+			entryId = savedInstanceState.getInt("entryId");
+		}
+	}
+
+	@Override
+	protected void onStart(){
+		super.onStart();
+		setView();
 	}
 
 	/**
@@ -74,10 +93,11 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	/**
 	 * Sets up the view content
 	 */
-	protected void setView(){		
+	protected void setView(){	
+		//set a new content view
 		setContentView(R.layout.activity_entry);
 
-
+		//get views references
 		messageText = (TextView) findViewById(R.id.messageText);
 		dateText = (TextView) findViewById(R.id.dateText);
         photoButton = (ImageView) findViewById(R.id.photoButton);
@@ -87,6 +107,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		editEntryButton = (Button) findViewById(R.id.editEntryButton);
 		photoDeleteButton = (Button) findViewById(R.id.photoDeleteButton);
 		
+		//if grace period is ended change button color
 		if(!dataBase.isEditableEntry(entryId)){
 			setNewMoodButton.setTextColor(0xFFBBBBBB);
 			editEntryButton.setTextColor(0xFFBBBBBB);
@@ -120,20 +141,22 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 				messageText.setTextSize(18);
 		}
 
+		//get entry's informations from db
   		Cursor c_entry = dataBase.getEntryById(entryId);
   		if (!c_entry.moveToFirst()) {
   			//won't happen if MainActivity uses correct entryIds
 			 throw new RuntimeException("Wrong entry id");
   		}
+  		//set message
   		String message = c_entry.getString(2);
   		messageText.setText(message);
+  		//set mood
   		String mood = c_entry.getString(3);
-
   		if(mood != null){
   			int identifier = getResources().getIdentifier(mood, "drawable", R.class.getPackage().getName());
 			moodImage.setImageResource(identifier);
   		}
-
+  		//set date
   		String d_tmp = c_entry.getString(4);
   		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss",Locale.ITALY);
   		SimpleDateFormat format_out = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy",Locale.ITALY);
@@ -145,8 +168,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			dateText.setText("??.??.????");
 		}
 
-		int dayId = c_entry.getInt(1);
-		this.dayId = dayId;
+		this.dayId = c_entry.getInt(1);
 
 		// make the image about square
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -155,27 +177,25 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		photoButton.setMaxWidth(dm.widthPixels);
 		photoButton.setMaxHeight(dm.widthPixels);
 
-		if (dayId != -1) {
-			Cursor c_photo = dataBase.getDayById(dayId);
-			c_photo.moveToFirst();
-
-			String path = null;
-			if (!c_photo.getString(1).equals("")) {
-				path = c_photo.getString(1);
-			} else {
-				photoButton.setClickable(false);
-				photoDeleteButton.setVisibility(View.INVISIBLE);
-			}
-
-			bitmapWorker.createTask(photoButton, path)
-				.setShowDefault(dayId)
-				.setTargetHeight(dm.widthPixels)
-				.setTargetWidth(dm.widthPixels)
-				.setHighQuality(true)
-				.setCenterCrop(true)
-				.execute();
-				c_photo.close();
+		Cursor c_photo = dataBase.getDayById(dayId);
+		c_photo.moveToFirst();
+		String path = null;
+		if (!c_photo.getString(1).equals("")) {
+			path = c_photo.getString(1);
+		} else {
+			photoButton.setClickable(false);
+			photoDeleteButton.setVisibility(View.INVISIBLE);
 		}
+
+		bitmapWorker.createTask(photoButton, path)
+			.setShowDefault(dayId)
+			.setTargetHeight(dm.widthPixels)
+			.setTargetWidth(dm.widthPixels)
+			.setHighQuality(true)
+			.setCenterCrop(true)
+			.execute();
+			c_photo.close();
+
 
 		c_entry.close();
 		
@@ -261,12 +281,16 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			case 0:	dataBase.deleteEntryById(entryId);
 					Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted),TOAST_DURATION_S);
 					toast.show();
-					//Now EntryActivity has no reason to be visible
-					finish();
+					if(dataBase.hasNextEntry(entryId, true)){
+						//move to the previous entry
+						moveNext(true);
+					}else{
+						//Now EntryActivity has no reason to be visible
+						finish();
+					}
 					break;
-			case 1:	Cursor day = dataBase.getDayByEntry(entryId);
+			case 1:	Cursor day = dataBase.getDayById(dayId);
 					day.moveToFirst();
-					int dayId = day.getInt(0);
 					String filename = day.getString(1);
 					day.close();
 					File photo = new File(filename);
@@ -285,9 +309,6 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * @param view
 	 */
 	public void onPhotoDelete(View view){
-		Cursor day = dataBase.getDayByEntry(entryId);
-		day.moveToFirst();
-		int dayId = day.getInt(0);
 		if (dataBase.isEditableDay(dayId)){
 			ConfirmDialogFragment newFragment = new ConfirmDialogFragment();
 			newFragment.setId(1);
@@ -373,23 +394,4 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		setView();
 	}
 	
-	@Override
-	protected void onSaveInstanceState(Bundle outState){
-		super.onSaveInstanceState(outState);
-		outState.putInt("entryId", entryId);
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState){
-		super.onRestoreInstanceState(savedInstanceState);
-		if(savedInstanceState.containsKey("entryId")){
-			entryId = savedInstanceState.getInt("entryId");
-		}
-	}
-
-	@Override
-	protected void onStart(){
-		super.onStart();
-		setView();
-	}
 }

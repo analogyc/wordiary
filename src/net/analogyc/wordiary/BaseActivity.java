@@ -75,11 +75,6 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	 * @param view
 	 */
 	public void onNewEntryButtonClicked(View view){
-		if (this instanceof MainActivity) {
-			//Dialog fragment don't pause the activity, so something needs to be saved manually
-			((MainActivity) this).setExpandedIds();
-		}
-		
 		NewEntryDialogFragment newFragment = new NewEntryDialogFragment();
 		newFragment.show(getSupportFragmentManager(), "newEntry");
 	}
@@ -138,16 +133,6 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 				Toast.makeText(this, getString(R.string.image_saved), TOAST_DURATION_L).show();
 				bitmapWorker.clearBitmapFromMemCache(imageUri.getPath());
 				bitmapWorker.clearBitmapFromMemCache("gallery_" + imageUri.getPath());
-
-				if (this instanceof MainActivity) {
-					((MainActivity) this).showEntries();
-				}
-				if (this instanceof GalleryActivity) {
-					((GalleryActivity) this).setView();
-				}
-				if (this instanceof EntryActivity) {
-					((EntryActivity) this).setView();
-				}
 			}
 		}
 	}
@@ -168,9 +153,6 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		if(!message.equals("")){
 			text = getString(R.string.message_saved);
 			dataBase.addEntry(message, 0);
-			if (this instanceof MainActivity) {
-				((MainActivity) this).showEntries();
-			}
 		} else {
 			text = getString(R.string.message_not_saved);
 		}

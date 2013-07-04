@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
+import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import net.analogyc.wordiary.adapter.EntryListAdapter;
 import net.analogyc.wordiary.adapter.EntryListAdapter.OptionDayListener;
 import net.analogyc.wordiary.adapter.EntryListAdapter.OptionEntryListener;
+import net.analogyc.wordiary.dialog.NewEntryDialogFragment;
 import net.analogyc.wordiary.dialog.OptionEntryDialogFragment;
 import net.analogyc.wordiary.dialog.OptionEntryDialogFragment.OptionEntryDialogListener;
 
@@ -230,6 +233,51 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 
 			}
 		}
+	}
+	
+	/**
+	 * Pops up a simple dialog to input a new entry and save list state
+	 *
+	 * @param view
+	 */
+	@Override
+	public void onNewEntryButtonClicked(View view){
+		//Dialog fragment don't pause the activity, so something needs to be saved manually
+		setExpandedIds();
+
+		super.onNewEntryButtonClicked(view);
+	}
+	
+	
+	/**
+	 * Takes results from: camera intent (100), and update view
+	 *
+	 * @param requestCode
+	 * @param resultCode
+	 * @param data
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+			if (resultCode == RESULT_OK) {
+				//If everything ok, update view
+				this.showEntries();
+			}
+		}
+	}
+	
+	/**
+	 * Positive input for the dialog for creating a new Entry
+	 *
+	 * @param dialog
+	 */
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		super.onDialogPositiveClick(dialog);
+		
+		showEntries();
 	}
 	
 }

@@ -52,4 +52,23 @@ public class GalleryActivity extends BaseActivity {
 			layout.addView(tv, params);
 		}
 	}
+	
+	/**
+	 * Takes results from: camera intent (100), and update view
+	 *
+	 * @param requestCode
+	 * @param resultCode
+	 * @param data
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+			if (resultCode == RESULT_OK) {
+				//If everything ok, update view
+				this.setView();
+			}
+		}
+	}
 }

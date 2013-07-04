@@ -61,6 +61,13 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			}
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);
+			
+			if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+				if (resultCode == RESULT_OK) {
+					//If everything ok, update view
+					this.setView();
+				}
+			}
 		}
 	}
 

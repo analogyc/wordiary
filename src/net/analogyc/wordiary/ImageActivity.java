@@ -190,7 +190,6 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 		//get photo filename
 		Cursor day = dataBase.getDayById(dayId);
 		day.moveToFirst();
-		int dayId = day.getInt(0);
 		String filename = day.getString(1);
 		day.close();
 		//delete photo

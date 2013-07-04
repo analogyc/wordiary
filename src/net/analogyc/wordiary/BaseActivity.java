@@ -31,14 +31,14 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	protected final int TOAST_DURATION_S = 1000;
 
 	protected Uri imageUri;
-	protected boolean saveUri;
 	protected DBAdapter dataBase;
 	protected BitmapWorker bitmapWorker;
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-		saveUri = false;
+		
 		bitmapWorker = BitmapWorker.findOrCreateBitmapWorker(getSupportFragmentManager());
 		
 		//get an instance of database
@@ -76,7 +76,8 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	 */
 	public void onNewEntryButtonClicked(View view){
 		if (this instanceof MainActivity) {
-			((MainActivity) this).expandedIds  = ((MainActivity) this).getExpandedIds();
+			//Dialog fragment don't pause the activity, so something needs to be saved manually
+			((MainActivity) this).setExpandedIds();
 		}
 		
 		NewEntryDialogFragment newFragment = new NewEntryDialogFragment();

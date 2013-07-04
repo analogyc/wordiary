@@ -33,6 +33,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
     private ImageView photoButton, moodImage;
 	private Button setNewMoodButton, editEntryButton, photoDeleteButton;
 
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,15 +42,6 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		Intent intent = getIntent();
 		//get the id of the selected entry (normally entryId can't be -1)
 		entryId = intent.getIntExtra("entryId", -1);
-
-		messageText = (TextView) findViewById(R.id.messageText);
-		dateText = (TextView) findViewById(R.id.dateText);
-        photoButton = (ImageView) findViewById(R.id.photoButton);
-        moodImage = (ImageView) findViewById(R.id.moodImage);
-
-		setNewMoodButton = (Button) findViewById(R.id.setNewMoodButton);
-		editEntryButton = (Button) findViewById(R.id.editEntryButton);
-		photoDeleteButton = (Button) findViewById(R.id.photoDeleteButton);
 	}
 
 	/**
@@ -182,12 +174,12 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		
 		
 		//check if this entry has a previous and a next 
-		if(!dataBase.hasNextEntry(entryId, true)){
+		if(!dataBase.hasNextEntry(entryId, false)){
 			Button nextB = (Button)this.findViewById(R.id.nextEntryButton);
 			nextB.setClickable(false);
 			nextB.setTextColor(0xFFBBBBBB);
 		}
-		if(!dataBase.hasNextEntry(entryId, false)){
+		if(!dataBase.hasNextEntry(entryId, true)){
 			Button prevB = (Button)this.findViewById(R.id.prevEntryButton);
 			prevB.setClickable(false);
 			prevB.setTextColor(0xFFBBBBBB);
@@ -248,6 +240,13 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		
 	}
 	
+	/**
+	 * Called after a confirmDialog, this method could delete a photo or  delete an entry
+	 * 
+	 * @param dialog
+	 * @param id the dialog id
+	 * 
+	 */
 	public void onConfirmedClick(DialogFragment dialog, int id) {
 		
 		// 0 = deleteEntry, 1 = DeletePhoto
@@ -341,7 +340,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * @param view
 	 */
 	public void nextEntryButtonClicked(View view){
-		moveNext(true);
+		moveNext(false);
 	}
 	
 	/**
@@ -350,13 +349,13 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * @param view
 	 */
 	public void prevEntryButtonClicked(View view){
-		moveNext(false);
+		moveNext(true);
 	}
 	
 	/**
 	 * Provides and shows the informations of previous/next entry
 	 * 
-	 * @param backwards false to go back, true otherwise
+	 * @param backwards true to go back, false otherwise
 	 */
 	public void moveNext(boolean backwards){
 		Cursor nextEntry = dataBase.getNextEntry(entryId, backwards);

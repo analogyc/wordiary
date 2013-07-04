@@ -6,11 +6,7 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,13 +27,6 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	private ExpandableListView entryList;
 	protected long[] expandedIds;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        //get the the corresponding link for each view object
-        
-    }
 
 	/**
 	 * Reloads the list of entries
@@ -112,12 +101,15 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
     }
 
 	/**
+	 * Called on a user long-click
 	 * Gives two commands: Delete entry and Share entry
 	 *
 	 * @param id The entry id
 	 */
 	public void onEntryLongClicked(int id){
-		expandedIds = getExpandedIds();
+		//Dialog fragment don't pause the activity, so something needs to be saved manually
+		setExpandedIds();
+		
 		OptionEntryDialogFragment editFragment = new OptionEntryDialogFragment();
 		Bundle args = new Bundle();
 		args.putInt("entryId", id);
@@ -177,14 +169,15 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
     @Override
     protected void onPause() {
         super.onPause();
-        expandedIds = getExpandedIds();
+        setExpandedIds();
     }
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		//store expanded days
-		outState.putLongArray("ExpandedIds", getExpandedIds());
+		setExpandedIds();
+		outState.putLongArray("ExpandedIds", expandedIds);
 	}
 
 	@Override
@@ -196,24 +189,32 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		}
 	}
 	
-	
-	protected long[] getExpandedIds() {
-			EntryListAdapter adapter = (EntryListAdapter)(entryList.getExpandableListAdapter());
-			int length = adapter.getGroupCount();
-			ArrayList<Long> ids = new ArrayList<Long>();
-			
-			for(int i=0; i < length; i++) {
-				if(entryList.isGroupExpanded(i)) {
-					ids.add(adapter.getGroupId(i));
-				}
+	/**
+	 * Set expandableId to the current state, need to be called to restore list state
+	 * 
+	 */
+	protected void setExpandedIds() {
+		EntryListAdapter adapter = (EntryListAdapter)(entryList.getExpandableListAdapter());
+		int length = adapter.getGroupCount();
+		ArrayList<Long> ids = new ArrayList<Long>();
+		
+		for(int i=0; i < length; i++) {
+			if(entryList.isGroupExpanded(i)) {
+				ids.add(adapter.getGroupId(i));
 			}
-			long[] expandedIds = new long[ids.size()];
-	        int i = 0;
-	        for (Long e : ids)  
-	        	expandedIds[i++] = e.longValue();
-	        return expandedIds;
+		}
+		long[] expandedIds = new long[ids.size()];
+        int i = 0;
+        for (Long e : ids){
+        	expandedIds[i++] = e.longValue();
+        }
+        this.expandedIds = expandedIds;
 	}
 	
+	/**
+	 * Restore list state
+	 * 
+	 */
 	private void restoreListState() {
 		EntryListAdapter adapter = (EntryListAdapter)(entryList.getExpandableListAdapter());
 		long id;

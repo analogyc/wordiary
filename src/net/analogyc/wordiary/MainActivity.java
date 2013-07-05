@@ -235,19 +235,6 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		}
 	}
 	
-	/**
-	 * Pops up a simple dialog to input a new entry and save list state
-	 *
-	 * @param view
-	 */
-	@Override
-	public void onNewEntryButtonClicked(View view){
-		//Dialog fragment don't pause the activity, so something needs to be saved manually
-		setExpandedIds();
-
-		super.onNewEntryButtonClicked(view);
-	}
-	
 	
 	/**
 	 * Takes results from: camera intent (100), and update view
@@ -276,8 +263,9 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	@Override
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		super.onDialogPositiveClick(dialog);
-		
+		//refresh screen and expand the last day on the list
 		showEntries();
+		entryList.expandGroup(0);
 	}
 	
 }

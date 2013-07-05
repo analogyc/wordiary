@@ -6,6 +6,8 @@
     <string name="title_activity_day">Giorno</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_entry">EntryActivity</string>
+    <string name="button_newEntry_label">Nuova entry</string>
+    <string name="button_takePhoto_label">Scatta foto</string>
     <string name="dialog_new_entry">Nuovo post</string>
     <string name="dialog_edit_entry">Editare il post</string>
     <string name="dialog_option_entry">Opzioni</string>
@@ -34,5 +36,6 @@
 	<string name="title_confirm">Procedere?</string>
     <string name="no_entry">Nessun entry</string>
     <string name="no_photo">Nessuna foto</string>
-    
+    <string name="no_entry_or_photo_notice">Puoi usare i seguenti bottoni per iniziare a divertirti con Wordiary. Appariranno attraverso quasi tutta l\'applicazione.</string>
+
 </resources>

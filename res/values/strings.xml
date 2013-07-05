@@ -6,7 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_day">Day</string>
     <string name="title_activity_settings">SettingsActivity</string>
-	<string name="button_takePhoto">&#xf030;</string>
+    <string name="button_takePhoto">&#xf030;</string>
 	<string name="button_openGallery">&#xf03e;</string>
     <string name="button_newEntry">&#xf10e;</string>
 	<string name="button_openPreferences">&#xf013;</string>
@@ -20,6 +20,8 @@
 	<string name="button_nextImage">&#xf054;</string>
 	<string name="button_shareImage">&#xf045;</string>
 	<string name="button_deleteImage">&#xf00d;</string>
+    <string name="button_newEntry_label">New entry</string>
+    <string name="button_takePhoto_label">Take photo</string>
     <string name="title_activity_entry">EntryActivity</string>
     <string name="dialog_new_entry">New Entry</string>
     <string name="dialog_edit_entry">Edit Entry</string>
@@ -48,5 +50,6 @@
     <string name="title_confirm">Proceed?</string>
     <string name="no_entry">No entry</string>
     <string name="no_photo">No photo</string>
+    <string name="no_entry_or_photo_notice">You can use the following buttons to start enjoying Wordiary. They will appear through most of the application.</string>
     
 </resources>

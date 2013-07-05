@@ -8,10 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ExpandableListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import net.analogyc.wordiary.adapters.EntryListAdapter;
@@ -62,8 +59,6 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 
 	/**
 	 * Reloads the list of entries and restore list state if possible
-	 * 
-	 * 
 	 */
 	protected void showEntries(){
 		//set a new content view
@@ -99,6 +94,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 			default:
 				textSize = 18;
 		}
+
 		entryAdapter.setChildFont(typeface, textSize);
 
 		entryList.setAdapter(entryAdapter);
@@ -110,14 +106,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		
 		//show a message if there's no entry/photo
 		if(entryAdapter.getGroupCount() <= 0){
-			RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainLayout);
-			TextView tv = new TextView(this);
-			tv.setText(R.string.no_entry);
-			tv.setTextColor(0xFFBBBBBB);
-			tv.setTextSize(34);
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
-			params.addRule(RelativeLayout.BELOW, R.id.HeaderViewLayout);
-			layout.addView(tv, params);
+            setContentView(R.layout.activity_main_noentries);
 		}
 		
 	}

@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		
 		//show a message if there's no entry/photo
 		if(entryAdapter.getGroupCount() <= 0){
-			RelativeLayout layout =(RelativeLayout) findViewById(R.id.mainLayout);
+			RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainLayout);
 			TextView tv = new TextView(this);
 			tv.setText(R.string.no_entry);
 			tv.setTextColor(0xFFBBBBBB);
@@ -120,6 +120,16 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		}
 		
 	}
+
+    /**
+     * The home button shouldn't do anything when already in MainActivity
+     *
+     * @param view
+     */
+    @Override
+    public void onHomeButtonClicked(View view) {
+        // prevent a new home from appearing
+    }
 
 	/**
 	 * Opens the entry in a new activity

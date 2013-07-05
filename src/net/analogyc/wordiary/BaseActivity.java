@@ -73,12 +73,10 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	 * @param view
 	 */
 	public void onHomeButtonClicked(View view) {
-		if (!(this instanceof MainActivity)) {
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-		}
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
 	}
 
 	/**
@@ -107,10 +105,8 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	 * @param view
 	 */
 	public void onOpenGalleryClicked(View view){
-		if (!(this instanceof GalleryActivity)) {
 			Intent intent = new Intent(this, GalleryActivity.class);
 			startActivity(intent);
-		}
 	}
 
 	/**

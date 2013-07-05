@@ -72,4 +72,14 @@ public class GalleryActivity extends BaseActivity {
 			}
 		}
 	}
+
+    /**
+     * The home button shouldn't do anything when already in GalleryActivity
+     *
+     * @param view
+     */
+    @Override
+    public void onOpenGalleryClicked(View view) {
+        // prevent a new gallery from appearing
+    }
 }

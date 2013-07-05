@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import net.analogyc.wordiary.database.DBAdapter;
-import net.analogyc.wordiary.dialog.NewEntryDialogFragment;
+import net.analogyc.wordiary.dialogs.NewEntryDialogFragment;
 import net.analogyc.wordiary.models.BitmapWorker;
 import net.analogyc.wordiary.models.Photo;
 
@@ -31,7 +31,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	protected final int TOAST_DURATION_L = 2000;
 	protected final int TOAST_DURATION_S = 1000;
 
-    protected final int MIN_SD_SPACE_MEGABYTES = 5;
+    protected final int CAPTURE_IMAGE_MIN_SPACE_MEGABYTES = 5;
 
 	protected Uri imageUri;
 	protected DBAdapter dataBase;
@@ -127,7 +127,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
 		long megabytes = ((long) stat.getBlockSize() * (long) stat.getBlockCount()) / (1024 * 1024);
 		
-		if (megabytes < MIN_SD_SPACE_MEGABYTES) {
+		if (megabytes < CAPTURE_IMAGE_MIN_SPACE_MEGABYTES) {
 			Toast.makeText(this, getString(R.string.sd_full), TOAST_DURATION_L).show();
 			return;
 		}

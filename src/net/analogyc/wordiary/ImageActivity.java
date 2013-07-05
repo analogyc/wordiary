@@ -9,14 +9,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import net.analogyc.wordiary.dialogs.ConfirmDialogFragment;
+import net.analogyc.wordiary.dialogs.ConfirmDialogFragment.ConfirmDialogListener;
+import net.analogyc.wordiary.views.ImageWebView;
+
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import net.analogyc.wordiary.dialog.ConfirmDialogFragment;
-import net.analogyc.wordiary.dialog.ConfirmDialogFragment.ConfirmDialogListener;
 
 /**
  * Displays the full image in a custom WebView to zoom on it

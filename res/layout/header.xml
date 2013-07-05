@@ -10,7 +10,7 @@
 	android:layout_alignParentRight="true"
 	android:background="#231f74" >
 
-	<net.analogyc.wordiary.AwesomeButtonView
+	<net.analogyc.wordiary.views.AwesomeButtonView
 		android:id="@+id/homeButton"
 		android:layout_width="0dp"
 		android:layout_height="match_parent"
@@ -21,7 +21,7 @@
 		android:background="@drawable/flatbutton"
 		android:textSize="17dp"/>
 
-	<net.analogyc.wordiary.AwesomeButtonView
+	<net.analogyc.wordiary.views.AwesomeButtonView
 		android:id="@+id/newEntryButton"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
 		android:paddingBottom="10dp"
 		android:textSize="20dp"/>
 
-	<net.analogyc.wordiary.AwesomeButtonView
+	<net.analogyc.wordiary.views.AwesomeButtonView
 		android:id="@+id/takePhotoButton"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
 		android:paddingBottom="10dp"
 		android:textSize="20dp"/>
 
-	<net.analogyc.wordiary.AwesomeButtonView
+	<net.analogyc.wordiary.views.AwesomeButtonView
 		android:id="@+id/openGalleryButton"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
 		android:paddingBottom="10dp"
 		android:textSize="20dp"/>
 
-	<net.analogyc.wordiary.AwesomeButtonView
+	<net.analogyc.wordiary.views.AwesomeButtonView
 		android:id="@+id/openPreferencesButton"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"

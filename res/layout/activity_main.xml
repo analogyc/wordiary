@@ -6,7 +6,7 @@
     tools:context=".MainActivity"
 	android:background="#eeeeee" >
 
-	<net.analogyc.wordiary.HeaderView
+	<net.analogyc.wordiary.views.HeaderView
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:id="@+id/HeaderViewLayout"/>

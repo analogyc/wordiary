@@ -8,7 +8,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import net.analogyc.wordiary.adapter.PhotoAdapter;
+
+import net.analogyc.wordiary.adapters.PhotoAdapter;
 
 /**
  * Shows the images on a grid

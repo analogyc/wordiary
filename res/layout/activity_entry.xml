@@ -5,7 +5,7 @@
 				tools:context=".EntryActivity"
 				android:background="#eeeeee">
 
-	<net.analogyc.wordiary.HeaderView
+	<net.analogyc.wordiary.views.HeaderView
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:id="@+id/HeaderViewLayout"/>
@@ -27,7 +27,7 @@
 				android:layout_height="wrap_content"
 				android:layout_margin="10dp"
 				android:background="#dddddd" >
-				<net.analogyc.wordiary.AwesomeButtonView
+				<net.analogyc.wordiary.views.AwesomeButtonView
 					android:layout_width="0dp"
 					android:layout_height="match_parent"
 					android:layout_weight="0.20"
@@ -38,7 +38,7 @@
 					android:background="#dddddd"
 					android:onClick="prevEntryButtonClicked"/>
 
-				<net.analogyc.wordiary.AwesomeButtonView
+				<net.analogyc.wordiary.views.AwesomeButtonView
 					android:layout_width="0dp"
 					android:layout_height="match_parent"
 					android:layout_weight="0.20"
@@ -98,7 +98,7 @@
 				android:layout_below="@+id/DataAndMoodLayout"
 				android:layout_margin="10dp"
 				android:background="#dddddd" >
-					<net.analogyc.wordiary.AwesomeButtonView
+					<net.analogyc.wordiary.views.AwesomeButtonView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="0.20"
@@ -111,7 +111,7 @@
 						android:background="#dddddd"
 						android:onClick="onMoodButtonClicked"/>
 
-					<net.analogyc.wordiary.AwesomeButtonView
+					<net.analogyc.wordiary.views.AwesomeButtonView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="0.20"
@@ -124,7 +124,7 @@
 						android:background="#dddddd"
 						android:onClick="onEditButtonClicked"/>
 
-					<net.analogyc.wordiary.AwesomeButtonView
+					<net.analogyc.wordiary.views.AwesomeButtonView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="0.20"
@@ -137,7 +137,7 @@
 						android:background="#dddddd"
 						android:onClick="onDeleteButtonClicked"/>
 
-					<net.analogyc.wordiary.AwesomeButtonView
+					<net.analogyc.wordiary.views.AwesomeButtonView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="0.20"
@@ -166,7 +166,7 @@
 				android:adjustViewBounds="true"
 				android:scaleType="fitCenter" />
 
-			<net.analogyc.wordiary.AwesomeButtonView
+			<net.analogyc.wordiary.views.AwesomeButtonView
 			    android:id="@+id/photoDeleteButton"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"

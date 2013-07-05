@@ -13,11 +13,12 @@ import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import net.analogyc.wordiary.adapter.EntryListAdapter;
-import net.analogyc.wordiary.adapter.EntryListAdapter.OptionDayListener;
-import net.analogyc.wordiary.adapter.EntryListAdapter.OptionEntryListener;
-import net.analogyc.wordiary.dialog.OptionEntryDialogFragment;
-import net.analogyc.wordiary.dialog.OptionEntryDialogFragment.OptionEntryDialogListener;
+
+import net.analogyc.wordiary.adapters.EntryListAdapter;
+import net.analogyc.wordiary.adapters.EntryListAdapter.OptionDayListener;
+import net.analogyc.wordiary.adapters.EntryListAdapter.OptionEntryListener;
+import net.analogyc.wordiary.dialogs.OptionEntryDialogFragment;
+import net.analogyc.wordiary.dialogs.OptionEntryDialogFragment.OptionEntryDialogListener;
 
 import java.util.ArrayList;
 
@@ -166,7 +167,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	 */
 	public void onDayLongClicked(int id){
 		Intent intent = new Intent(MainActivity.this, ImageActivity.class);
-    	intent.putExtra("dayId",id);
+    	intent.putExtra("dayId", id);
     	startActivity(intent);
 	}
 

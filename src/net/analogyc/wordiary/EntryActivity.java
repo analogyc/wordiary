@@ -12,11 +12,16 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.*;
-import net.analogyc.wordiary.dialog.ConfirmDialogFragment;
-import net.analogyc.wordiary.dialog.EditEntryDialogFragment;
-import net.analogyc.wordiary.dialog.ConfirmDialogFragment.ConfirmDialogListener;
-import net.analogyc.wordiary.dialog.EditEntryDialogFragment.EditEntryDialogListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import net.analogyc.wordiary.dialogs.ConfirmDialogFragment;
+import net.analogyc.wordiary.dialogs.ConfirmDialogFragment.ConfirmDialogListener;
+import net.analogyc.wordiary.dialogs.EditEntryDialogFragment;
+import net.analogyc.wordiary.dialogs.EditEntryDialogFragment.EditEntryDialogListener;
 
 import java.io.File;
 import java.text.ParseException;

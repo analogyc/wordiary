@@ -53,7 +53,6 @@ public class ImageWebView extends WebView {
 		set.setBuiltInZoomControls(true);
 		set.setLoadWithOverviewMode(true);
 		set.setUseWideViewPort(true);
-		set.setCacheMode(WebSettings.LOAD_NO_CACHE);
 		setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		setScrollbarFadingEnabled(true);
 		setBackgroundColor(Color.BLACK);
@@ -162,10 +161,12 @@ public class ImageWebView extends WebView {
 		// for some reason higher DPI must screw with the width of WebView
 		dm.widthPixels /= getWebDensity();
 
-		String html =
+        String html =
 			"<html>" +
 				"<head>" +
-				"<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=10000.0 target-densitydpi=device-dpi;\">" +
+                    "<meta http-equiv=\"cache-control\" CONTENT=\"no-cache\">" +
+                    "<meta http-equiv=\"pragma\" content=\"no-cache\">" +
+				    "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=10000.0 target-densitydpi=device-dpi;\">" +
 				"<style>" +
 					"html {background: #000000}" +
 					"body {margin: 0; padding: 0;}" +
@@ -178,6 +179,9 @@ public class ImageWebView extends WebView {
 
 		loadDataWithBaseURL(location, html, "text/html", "utf-8", location);
 		overrideZoom();
+
+        // only safe known method to truly disable cache
+        clearCache(true);
 	}
 
 	/**

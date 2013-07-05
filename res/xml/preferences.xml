@@ -7,12 +7,6 @@
         android:entries="@array/fontSize"
         android:entryValues="@array/fontSizeValues"
         android:defaultValue="2"/>
- 	<EditTextPreference
- 	    android:title="@string/grace_period"
- 	    android:key="grace_period"
- 	    android:dialogTitle="@string/grace_period"
- 	    android:inputType="number"
- 	    android:defaultValue="24"/>
  	<ListPreference
  	    android:title="@string/typeface"
  	    android:key="typeface"
@@ -20,6 +14,11 @@
  	    android:entries="@array/typeface"
  	    android:entryValues="@array/typefaceValues"
  	    android:defaultValue="1"/>
-   
+    <EditTextPreference
+            android:title="@string/grace_period"
+            android:key="grace_period"
+            android:dialogTitle="@string/grace_period"
+            android:inputType="number"
+            android:defaultValue="24"/>
 
 </PreferenceScreen>

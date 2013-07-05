@@ -2,10 +2,9 @@
 <resources>
 
     <string name="app_name">Wordiary</string>
-    <string name="hello_world">Ciao, mondo!</string>
     <string name="title_activity_day">Giorno</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_entry">EntryActivity</string>
+    <string name="title_activity_image">Immagine</string>
+    <string name="title_activity_entry">Entry</string>
     <string name="button_newEntry_label">Nuova entry</string>
     <string name="button_takePhoto_label">Scatta foto</string>
     <string name="dialog_new_entry">Nuovo post</string>
@@ -19,7 +18,7 @@
     <string name="preferences">Preferenze</string>
     <string name="grace_period">Imposta il tempo limite di modifica per i post</string>
     <string name="typeface">Tipo di font per i post</string>
-    <string name="title_activity_gallery">GalleryActivity</string>
+    <string name="title_activity_gallery">Galleria</string>
     <string name="grace_period_ended">Il tempo limite di modifica per il post è scaduto.</string>
     <string name="image_saved">Immagine salvata</string>
     <string name="message_deleted">Messaggio eliminato</string>

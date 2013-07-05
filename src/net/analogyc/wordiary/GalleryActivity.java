@@ -2,12 +2,9 @@ package net.analogyc.wordiary;
 
 import android.content.Intent;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import net.analogyc.wordiary.adapters.PhotoAdapter;
 
@@ -44,14 +41,7 @@ public class GalleryActivity extends BaseActivity {
 		
 		//if there's no photo show a message
 		if(gridView.getAdapter().getCount() <= 0){
-			RelativeLayout layout =(RelativeLayout) findViewById(R.id.galleryLayout);
-			TextView tv = new TextView(this);
-			tv.setText(R.string.no_photo);
-			tv.setTextColor(0xFFBBBBBB);
-			tv.setTextSize(34);
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
-			params.addRule(RelativeLayout.BELOW, R.id.HeaderViewLayout);
-			layout.addView(tv, params);
+            setContentView(R.layout.activity_gallery_nophotos);
 		}
 	}
 	

@@ -51,5 +51,6 @@
     <string name="no_entry">No entry</string>
     <string name="no_photo">No photo</string>
     <string name="no_entry_or_photo_notice">You can use the following buttons to start enjoying Wordiary. They will appear through most of the application.</string>
-    
+    <string name="no_photo_notice">The gallery is still empty. Use the camera button to take a photo.</string>
+
 </resources>

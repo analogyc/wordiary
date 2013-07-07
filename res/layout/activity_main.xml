@@ -1,22 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/mainLayout"
-    tools:context=".MainActivity"
-	android:background="#eeeeee" >
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/mainLayout"
+                tools:context=".MainActivity"
+                android:background="#eeeeee">
 
-	<net.analogyc.wordiary.views.HeaderView
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
-		android:id="@+id/HeaderViewLayout"/>
+    <net.analogyc.wordiary.views.HeaderView
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:id="@+id/HeaderViewLayout"/>
 
 
-	<ExpandableListView
-		android:id="@+id/entries"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_below="@+id/HeaderViewLayout"
-		/>
+    <ExpandableListView
+            android:id="@+id/entries"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/HeaderViewLayout"
+            />
 
 </RelativeLayout>

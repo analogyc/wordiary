@@ -4,7 +4,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/mainLayout"
                 tools:context=".MainActivity"
-                android:background="#eeeeee" >
+                android:background="#eeeeee">
 
     <net.analogyc.wordiary.views.HeaderView
             android:layout_height="wrap_content"

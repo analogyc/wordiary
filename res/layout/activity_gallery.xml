@@ -1,21 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/galleryLayout"
-    tools:context=".GalleryActivity" >
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/galleryLayout"
+                tools:context=".GalleryActivity">
 
-	<net.analogyc.wordiary.views.HeaderView
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
-		android:id="@+id/HeaderViewLayout"/>
+    <net.analogyc.wordiary.views.HeaderView
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:id="@+id/HeaderViewLayout"/>
 
     <GridView
-        android:id="@+id/photoGrid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-		android:layout_below="@+id/HeaderViewLayout"
-        android:numColumns="3" >
+            android:id="@+id/photoGrid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/HeaderViewLayout"
+            android:numColumns="3">
     </GridView>
 
 </RelativeLayout>

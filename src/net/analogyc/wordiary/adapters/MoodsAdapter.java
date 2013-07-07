@@ -13,7 +13,7 @@ import net.analogyc.wordiary.R;
  * Adapter to show the moods
  */ 
 public class MoodsAdapter extends BaseAdapter {
-	private Context context;
+	private Context mContext;
 	private final String[] moods;
  
 	/**
@@ -24,20 +24,20 @@ public class MoodsAdapter extends BaseAdapter {
 	 */
 	public MoodsAdapter(Context context, String[] moods) {
 		super();
-		this.context = context;
+		this.mContext = context;
 		this.moods = moods;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
  
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
  
 		View gridView;
 		
 		if (convertView == null) {
 			 
-			gridView = new View(context);
+			gridView = new View(mContext);
  
 			// get layout from mobile.xml
 			gridView = inflater.inflate(R.layout.moods_style, null);
@@ -45,7 +45,7 @@ public class MoodsAdapter extends BaseAdapter {
 			// set image based on selected text
 			ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
 			//get the identifier of the image
-			int identifier = context.getResources().getIdentifier(moods[position], "drawable", R.class.getPackage().getName());
+			int identifier = mContext.getResources().getIdentifier(moods[position], "drawable", R.class.getPackage().getName());
 			imageView.setImageResource(identifier);
  
 		} else {

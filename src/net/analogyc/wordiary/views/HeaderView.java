@@ -14,20 +14,20 @@ import net.analogyc.wordiary.R;
  */
 public class HeaderView extends LinearLayout {
 
-	LayoutInflater inflater;
-	Button takePhotoButton;
+	private LayoutInflater mInflater;
+	private Button mTakePhotoButton;
 
 	public HeaderView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.header, this, true);
+		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mInflater.inflate(R.layout.header, this, true);
 
-		takePhotoButton = (Button) findViewById(R.id.takePhotoButton);
+		mTakePhotoButton = (Button) findViewById(R.id.takePhotoButton);
 
 		if (!(context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
 			|| context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))) {
-			takePhotoButton.setTextColor(0x77FFFFFF);
+			mTakePhotoButton.setTextColor(0x77FFFFFF);
 		}
 	}
 }

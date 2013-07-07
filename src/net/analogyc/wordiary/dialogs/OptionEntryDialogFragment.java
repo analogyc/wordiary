@@ -14,7 +14,7 @@ import net.analogyc.wordiary.R;
 
 public class OptionEntryDialogFragment extends DialogFragment {
 	
-	private int entryId;
+	private int mEntryId;
 	
 	public interface OptionEntryDialogListener {
 		public void deleteSelectedEntry(int id);
@@ -23,7 +23,7 @@ public class OptionEntryDialogFragment extends DialogFragment {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		entryId = getArguments().getInt("entryId");
+		mEntryId = getArguments().getInt("entryId");
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		// Get the layout inflater
@@ -53,7 +53,7 @@ public class OptionEntryDialogFragment extends DialogFragment {
 		shareButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				activity.shareSelectedEntry(entryId);
+				activity.shareSelectedEntry(mEntryId);
 				entryDialog.dismiss();
 			}	
 		});
@@ -62,7 +62,7 @@ public class OptionEntryDialogFragment extends DialogFragment {
 		deleteButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				activity.deleteSelectedEntry(entryId);
+				activity.deleteSelectedEntry(mEntryId);
 				entryDialog.dismiss();
 			}	
 		});

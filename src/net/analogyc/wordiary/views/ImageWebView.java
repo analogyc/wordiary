@@ -220,6 +220,16 @@ public class ImageWebView extends WebView {
      * Custom onFling to apply to the ImageWebView
      */
     public interface OnFlingListener {
+        /**
+         * Set a callback when the user flings on the ImageWebView
+         *
+         * @param view The view the OnFling is attached to
+         * @param e1 The motion event that triggered the onFling
+         * @param motionEvent The current motionEvent
+         * @param velocityX The horizontal speed of the fling
+         * @param velocityY The vertical speed of the fling
+         * @return Whether the event was consumed
+         */
         public boolean onFling(View view, MotionEvent e1, MotionEvent motionEvent, float velocityX, float velocityY);
     }
 }

@@ -207,7 +207,6 @@ public class DBAdapter {
 
         long diff = now_mil - created_mil;
         return diff < grace_period * 60 * 60 * 1000;
-
     }
 
     /**

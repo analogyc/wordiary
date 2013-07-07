@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.LruCache;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -346,6 +347,9 @@ public class BitmapWorker extends Fragment {
 
                     // don't reload the image if it's the same as in the drawable
                     if (getPath() != null && getPath().equals(oldTask.getBuilderCopy().getPath())) {
+                        BitmapWorkerTask task = new BitmapWorkerTask(mImageView, this);
+                        mImageView.setImageDrawable(new AsyncDrawable(getResources(), task));
+                        task.execute();
                         return;
                     }
                 }
@@ -369,6 +373,11 @@ public class BitmapWorker extends Fragment {
     class AsyncDrawable extends BitmapDrawable {
         // we aren't using weak references because we keep reusing this data to reduce flickering in the view
         private final BitmapWorkerTask mBitmapWorkerTask;
+
+        public AsyncDrawable(Resources res, BitmapWorkerTask bitmapWorkerTask) {
+            super(res);
+            mBitmapWorkerTask = bitmapWorkerTask;
+        }
 
         public AsyncDrawable(Resources res, Bitmap bitmap, BitmapWorkerTask bitmapWorkerTask) {
             super(res, bitmap);
@@ -486,8 +495,7 @@ public class BitmapWorker extends Fragment {
          * @return Bitmap with rounded corners
          */
         public Bitmap getRoundedCornerBitmap(Bitmap bitmap, int roundedPixels) {
-            Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
-                    .getHeight(), Bitmap.Config.ARGB_8888);
+            Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(output);
 
             Paint paint;

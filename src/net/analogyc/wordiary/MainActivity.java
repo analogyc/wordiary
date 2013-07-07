@@ -258,11 +258,11 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	/**
 	 * Positive input for the dialog for creating a new Entry
 	 *
-	 * @param dialog
+	 * @param message the entry message
 	 */
 	@Override
-	public void onDialogPositiveClick(DialogFragment dialog) {
-		super.onDialogPositiveClick(dialog);
+	public void onDialogPositiveClick(String message) {
+		super.onDialogPositiveClick(message);
 		//refresh screen and expand the last day on the list
 		showEntries();
 		mEntryList.expandGroup(0);

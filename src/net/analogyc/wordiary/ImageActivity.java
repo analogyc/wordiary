@@ -184,11 +184,10 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 	/**
 	 * If user confirms the operation delete the photo
 	 * 
-	 * @param dialog
 	 * @param id the dialog id
 	 * 
 	 */
-	public void onConfirmedClick(DialogFragment dialog, int id) {
+	public void onConfirmedClick(int id) {
 		//get photo filename
 		Cursor day = mDataBase.getDayById(mDayId);
 		day.moveToFirst();

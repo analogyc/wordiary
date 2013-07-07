@@ -275,11 +275,10 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	/**
 	 * Called after a confirmDialog, this method could delete a photo or  delete an entry
 	 * 
-	 * @param dialog
 	 * @param id the dialog id
 	 * 
 	 */
-	public void onConfirmedClick(DialogFragment dialog, int id) {
+	public void onConfirmedClick(int id) {
 		
 		// 0 = deleteEntry, 1 = DeletePhoto
 		switch (id){
@@ -348,16 +347,15 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 *
 	 * @param dialog
 	 */
-	public void onDialogModifyClick(DialogFragment dialog) {
+	public void onDialogModifyClick(String message) {
 		Context context = getApplicationContext();
 		CharSequence text;
 
-		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
-		String message = edit.getText().toString().trim();
+		String newMessage = message.trim();
 
-		if(!message.equals("")){
+		if(!newMessage.equals("")){
 			text = getString(R.string.message_saved);
-			mDataBase.updateMessage(mEntryId, message);
+			mDataBase.updateMessage(mEntryId, newMessage);
 			setView();
 		} else {
 			text = getString(R.string.message_not_saved);

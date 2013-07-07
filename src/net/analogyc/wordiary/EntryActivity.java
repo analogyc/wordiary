@@ -32,11 +32,11 @@ import java.util.Locale;
 public class EntryActivity extends BaseActivity implements EditEntryDialogListener, ConfirmDialogListener  {
 
 	private final int MOOD_RESULT_CODE = 101;
-	private int entryId;
-	private int dayId;
-	private TextView messageText, dateText;
-    private ImageView photoButton, moodImage;
-	private Button setNewMoodButton, editEntryButton, photoDeleteButton;
+	private int mEntryId;
+	private int mDayId;
+	private TextView mMessageText, mDateText;
+    private ImageView mPhotoButton, mMoodImage;
+	private Button mSetNewMoodButton, mEditEntryButton, mPhotoDeleteButton;
 
 
 	@Override
@@ -44,21 +44,21 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		super.onCreate(savedInstanceState);
 		
 		Intent intent = getIntent();
-		//get the id of the selected entry (normally entryId can't be -1)
-		entryId = intent.getIntExtra("entryId", -1);
+		//get the id of the selected entry (normally mEntryId can't be -1)
+		mEntryId = intent.getIntExtra("entryId", -1);
 	}
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
-		outState.putInt("entryId", entryId);
+		outState.putInt("entryId", mEntryId);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState){
 		super.onRestoreInstanceState(savedInstanceState);
 		if(savedInstanceState.containsKey("entryId")){
-			entryId = savedInstanceState.getInt("entryId");
+			mEntryId = savedInstanceState.getInt("entryId");
 		}
 	}
 
@@ -80,7 +80,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		if (requestCode == MOOD_RESULT_CODE) {
 			if (resultCode == RESULT_OK) {
 				String moodId = data.getStringExtra("moodId");
-				dataBase.updateMood(entryId, moodId);
+				mDataBase.updateMood(mEntryId, moodId);
 				setView();
 			}
 		} else {
@@ -103,19 +103,19 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		setContentView(R.layout.activity_entry);
 
 		//get views references
-		messageText = (TextView) findViewById(R.id.messageText);
-		dateText = (TextView) findViewById(R.id.dateText);
-        photoButton = (ImageView) findViewById(R.id.photoButton);
-        moodImage = (ImageView) findViewById(R.id.moodImage);
+		mMessageText = (TextView) findViewById(R.id.messageText);
+		mDateText = (TextView) findViewById(R.id.dateText);
+        mPhotoButton = (ImageView) findViewById(R.id.photoButton);
+        mMoodImage = (ImageView) findViewById(R.id.moodImage);
 
-		setNewMoodButton = (Button) findViewById(R.id.setNewMoodButton);
-		editEntryButton = (Button) findViewById(R.id.editEntryButton);
-		photoDeleteButton = (Button) findViewById(R.id.photoDeleteButton);
+		mSetNewMoodButton = (Button) findViewById(R.id.setNewMoodButton);
+		mEditEntryButton = (Button) findViewById(R.id.editEntryButton);
+		mPhotoDeleteButton = (Button) findViewById(R.id.photoDeleteButton);
 		
 		//if grace period is ended change button color
-		if(!dataBase.isEditableEntry(entryId)){
-			setNewMoodButton.setTextColor(0xFFBBBBBB);
-			editEntryButton.setTextColor(0xFFBBBBBB);
+		if(!mDataBase.isEditableEntry(mEntryId)){
+			mSetNewMoodButton.setTextColor(0xFFBBBBBB);
+			mEditEntryButton.setTextColor(0xFFBBBBBB);
 		}
 
 		// we keep this in onStart because the user might have changed the font in Preferences and come back to Entry
@@ -124,42 +124,42 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		switch (typefaceInt) {
 			case 2:
 				Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
-				messageText.setTypeface(typeface);
+				mMessageText.setTypeface(typeface);
 				break;
 			case 3:
 				Typeface typeface3 = Typeface.createFromAsset(getAssets(), "fonts/stanhand.ttf");
-				messageText.setTypeface(typeface3);
+				mMessageText.setTypeface(typeface3);
 				break;
 			default:
-				messageText.setTypeface(Typeface.SANS_SERIF);
+				mMessageText.setTypeface(Typeface.SANS_SERIF);
 		}
 
 		int fontSize = Integer.parseInt(preferences.getString("font_size", "2"));
 		switch (fontSize) {
 			case 1:
-				messageText.setTextSize(14);
+				mMessageText.setTextSize(14);
 				break;
 			case 3:
-				messageText.setTextSize(24);
+				mMessageText.setTextSize(24);
 				break;
 			default:
-				messageText.setTextSize(18);
+				mMessageText.setTextSize(18);
 		}
 
 		//get entry's informations from db
-  		Cursor c_entry = dataBase.getEntryById(entryId);
+  		Cursor c_entry = mDataBase.getEntryById(mEntryId);
   		if (!c_entry.moveToFirst()) {
   			//won't happen if MainActivity uses correct entryIds
 			 throw new RuntimeException("Wrong entry id");
   		}
   		//set message
   		String message = c_entry.getString(2);
-  		messageText.setText(message);
+  		mMessageText.setText(message);
   		//set mood
   		String mood = c_entry.getString(3);
   		if(mood != null){
   			int identifier = getResources().getIdentifier(mood, "drawable", R.class.getPackage().getName());
-			moodImage.setImageResource(identifier);
+			mMoodImage.setImageResource(identifier);
   		}
   		//set date
   		String d_tmp = c_entry.getString(4);
@@ -167,33 +167,33 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
   		SimpleDateFormat format_out = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy",Locale.ITALY);
 		try {
 			Date date = format_in.parse(d_tmp);
-			dateText.setText(format_out.format(date)); //probably a better method to do this exists
+			mDateText.setText(format_out.format(date)); //probably a better method to do this exists
 		} catch (ParseException e) {
 			//won't happen if we use only dataBase.addEntry(...)
-			dateText.setText("??.??.????");
+			mDateText.setText("??.??.????");
 		}
 
-		this.dayId = c_entry.getInt(1);
+		this.mDayId = c_entry.getInt(1);
 
 		// make the image about square
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		DisplayMetrics dm = new DisplayMetrics();
 		display.getMetrics(dm);
-		photoButton.setMaxWidth(dm.widthPixels);
-		photoButton.setMaxHeight(dm.widthPixels);
+		mPhotoButton.setMaxWidth(dm.widthPixels);
+		mPhotoButton.setMaxHeight(dm.widthPixels);
 
-		Cursor c_photo = dataBase.getDayById(dayId);
+		Cursor c_photo = mDataBase.getDayById(mDayId);
 		c_photo.moveToFirst();
 		String path = null;
 		if (!c_photo.getString(1).equals("")) {
 			path = c_photo.getString(1);
 		} else {
-			photoButton.setClickable(false);
-			photoDeleteButton.setVisibility(View.INVISIBLE);
+			mPhotoButton.setClickable(false);
+			mPhotoDeleteButton.setVisibility(View.INVISIBLE);
 		}
 
-		bitmapWorker.createTask(photoButton, path)
-			.setShowDefault(dayId)
+		mBitmapWorker.createTask(mPhotoButton, path)
+			.setShowDefault(mDayId)
 			.setTargetHeight(dm.widthPixels)
 			.setTargetWidth(dm.widthPixels)
 			.setHighQuality(true)
@@ -206,12 +206,12 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		
 		
 		//check if this entry has a previous and a next 
-		if(!dataBase.hasNextEntry(entryId, false)){
+		if(!mDataBase.hasNextEntry(mEntryId, false)){
 			Button nextB = (Button)this.findViewById(R.id.nextEntryButton);
 			nextB.setClickable(false);
 			nextB.setTextColor(0xFFBBBBBB);
 		}
-		if(!dataBase.hasNextEntry(entryId, true)){
+		if(!mDataBase.hasNextEntry(mEntryId, true)){
 			Button prevB = (Button)this.findViewById(R.id.prevEntryButton);
 			prevB.setClickable(false);
 			prevB.setTextColor(0xFFBBBBBB);
@@ -225,7 +225,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 */
 	public void onPhotoButtonClicked(View view) {
 		Intent intent = new Intent(this, ImageActivity.class);
-		intent.putExtra("dayId", dayId);
+		intent.putExtra("dayId", mDayId);
 		startActivity(intent);
 	}
 
@@ -235,14 +235,14 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * @param view
 	 */
 	public void onMoodButtonClicked(View view){
-		if(!dataBase.isEditableEntry(entryId)){
+		if(!mDataBase.isEditableEntry(mEntryId)){
 			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), TOAST_DURATION_S);
 			toast.show();
 			return;
 		}
 		
 		Intent intent = new Intent(this, MoodsActivity.class);
-		intent.putExtra("entryId", entryId);
+		intent.putExtra("entryId", mEntryId);
 		startActivityForResult(intent, MOOD_RESULT_CODE);
 	}
 
@@ -254,8 +254,8 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	public void onShareButtonClicked(View view){
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
-		String shareBody = (String) messageText.getText();
-		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wordiary");
+		String shareBody = (String) mMessageText.getText();
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
 		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 		startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
 	}
@@ -283,10 +283,10 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		
 		// 0 = deleteEntry, 1 = DeletePhoto
 		switch (id){
-			case 0:	dataBase.deleteEntryById(entryId);
+			case 0:	mDataBase.deleteEntryById(mEntryId);
 					Toast toast = Toast.makeText(getBaseContext(), getString(R.string.message_deleted),TOAST_DURATION_S);
 					toast.show();
-					if(dataBase.hasNextEntry(entryId, true)){
+					if(mDataBase.hasNextEntry(mEntryId, true)){
 						//move to the previous entry
 						moveNext(true);
 					}else{
@@ -294,13 +294,13 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 						finish();
 					}
 					break;
-			case 1:	Cursor day = dataBase.getDayById(dayId);
+			case 1:	Cursor day = mDataBase.getDayById(mDayId);
 					day.moveToFirst();
 					String filename = day.getString(1);
 					day.close();
 					File photo = new File(filename);
 					if(photo.delete()){
-						dataBase.deletePhoto(dayId);
+						mDataBase.deletePhoto(mDayId);
 						Toast toast1 = Toast.makeText(getBaseContext(), R.string.photo_deleted ,TOAST_DURATION_S);
 						toast1.show();
 					}
@@ -314,7 +314,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * @param view
 	 */
 	public void onPhotoDelete(View view){
-		if (dataBase.isEditableDay(dayId)){
+		if (mDataBase.isEditableDay(mDayId)){
 			ConfirmDialogFragment newFragment = new ConfirmDialogFragment();
 			newFragment.setId(1);
 			newFragment.show(getSupportFragmentManager(), "Confirm");
@@ -330,7 +330,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * @param view
 	 */
 	public void onEditButtonClicked(View view){
-		if(!dataBase.isEditableEntry(entryId)){
+		if(!mDataBase.isEditableEntry(mEntryId)){
 			Toast toast = Toast.makeText(getBaseContext(), getString(R.string.grace_period_ended), TOAST_DURATION_S);
 			toast.show();
 			return;
@@ -338,7 +338,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		
 		EditEntryDialogFragment editFragment = new EditEntryDialogFragment();
 		Bundle args = new Bundle();
-		args.putString("message", (String) messageText.getText());
+		args.putString("message", (String) mMessageText.getText());
 		editFragment.setArguments(args);
 		editFragment.show(getSupportFragmentManager(), "modifyEntry");
 	}
@@ -357,7 +357,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 
 		if(!message.equals("")){
 			text = getString(R.string.message_saved);
-			dataBase.updateMessage(entryId, message);
+			mDataBase.updateMessage(mEntryId, message);
 			setView();
 		} else {
 			text = getString(R.string.message_not_saved);
@@ -391,10 +391,10 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	 * @param backwards true to go back, false otherwise
 	 */
 	public void moveNext(boolean backwards){
-		Cursor nextEntry = dataBase.getNextEntry(entryId, backwards);
+		Cursor nextEntry = mDataBase.getNextEntry(mEntryId, backwards);
 		nextEntry.moveToFirst();
 		int next = nextEntry.getInt(0);
-		entryId = next;
+		mEntryId = next;
 		nextEntry.close();
 		setView();
 	}

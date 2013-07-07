@@ -24,23 +24,23 @@ import java.util.Locale;
  * Displays the full image in a custom WebView to zoom on it
  */
 public class ImageActivity extends BaseActivity implements ConfirmDialogListener {
-	private int dayId;
-	private String currentImage;
-	private ImageWebView imageWebView;
-	private TextView dateText;
+	private int mDayId;
+	private String mCurrentImage;
+	private ImageWebView mImageWebView;
+	private TextView mDateText;
 	
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("dayId", dayId);
+		outState.putInt("dayId", mDayId);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		if(savedInstanceState.containsKey("dayId")){
-			dayId = savedInstanceState.getInt("dayId");
+			mDayId = savedInstanceState.getInt("dayId");
 		}
 	}
 
@@ -56,10 +56,10 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 	 * @param backwards If we actually want a getPrev
 	 */
 	public void getNext(boolean backwards) {
-		Cursor c = dataBase.getNextDay(dayId, backwards);
+		Cursor c = mDataBase.getNextDay(mDayId, backwards);
 		if (c.getCount() == 1) {
 			c.moveToNext();
-			dayId = c.getInt(0);
+			mDayId = c.getInt(0);
 			setView();
 		}
 		c.close();
@@ -71,11 +71,11 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 	 * @return The uri to the currently loaded image
 	 */
 	public String getCurrentImage() {
-		return currentImage;
+		return mCurrentImage;
 	}
 
 	public void setCurrentImage(String image) {
-		currentImage = image;
+		mCurrentImage = image;
 	}
 
 	/**
@@ -85,29 +85,29 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 		// reload the entire view since on android 2.x it will fail to reload the html
 		setContentView(R.layout.activity_image);
 
-		if (dayId == 0) {
+		if (mDayId == 0) {
 			Intent intent = getIntent();
-			dayId = intent.getIntExtra("dayId", -1);
+			mDayId = intent.getIntExtra("dayId", -1);
 		}
 
-		imageWebView = (ImageWebView) findViewById(R.id.imageWebView);
-		dateText = (TextView) findViewById(R.id.imageDateText);
+		mImageWebView = (ImageWebView) findViewById(R.id.imageWebView);
+		mDateText = (TextView) findViewById(R.id.imageDateText);
 
 		// all custom onFlingListener for ImageWebView
-		imageWebView.setOnFlingListener(new ImageWebView.OnFlingListener() {
-			@Override
-			public boolean onFling(View view, MotionEvent e1, MotionEvent motionEvent, float velocityX, float velocityY) {
-				if (velocityX > 800f * imageWebView.getWebDensity()) {
-					getNext(false);
-				} else if (velocityX < -800f) {
-					getNext(true);
-				}
+		mImageWebView.setOnFlingListener(new ImageWebView.OnFlingListener() {
+            @Override
+            public boolean onFling(View view, MotionEvent e1, MotionEvent motionEvent, float velocityX, float velocityY) {
+                if (velocityX > 800f * mImageWebView.getWebDensity()) {
+                    getNext(false);
+                } else if (velocityX < -800f) {
+                    getNext(true);
+                }
 
-				return true;
-			}
-		});
+                return true;
+            }
+        });
 
-		Cursor c = dataBase.getDayById(dayId);
+		Cursor c = mDataBase.getDayById(mDayId);
 		c.moveToFirst();
 		String location = "file://" + c.getString(1);
 		setCurrentImage(location);
@@ -118,14 +118,14 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 
 		try {
 			Date date = format_in.parse(dateString);
-			dateText.setText(format_out.format(date));
+			mDateText.setText(format_out.format(date));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 
 		c.close();
 
-		imageWebView.setImage(location);
+		mImageWebView.setImage(location);
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 	public void onShareImageButtonClicked(View view) {
 		Intent share = new Intent(Intent.ACTION_SEND);
 		share.setType("image/*");
-		share.putExtra(Intent.EXTRA_STREAM, Uri.parse(currentImage));
+		share.putExtra(Intent.EXTRA_STREAM, Uri.parse(mCurrentImage));
 		startActivity(Intent.createChooser(share, getString(R.string.share_via)));
 	}
 
@@ -164,12 +164,12 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 	 * @param view
 	 */
 	public void onDeleteImageButtonClicked(View view){
-		Cursor day = dataBase.getDayById(dayId);
+		Cursor day = mDataBase.getDayById(mDayId);
 		day.moveToFirst();
 		int dayId = day.getInt(0);
 		day.close();
 		//control if photo is editable
-		if (dataBase.isEditableDay(dayId)){
+		if (mDataBase.isEditableDay(dayId)){
 			//ask if user really wants to proceed
 			ConfirmDialogFragment newFragment = new ConfirmDialogFragment();
 			newFragment.setId(0);
@@ -190,14 +190,14 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 	 */
 	public void onConfirmedClick(DialogFragment dialog, int id) {
 		//get photo filename
-		Cursor day = dataBase.getDayById(dayId);
+		Cursor day = mDataBase.getDayById(mDayId);
 		day.moveToFirst();
 		String filename = day.getString(1);
 		day.close();
 		//delete photo
 		File photo = new File(filename);
 		if(photo.delete()){
-			dataBase.deletePhoto(dayId);
+			mDataBase.deletePhoto(mDayId);
 			Toast toast = Toast.makeText(getBaseContext(), R.string.photo_deleted ,TOAST_DURATION_S);
 			toast.show();
 		}
@@ -210,7 +210,7 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 	 */
 	@Override
 	public void onBackPressed() {
-		if (imageWebView.getScale() == imageWebView.getWebDensity()) {
+		if (mImageWebView.getScale() == mImageWebView.getWebDensity()) {
 			super.onBackPressed();
 		} else {
 			setView();

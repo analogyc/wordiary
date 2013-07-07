@@ -31,14 +31,13 @@ public class BitmapWorker extends Fragment {
 	private static final String TAG = "BitmapWorker";
 	private LruCache<String, Bitmap> mMemoryCache;
 
-	private Bitmap[] avatars;
-	private float density;
+	private Bitmap[] mAvatars;
+	private float mDensity;
 
 	/**
 	 * Sets the max memory usage for the LRU cache
 	 */
 	public BitmapWorker() {
-
 		final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 		final int cacheSize = maxMemory / 8;
 
@@ -85,18 +84,18 @@ public class BitmapWorker extends Fragment {
 		Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		DisplayMetrics dm = new DisplayMetrics();
 		display.getMetrics(dm);
-		density = dm.density < 1.0f ? 1.0f : (Math.round(dm.density * 100f)) / 100f;
+		mDensity = dm.density < 1.0f ? 1.0f : (Math.round(dm.density * 100f)) / 100f;
 
 		try {
 			String[] avatar_paths = getActivity().getAssets().list("avatars");
-			avatars = new Bitmap[avatar_paths.length];
+			mAvatars = new Bitmap[avatar_paths.length];
 			for (int i = 0; i < avatar_paths.length; i++) {
-				avatars[i] = BitmapFactory
+				mAvatars[i] = BitmapFactory
 					.decodeStream(getActivity().getAssets().open("avatars/" + avatar_paths[i]));
 
 				// reduce ram usage on devices with ldpi
 				if (dm.density < 1.5f) {
-					avatars[i] = Bitmap.createScaledBitmap(avatars[i], 256, 256, false);
+					mAvatars[i] = Bitmap.createScaledBitmap(mAvatars[i], 256, 256, false);
 				}
 			}
 		} catch (IOException e) {
@@ -134,7 +133,7 @@ public class BitmapWorker extends Fragment {
 	 * @param path The path of the bitmap
 	 */
 	public void clearBitmapFromMemCache(String path) {
-		mMemoryCache.remove("models.EntryAdapter.thumbnails." + path);
+		mMemoryCache.remove(path);
 	}
 
 	/**
@@ -202,7 +201,7 @@ public class BitmapWorker extends Fragment {
 		}
 
 		public BitmapWorkerTaskBuilder setTargetWidth(int targetWidth) {
-			this.targetWidth = Math.round(targetWidth * density);
+			this.targetWidth = Math.round(targetWidth * mDensity);
 			return this;
 		}
 
@@ -211,7 +210,7 @@ public class BitmapWorker extends Fragment {
 		}
 
 		public BitmapWorkerTaskBuilder setTargetHeight(int targetHeight) {
-			this.targetHeight = Math.round(targetHeight * density);
+			this.targetHeight = Math.round(targetHeight * mDensity);
 			return this;
 		}
 
@@ -266,7 +265,7 @@ public class BitmapWorker extends Fragment {
 				}
 			}
 
-			Bitmap avatar = avatars[getShowDefault() % avatars.length];
+			Bitmap avatar = mAvatars[getShowDefault() % mAvatars.length];
 
 			if (getPath() == null) {
 				imageView.setImageBitmap(avatar);
@@ -321,7 +320,7 @@ public class BitmapWorker extends Fragment {
 		 */
 		@Override
 		protected Bitmap doInBackground(Integer... params) {
-			Bitmap image = getBitmapFromMemCache("models.EntryAdapter.thumbnails." + bwtb.getPrefix() + bwtb.getPath());
+			Bitmap image = getBitmapFromMemCache(bwtb.getPrefix() + bwtb.getPath());
 
 			if (image != null) {
 				return image;
@@ -422,7 +421,7 @@ public class BitmapWorker extends Fragment {
 		@Override
 		protected void onPostExecute(Bitmap bitmap) {
 			if (!isCancelled() && isAdded() && imageViewReference != null && bitmap != null) {
-				addBitmapToMemoryCache("models.EntryAdapter.thumbnails."  + bwtb.getPrefix() + bwtb.getPath(), bitmap);
+				addBitmapToMemoryCache(bwtb.getPrefix() + bwtb.getPath(), bitmap);
 				final ImageView imageView = imageViewReference.get();
 				if (imageView != null) {
 					imageView.setImageDrawable(new AsyncDrawable(getResources(), bitmap, this));

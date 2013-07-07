@@ -13,7 +13,7 @@ import net.analogyc.wordiary.adapters.PhotoAdapter;
  */
 public class GalleryActivity extends BaseActivity {
 
-	private GridView gridView;
+	private GridView mGridView;
 	
 	@Override
 	public void onStart() {
@@ -25,22 +25,22 @@ public class GalleryActivity extends BaseActivity {
 		//set a new content view
 		setContentView(R.layout.activity_gallery);
 
-		gridView = (GridView) findViewById(R.id.photoGrid);
-		gridView.setAdapter(new PhotoAdapter(this, bitmapWorker));
+		mGridView = (GridView) findViewById(R.id.photoGrid);
+		mGridView.setAdapter(new PhotoAdapter(this, mBitmapWorker));
 
-		gridView.setOnItemClickListener(new OnItemClickListener() {
+		mGridView.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
-			public void onItemClick(AdapterView<?> adpView, View view, int position,long id) {
-				//open the image in fullscreen mode
-				Intent intent = new Intent(GalleryActivity.this, ImageActivity.class);
-				intent.putExtra("dayId", (int)id);
-				startActivity(intent);
-			}
-		});
+            @Override
+            public void onItemClick(AdapterView<?> adpView, View view, int position, long id) {
+                //open the image in fullscreen mode
+                Intent intent = new Intent(GalleryActivity.this, ImageActivity.class);
+                intent.putExtra("dayId", (int) id);
+                startActivity(intent);
+            }
+        });
 		
 		//if there's no photo show a message
-		if(gridView.getAdapter().getCount() <= 0){
+		if(mGridView.getAdapter().getCount() <= 0){
             setContentView(R.layout.activity_gallery_nophotos);
 		}
 	}

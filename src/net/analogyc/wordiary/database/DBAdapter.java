@@ -50,11 +50,9 @@ public class DBAdapter {
 			database = null;
 		}
 	}
-	
-	
-	
-	//ENTRIES OPERATIONS
-	
+
+
+	/**** ENTRIES OPERATIONS ****/
 
 	/**
 	 * Get all the entries
@@ -107,7 +105,6 @@ public class DBAdapter {
 						" ORDER BY "+ Entry._ID+" DESC";
 		return getConnection().rawQuery(query, null);
 	}
-
 
 	/**
 	 * Add a new entry
@@ -245,7 +242,7 @@ public class DBAdapter {
 	/**
 	 * Gets the next or the previous entry id
 	 *
-	 * @param currentDay The id of the current day opened
+	 * @param currentEntry The id of the current entry opened
 	 * @param backwards If it should look for the previous image
 	 * @return The cursor containing the single row or zero rows, with as only column the ID
 	 */
@@ -267,7 +264,7 @@ public class DBAdapter {
 	/**
 	 * Determine if entry has a next ( or the previous) entry
 	 *
-	 * @param currentDay The id of the current day opened
+	 * @param currentEntry The id of the current entry opened
 	 * @param backwards If it should look for the previous image
 	 * @return true is it has a next or previous, false otherwise
 	 */
@@ -281,13 +278,9 @@ public class DBAdapter {
 		result.close();
 		return hasNext;
 	}
-	
-	
-	
-	
-	
-	//DAYS OPERATIONS
-	
+
+
+	/**** DAYS OPERATIONS ****/
 	
 	/**
 	 * Delete a day, this method could maintain the consistency of the data stored (in this case so a day 
@@ -327,7 +320,7 @@ public class DBAdapter {
 	/**
 	 * Delete the selected photo
 	 *
-	 * @param int the day id
+	 * @param id the day id
 	 * 
 	 */
 	public void deletePhoto(int id) {
@@ -343,8 +336,6 @@ public class DBAdapter {
 		}
 	}
 	
-
-
 	/**
 	 * Add a photo to the current day
 	 *
@@ -382,7 +373,6 @@ public class DBAdapter {
 		}
 		c.close();
 	}
-	
 
 	/**
 	 * Get the photo of the given day
@@ -398,7 +388,6 @@ public class DBAdapter {
 
 		return getConnection().rawQuery(query, null);
 	}
-
 
 	/**
 	 * Get all the days ordered by date (DESC)
@@ -433,12 +422,10 @@ public class DBAdapter {
 		return getConnection().rawQuery(query, null);
 	}
 	
-	
-	
 	/**
 	 * Verify if the selected entry can be modified
 	 *
-	 * @param entryId entry id
+	 * @param dayId day id
 	 * @return boolean true if it is editable, false otherwise
 	 */
 	public boolean isEditableDay(int dayId){
@@ -469,9 +456,6 @@ public class DBAdapter {
 				"AND " + Day.COLUMN_NAME_FILENAME + " <> ? " +
 				"ORDER BY " + Day._ID + " " + (backwards ? "DESC" : "ASC") + " " +
 				"LIMIT 1";
-		return getConnection().rawQuery(query, new String[] {Integer.toString(currentDay), "" });
+		return getConnection().rawQuery(query, new String[] {Integer.toString(currentDay), ""});
 	}
-	
-	
-	
 }

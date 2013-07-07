@@ -70,5 +70,4 @@ public class EditEntryDialogFragment extends DialogFragment{
 		
 		return builder.create();
 	}
-
 }

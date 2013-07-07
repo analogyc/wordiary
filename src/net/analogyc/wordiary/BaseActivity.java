@@ -33,26 +33,26 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 
     protected final int CAPTURE_IMAGE_MIN_SPACE_MEGABYTES = 5;
 
-	protected Uri imageUri;
-	protected DBAdapter dataBase;
-	protected BitmapWorker bitmapWorker;
+	protected Uri mImageUri;
+	protected DBAdapter mDataBase;
+	protected BitmapWorker mBitmapWorker;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		
-		bitmapWorker = BitmapWorker.findOrCreateBitmapWorker(getSupportFragmentManager());
+		mBitmapWorker = BitmapWorker.findOrCreateBitmapWorker(getSupportFragmentManager());
 		
 		//get an instance of database
-		dataBase = new DBAdapter(this);
+		mDataBase = new DBAdapter(this);
 	}
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState){
 		super.onSaveInstanceState(outState);
-		if(imageUri != null){
-			outState.putString("cameraImageUri", imageUri.toString());
+		if(mImageUri != null){
+			outState.putString("cameraImageUri", mImageUri.toString());
 		}
 	}
 
@@ -60,13 +60,13 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	protected void onRestoreInstanceState(Bundle savedState){
 		super.onRestoreInstanceState(savedState);
 		if(savedState.containsKey("cameraImageUri")){
-			imageUri = Uri.parse(savedState.getString("cameraImageUri"));
+			mImageUri = Uri.parse(savedState.getString("cameraImageUri"));
 		}
 	}
 
 	@Override
 	protected void onPause(){
-		dataBase.close();
+		mDataBase.close();
 		super.onPause();
 	}
 
@@ -133,8 +133,8 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		}
 		
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		imageUri = Uri.fromFile(Photo.getOutputMediaFile(1));
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+		mImageUri = Uri.fromFile(Photo.getOutputMediaFile(1));
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
 		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 	}
 
@@ -149,11 +149,12 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
-				dataBase.addPhoto(imageUri.getPath());
+				mDataBase.addPhoto(mImageUri.getPath());
 				// Image captured and saved to fileUri specified in the Intent
 				Toast.makeText(this, getString(R.string.image_saved), TOAST_DURATION_L).show();
-				bitmapWorker.clearBitmapFromMemCache(imageUri.getPath());
-				bitmapWorker.clearBitmapFromMemCache("gallery_" + imageUri.getPath());
+				mBitmapWorker.clearBitmapFromMemCache(mImageUri.getPath());
+                // clear also the thumbnails for the gallery
+				mBitmapWorker.clearBitmapFromMemCache("gallery_" + mImageUri.getPath());
 			}
 		}
 	}
@@ -173,7 +174,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 
 		if(!message.equals("")){
 			text = getString(R.string.message_saved);
-			dataBase.addEntry(message, 0);
+			mDataBase.addEntry(message, 0);
 		} else {
 			text = getString(R.string.message_not_saved);
 		}

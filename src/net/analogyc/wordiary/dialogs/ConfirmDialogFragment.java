@@ -17,8 +17,7 @@ public class ConfirmDialogFragment extends DialogFragment {
 
 	protected ConfirmDialogListener mListener;
 	protected int id;
-	
-	
+
 	/**
 	 * Set the dialog id, this will be used to identify the confirmation at onConfirmedClick
 	 * 
@@ -63,5 +62,4 @@ public class ConfirmDialogFragment extends DialogFragment {
 
 		return builder.create();
 	}
-
 }

@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		setContentView(R.layout.activity_main);
 		
         entryList = (ExpandableListView) findViewById(R.id.entries);
-		EntryListAdapter entryAdapter = new EntryListAdapter(this, bitmapWorker);
+		EntryListAdapter entryAdapter = new EntryListAdapter(this, mBitmapWorker);
 		
 		//set the typeface and font size
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -167,7 +167,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	 */
 	@Override
 	public void deleteSelectedEntry(int id) {
-		dataBase.deleteEntryById(id);
+		mDataBase.deleteEntryById(id);
 		Toast toast = Toast.makeText(this, getString(R.string.message_deleted), TOAST_DURATION_S);
 		toast.show();
 		showEntries();
@@ -182,7 +182,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	public void shareSelectedEntry(int id) {
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
-		Cursor entry = dataBase.getEntryById(id);
+		Cursor entry = mDataBase.getEntryById(id);
 		entry.moveToFirst();
 		String shareBody = entry.getString(2);
 		entry.close();

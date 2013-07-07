@@ -39,6 +39,4 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// NOT USED
 	}
-
-	
 }

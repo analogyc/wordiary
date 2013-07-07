@@ -58,16 +58,29 @@ public class ImageWebView extends WebView {
         setBackgroundColor(Color.BLACK);
 
         mGestureDetector = new GestureDetector(mContext, new GestureDetector.SimpleOnGestureListener() {
+            /**
+             * Zoom in when the user taps once
+             * @param e
+             * @return Always true, consumes the event
+             */
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
                 ImageWebView.this.zoomIn();
                 return true;
             }
 
+            /**
+             * Run the onFling function
+             *
+             * @param e1
+             * @param e2
+             * @param velocityX
+             * @param velocityY
+             * @return True if the event is consumed
+             */
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                ImageWebView.this.mFlingListener.onFling(ImageWebView.this, e1, e2, velocityX, velocityY);
-                return true;
+                return ImageWebView.this.mFlingListener.onFling(ImageWebView.this, e1, e2, velocityX, velocityY);
             }
         });
 

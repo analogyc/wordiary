@@ -188,7 +188,7 @@ public class ImageWebView extends WebView {
 	 * Overriding the onTouchEvent to use double-tap and allowing extending onFling
 	 *
 	 * @param event
-	 * @return
+	 * @return Whether the event has been consumed
 	 */
 	public boolean onTouchEvent(MotionEvent event) {
 		return mGestureDetector.onTouchEvent(event) || super.onTouchEvent(event);

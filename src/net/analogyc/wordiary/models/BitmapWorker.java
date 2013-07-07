@@ -309,7 +309,7 @@ public class BitmapWorker extends Fragment {
 		/**
 		 * Returns a copy of the Builder to read the info. The imageView can't be accessed from this.
 		 *
-		 * @return
+		 * @return The task builder
 		 */
 		public BitmapWorkerTaskBuilder getBuilderCopy() {
 			return new BitmapWorkerTaskBuilder(bwtb);

@@ -3,6 +3,7 @@ package net.analogyc.wordiary.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.support.v4.app.FragmentManager;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
@@ -40,14 +41,14 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	private final Context context;
 	private ArrayList<String[]> days = new ArrayList<String[]>();
-	private BitmapWorker bitmapWorker;
+	private FragmentManager fragmentManager;
 	private int childTextSize;
 	private Typeface childTypeface;
 
-	public EntryListAdapter(Context context, BitmapWorker bitmapWorker) {
+	public EntryListAdapter(Context context, FragmentManager fm) {
 		this.context = context;
-		this.bitmapWorker = bitmapWorker;
-		
+        this.fragmentManager = fm;
+
 		//these explicit assignments make clear how setView(...) works with these variables
 		childTypeface =  null;
 		childTextSize = 0;
@@ -118,7 +119,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 				if(event.getAction() == MotionEvent.ACTION_DOWN){
 					v.setBackgroundColor(0xFFFFFFFF);
 				}
-				else{
+				else {
 					v.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
 				}
 				 
@@ -169,7 +170,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		
 		int entries = getChildrenCount(groupPosition);
 		TextView v =(TextView) view.findViewById(R.id.dayCount);
-		v.setText(""+entries);
+		v.setText("" + entries);
 
 		String path = null;
 		if (!info[1].equals("")) {
@@ -178,7 +179,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			hasImage = false;
 		}
 
-		bitmapWorker.createTask(imageView, path)
+        BitmapWorker.findOrCreateBitmapWorker(fragmentManager).createTask(imageView, path)
 			.setShowDefault(Integer.parseInt(info[0]))
 			.setTargetHeight(128)
 			.setTargetWidth(128)

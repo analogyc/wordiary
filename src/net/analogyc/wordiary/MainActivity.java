@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		setContentView(R.layout.activity_main);
 		
         entryList = (ExpandableListView) findViewById(R.id.entries);
-		EntryListAdapter entryAdapter = new EntryListAdapter(this, mBitmapWorker);
+		EntryListAdapter entryAdapter = new EntryListAdapter(this, getSupportFragmentManager());
 		
 		//set the typeface and font size
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);

@@ -161,6 +161,9 @@ public class ImageWebView extends WebView {
 		// for some reason higher DPI must screw with the width of WebView
 		dm.widthPixels /= getWebDensity();
 
+        // only safe known method to truly disable cache
+        clearCache(true);
+
         String html =
 			"<html>" +
 				"<head>" +
@@ -179,9 +182,6 @@ public class ImageWebView extends WebView {
 
 		loadDataWithBaseURL(location, html, "text/html", "utf-8", location);
 		overrideZoom();
-
-        // only safe known method to truly disable cache
-        clearCache(true);
 	}
 
 	/**

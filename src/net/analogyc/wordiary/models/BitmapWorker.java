@@ -382,7 +382,7 @@ public class BitmapWorker extends Fragment {
 				bmp = getRoundedCornerBitmap(bmp, bwtb.getRoundedCorner());
 			}
 
-			return bmp;
+            return bmp;
 		}
 
 		/**
@@ -420,7 +420,8 @@ public class BitmapWorker extends Fragment {
 		 */
 		@Override
 		protected void onPostExecute(Bitmap bitmap) {
-			if (!isCancelled() && isAdded() && imageViewReference != null && bitmap != null) {
+            super.onPostExecute(bitmap);
+            if (!isCancelled() && isAdded() && imageViewReference != null && bitmap != null) {
 				addBitmapToMemoryCache(bwtb.getPrefix() + bwtb.getPath(), bitmap);
 				final ImageView imageView = imageViewReference.get();
 				if (imageView != null) {

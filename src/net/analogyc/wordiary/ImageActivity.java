@@ -201,8 +201,8 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 			Toast toast = Toast.makeText(getBaseContext(), R.string.photo_deleted ,TOAST_DURATION_S);
 			toast.show();
 		}
+
 		finish();
-		
 	}
 
 	/**

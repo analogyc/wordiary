@@ -263,7 +263,9 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
         super.onDialogPositiveClick(message);
         //refresh screen and expand the last day on the list
         showEntries();
-        mEntryList.expandGroup(0);
+        if (!message.equals("")) {
+            mEntryList.expandGroup(0);
+        }
     }
 
 }

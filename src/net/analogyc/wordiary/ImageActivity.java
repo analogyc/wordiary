@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import net.analogyc.wordiary.dialogs.ConfirmDialogFragment;
 import net.analogyc.wordiary.dialogs.ConfirmDialogFragment.ConfirmDialogListener;
+import net.analogyc.wordiary.models.DateFormats;
 import net.analogyc.wordiary.views.ImageWebView;
 
 import java.io.File;
@@ -113,8 +114,8 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
 		setCurrentImage(location);
 
 		String dateString = c.getString(2);
-		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
-		SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+		SimpleDateFormat format_in = new SimpleDateFormat(DateFormats.DATABASE, Locale.getDefault());
+		SimpleDateFormat format_out = new SimpleDateFormat(DateFormats.IMAGE, Locale.getDefault());
 
 		try {
 			Date date = format_in.parse(dateString);

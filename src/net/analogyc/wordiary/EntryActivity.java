@@ -22,6 +22,7 @@ import net.analogyc.wordiary.dialogs.ConfirmDialogFragment;
 import net.analogyc.wordiary.dialogs.ConfirmDialogFragment.ConfirmDialogListener;
 import net.analogyc.wordiary.dialogs.EditEntryDialogFragment;
 import net.analogyc.wordiary.dialogs.EditEntryDialogFragment.EditEntryDialogListener;
+import net.analogyc.wordiary.models.DateFormats;
 import net.analogyc.wordiary.models.EntryFont;
 
 import java.io.File;
@@ -164,8 +165,8 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
   		}
   		//set date
   		String d_tmp = c_entry.getString(4);
-  		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);
-  		SimpleDateFormat format_out = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy", Locale.ITALY);
+  		SimpleDateFormat format_in = new SimpleDateFormat(DateFormats.DATABASE, Locale.ITALY);
+  		SimpleDateFormat format_out = new SimpleDateFormat(DateFormats.ENTRY, Locale.ITALY);
 		try {
 			Date date = format_in.parse(d_tmp);
 			mDateText.setText(format_out.format(date)); //probably a better method to do this exists

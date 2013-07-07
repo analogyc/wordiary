@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 
+import net.analogyc.wordiary.models.DateFormats;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -86,8 +88,7 @@ public class DBAdapter {
 	public void addEntry(String text, int mood) {
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
-		String DATE_FORMAT = "yyyyMMddHHmmss";
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+		SimpleDateFormat sdf = new SimpleDateFormat(DateFormats.DATABASE, Locale.getDefault());
 		
 		//if there's a the correspond day for this entry, we'll create a new day 
 		String query =	"SELECT * " +
@@ -187,8 +188,7 @@ public class DBAdapter {
 		 int grace_period = Integer.parseInt(mPreferences.getString("grace_period", "1"));
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
-		String DATE_FORMAT = "yyyyMMddHHmmss";
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+		SimpleDateFormat sdf = new SimpleDateFormat(DateFormats.DATABASE, Locale.getDefault());
 
 		String query = "SELECT * FROM " + Entry.TABLE_NAME + " WHERE " + Entry._ID + " = " + entryId +" LIMIT 1";
 		Cursor c =getConnection().rawQuery(query, null);
@@ -315,8 +315,7 @@ public class DBAdapter {
 	public void addPhoto(String filename) {
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
-		String DATE_FORMAT = "yyyyMMddHHmmss";
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+		SimpleDateFormat sdf = new SimpleDateFormat(DateFormats.DATABASE, Locale.getDefault());
 		String date = sdf.format(now);
 
 		//verify if there is a row for this day
@@ -402,8 +401,7 @@ public class DBAdapter {
 	public boolean isEditableDay(int dayId){
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
-		String DATE_FORMAT = "yyyyMMddHHmmss";
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+		SimpleDateFormat sdf = new SimpleDateFormat(DateFormats.DATABASE, Locale.getDefault());
 
 		String query = "SELECT * FROM " + Day.TABLE_NAME + " WHERE " + Day._ID + " = " + dayId +" LIMIT 1";
 		Cursor c =getConnection().rawQuery(query, null);

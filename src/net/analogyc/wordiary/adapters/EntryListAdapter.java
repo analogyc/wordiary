@@ -17,6 +17,7 @@ import android.widget.TextView;
 import net.analogyc.wordiary.R;
 import net.analogyc.wordiary.database.DBAdapter;
 import net.analogyc.wordiary.models.BitmapWorker;
+import net.analogyc.wordiary.models.DateFormats;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,8 +32,6 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	
 	/**
 	 * The interface for a day listener
-	 * 
-	 *
 	 */
 	public interface OptionDayListener {
 		
@@ -214,8 +213,8 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			.setRoundedCorner(15)
 			.execute();
 
-		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
-		SimpleDateFormat format_out = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+		SimpleDateFormat format_in = new SimpleDateFormat(DateFormats.DATABASE, Locale.getDefault());
+		SimpleDateFormat format_out = new SimpleDateFormat(DateFormats.IMAGE, Locale.getDefault());
 		try {
 			Date date = format_in.parse(info[2]);
 			((TextView) view.findViewById(R.id.dayDate)).setText(format_out.format(date));

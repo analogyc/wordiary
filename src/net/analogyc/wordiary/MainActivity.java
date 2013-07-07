@@ -73,10 +73,10 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
         Typeface typeface;
         switch (typefaceInt) {
             case 2:
-                typeface = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_ANIMEACE);
+                typeface = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_ANIMEACE_DIR);
                 break;
             case 3:
-                typeface = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_STANHAND);
+                typeface = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_STANHAND_DIR);
                 break;
             default:
                 typeface = Typeface.SANS_SERIF;

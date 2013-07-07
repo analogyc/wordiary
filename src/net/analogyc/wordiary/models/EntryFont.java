@@ -5,8 +5,8 @@ package net.analogyc.wordiary.models;
  */
 public class EntryFont {
 
-    public final static String TYPEFACE_ANIMEACE = "fonts/animeace2.ttf";
-    public final static String TYPEFACE_STANHAND = "fonts/stanhand.ttf";
+    public final static String TYPEFACE_ANIMEACE_DIR = "fonts/animeace2.ttf";
+    public final static String TYPEFACE_STANHAND_DIR = "fonts/stanhand.ttf";
 
     public final static int SIZE_SMALL = 14;
     public final static int SIZE_MEDIUM = 18;

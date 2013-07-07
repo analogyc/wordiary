@@ -123,11 +123,11 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
         int typefaceInt = Integer.parseInt(preferences.getString("typeface", "1"));
         switch (typefaceInt) {
             case 2:
-                Typeface typeface = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_ANIMEACE);
+                Typeface typeface = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_ANIMEACE_DIR);
                 mMessageText.setTypeface(typeface);
                 break;
             case 3:
-                Typeface typeface3 = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_STANHAND);
+                Typeface typeface3 = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_STANHAND_DIR);
                 mMessageText.setTypeface(typeface3);
                 break;
             default:

@@ -26,7 +26,9 @@ public class PreferencesActivity extends PreferenceActivity {
 					
 					try {
 						value = Integer.parseInt((String) newValue);
+                        // if the number starts with 0 and is higher than 0, or the value is higher than 168
 						if (!newValue.toString().matches("^([1-9][0-9]*)|([0])$") || (value > 168)) {
+                            // throw the number format exception as the parseInt would
 							throw new NumberFormatException();
 						}
 					}

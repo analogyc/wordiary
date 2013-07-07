@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 import net.analogyc.wordiary.R;
 
@@ -26,9 +27,9 @@ public class NewEntryDialogFragment extends DialogFragment {
 		/**
 		 * Manages a new entry addition request 
 		 * 
-		 * @param dialog the dialog instance
+		 * @param message the entry message
 		 */
-		public void onDialogPositiveClick(DialogFragment dialog);
+		public void onDialogPositiveClick(String message);
 	}
 
 	protected NewEntryDialogListener mListener;
@@ -61,7 +62,8 @@ public class NewEntryDialogFragment extends DialogFragment {
 				.setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
-						mListener.onDialogPositiveClick(NewEntryDialogFragment.this);
+						EditText edit=(EditText)( (NewEntryDialogFragment.this).getDialog().findViewById(R.id.newMessage));
+						mListener.onDialogPositiveClick(edit.getText().toString());
 					}
 				})
 				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

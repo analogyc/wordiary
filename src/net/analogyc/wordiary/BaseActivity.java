@@ -162,19 +162,18 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 	/**
 	 * Positive input for the dialog for creating a new Entry
 	 *
-	 * @param dialog
+	 * @param message the entry message
 	 */
 	@Override
-	public void onDialogPositiveClick(DialogFragment dialog) {
+	public void onDialogPositiveClick(String message) {
 		Context context = getApplicationContext();
 		CharSequence text;
 
-		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
-		String message = edit.getText().toString().trim();
+		String newMessage = message.trim();
 
-		if(!message.equals("")){
+		if(!newMessage.equals("")){
 			text = getString(R.string.message_saved);
-			mDataBase.addEntry(message, 0);
+			mDataBase.addEntry(newMessage, 0);
 		} else {
 			text = getString(R.string.message_not_saved);
 		}

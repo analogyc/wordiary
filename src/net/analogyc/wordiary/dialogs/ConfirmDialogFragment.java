@@ -23,7 +23,7 @@ public class ConfirmDialogFragment extends DialogFragment {
 		 * @param dialog the dialog instance
 		 * @param id the dialog id
 		 */
-		public void onConfirmedClick(DialogFragment dialog, int id);
+		public void onConfirmedClick(int id);
 	}
 
 	protected ConfirmDialogListener mListener;
@@ -62,7 +62,7 @@ public class ConfirmDialogFragment extends DialogFragment {
 				.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
-						mListener.onConfirmedClick(ConfirmDialogFragment.this, callId);
+						mListener.onConfirmedClick(callId);
 					}
 				})
 				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

@@ -11,4 +11,7 @@ public class DateFormats {
 
     public final static String ENTRY = "HH:mm:ss dd/MM/yyyy";
 
+    public final static String IMAGE_FILENAME = "dd.MM.yyyy";
+
+
 }

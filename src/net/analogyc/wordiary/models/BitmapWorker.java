@@ -98,7 +98,7 @@ public class BitmapWorker extends Fragment {
 
                 // reduce ram usage on devices with ldpi by using half size avatars
                 if (dm.density < 1.5f) {
-                    mAvatars[i] = Bitmap.createScaledBitmap(mAvatars[i], HALF_SIZE_AVATAR, HALF_SIZE_AVATAR, false);
+                    mAvatars[i] = Bitmap.createScaledBitmap(mAvatars[i], HALF_SIZE_AVATAR, HALF_SIZE_AVATAR, true);
                 }
             }
         } catch (IOException e) {

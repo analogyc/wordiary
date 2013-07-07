@@ -128,9 +128,9 @@ public class BitmapWorker extends Fragment {
 	}
 
 	/**
-	 * Clears the image from the cache, given the path
+	 * Clears the image from the cache, given the mPath
 	 *
-	 * @param path The path of the bitmap
+	 * @param path The mPath of the bitmap
 	 */
 	public void clearBitmapFromMemCache(String path) {
 		mMemoryCache.remove(path);
@@ -140,7 +140,7 @@ public class BitmapWorker extends Fragment {
 	 * Returns a new builder to prepare the BitmapWorkerTask
 	 *
 	 * @param imageView The view in which the image will be displayed
-	 * @param path The path to the image
+	 * @param path The mPath to the image
 	 * @return The builder object to prepare the task
 	 */
 	public BitmapWorkerTaskBuilder createTask(ImageView imageView, String path) {
@@ -152,19 +152,19 @@ public class BitmapWorker extends Fragment {
 	 */
 	public class BitmapWorkerTaskBuilder {
 
-		protected ImageView imageView;
-		protected String path;
-		protected int showDefault;
-		protected int targetWidth;
-		protected int targetHeight;
-		protected boolean centerCrop = false;
-		protected boolean highQuality = true;
-		protected int roundedCorner;
-		protected String prefix = "";
+		protected ImageView mImageView;
+		protected String mPath;
+		protected int mShowDefault;
+		protected int mTargetWidth;
+		protected int mTargetHeight;
+		protected boolean mCenterCrop = false;
+		protected boolean mHighQuality = true;
+		protected int mRoundedCorner;
+		protected String mPrefix = "";
 
 		public BitmapWorkerTaskBuilder(ImageView imageView, String path) {
-			this.imageView = imageView;
-			this.path = path;
+			mImageView = imageView;
+			mPath = path;
 		}
 
 		/**
@@ -173,88 +173,88 @@ public class BitmapWorker extends Fragment {
 		 * @param b
 		 */
 		protected BitmapWorkerTaskBuilder(BitmapWorkerTaskBuilder b) {
-			path = b.getPath();
-			showDefault = b.getShowDefault();
-			targetWidth = b.getTargetWidth();
-			targetHeight = b.getTargetHeight();
-			centerCrop = b.isCenterCrop();
-			highQuality = b.isHighQuality();
-			roundedCorner = b.getRoundedCorner();
-			prefix = b.getPrefix();
+			mPath = b.getPath();
+			mShowDefault = b.getShowDefault();
+			mTargetWidth = b.getTargetWidth();
+			mTargetHeight = b.getTargetHeight();
+			mCenterCrop = b.isCenterCrop();
+			mHighQuality = b.isHighQuality();
+			mRoundedCorner = b.getRoundedCorner();
+			mPrefix = b.getPrefix();
 		}
 
 		public String getPath() {
-			return path;
+			return mPath;
 		}
 
 		public int getShowDefault() {
-			return showDefault;
+			return mShowDefault;
 		}
 
 		public BitmapWorkerTaskBuilder setShowDefault(int showDefault) {
-			this.showDefault = showDefault;
+			mShowDefault = showDefault;
 			return this;
 		}
 
 		public int getTargetWidth() {
-			return targetWidth;
+			return mTargetWidth;
 		}
 
 		public BitmapWorkerTaskBuilder setTargetWidth(int targetWidth) {
-			this.targetWidth = Math.round(targetWidth * mDensity);
+			mTargetWidth = Math.round(targetWidth * mDensity);
 			return this;
 		}
 
 		public int getTargetHeight() {
-			return targetHeight;
+			return mTargetHeight;
 		}
 
 		public BitmapWorkerTaskBuilder setTargetHeight(int targetHeight) {
-			this.targetHeight = Math.round(targetHeight * mDensity);
+			mTargetHeight = Math.round(targetHeight * mDensity);
 			return this;
 		}
 
 		public boolean isCenterCrop() {
-			return centerCrop;
+			return mCenterCrop;
 		}
 
 		public BitmapWorkerTaskBuilder setCenterCrop(boolean centerCrop) {
-			this.centerCrop = centerCrop;
+			mCenterCrop = centerCrop;
 			return this;
 		}
 
 		public boolean isHighQuality() {
-			return highQuality;
+			return mHighQuality;
 		}
 
 		public BitmapWorkerTaskBuilder setHighQuality(boolean highQuality) {
-			this.highQuality = highQuality;
+			mHighQuality = highQuality;
 			return this;
 		}
 
 		public int getRoundedCorner() {
-			return roundedCorner;
+			return mRoundedCorner;
 		}
 
 		public BitmapWorkerTaskBuilder setRoundedCorner(int roundedCorner) {
-			this.roundedCorner = roundedCorner;
+			mRoundedCorner = roundedCorner;
 			return this;
 		}
 
 		public BitmapWorkerTaskBuilder setPrefix(String prefix) {
-			this.prefix = prefix;
+			mPrefix = prefix;
 			return this;
 		}
 
 
 		public String getPrefix() {
-			return prefix;
+			return mPrefix;
 		}
 
 		public void execute() {
 			// stop the previous task if we're going to use this drawable with another Bitmap
-			if (imageView.getDrawable() instanceof AsyncDrawable) {
-				BitmapWorkerTask oldTask = ((AsyncDrawable) imageView.getDrawable()).getBitmapWorkerTask();
+			if (mImageView.getDrawable() instanceof AsyncDrawable) {
+				BitmapWorkerTask oldTask = ((AsyncDrawable) mImageView.getDrawable()).getBitmapWorkerTask();
 				if (oldTask != null) {
 					oldTask.cancel(true);
 
@@ -268,10 +268,10 @@ public class BitmapWorker extends Fragment {
 			Bitmap avatar = mAvatars[getShowDefault() % mAvatars.length];
 
 			if (getPath() == null) {
-				imageView.setImageBitmap(avatar);
+				mImageView.setImageBitmap(avatar);
 			} else {
-				BitmapWorkerTask task = new BitmapWorkerTask(imageView, this);
-				imageView.setImageDrawable(new AsyncDrawable(getResources(), avatar, task));
+				BitmapWorkerTask task = new BitmapWorkerTask(mImageView, this);
+				mImageView.setImageDrawable(new AsyncDrawable(getResources(), avatar, task));
 				task.execute();
 			}
 		}
@@ -282,28 +282,28 @@ public class BitmapWorker extends Fragment {
 	 */
 	class AsyncDrawable extends BitmapDrawable {
 		// we aren't using weak references because we keep reusing this data to reduce flickering in the view
-		private final BitmapWorkerTask bitmapWorkerTask;
+		private final BitmapWorkerTask mBitmapWorkerTask;
 
 		public AsyncDrawable(Resources res, Bitmap bitmap, BitmapWorkerTask bitmapWorkerTask) {
 			super(res, bitmap);
-			this.bitmapWorkerTask = bitmapWorkerTask;
+			mBitmapWorkerTask = bitmapWorkerTask;
 		}
 
 		public BitmapWorkerTask getBitmapWorkerTask() {
-			return bitmapWorkerTask;
+			return mBitmapWorkerTask;
 		}
 	}
 
 	/**
 	 * The actual task in charge of editing the image
 	 */
-	public class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
-		private final WeakReference<ImageView> imageViewReference;
-		private final BitmapWorkerTaskBuilder bwtb;
+	class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
+		private final WeakReference<ImageView> mImageViewReference;
+		private final BitmapWorkerTaskBuilder mBwtb;
 
 		public BitmapWorkerTask(ImageView imageView, BitmapWorkerTaskBuilder bwtb) {
-			imageViewReference = new WeakReference<ImageView>(imageView);
-			this.bwtb = bwtb;
+			mImageViewReference = new WeakReference<ImageView>(imageView);
+			mBwtb = bwtb;
 		}
 
 		/**
@@ -312,7 +312,7 @@ public class BitmapWorker extends Fragment {
 		 * @return The task builder
 		 */
 		public BitmapWorkerTaskBuilder getBuilderCopy() {
-			return new BitmapWorkerTaskBuilder(bwtb);
+			return new BitmapWorkerTaskBuilder(mBwtb);
 		}
 
 		/**
@@ -320,7 +320,7 @@ public class BitmapWorker extends Fragment {
 		 */
 		@Override
 		protected Bitmap doInBackground(Integer... params) {
-			Bitmap image = getBitmapFromMemCache(bwtb.getPrefix() + bwtb.getPath());
+			Bitmap image = getBitmapFromMemCache(mBwtb.getPrefix() + mBwtb.getPath());
 
 			if (image != null) {
 				return image;
@@ -329,29 +329,29 @@ public class BitmapWorker extends Fragment {
 			Bitmap bmp;
 
 			// just use lower inSampleSize
-			if (bwtb.getTargetWidth() > 0) {
+			if (mBwtb.getTargetWidth() > 0) {
 				// get the image width and height without loading it in memory
 				BitmapFactory.Options options = new BitmapFactory.Options();
 				options.inJustDecodeBounds = true;
-				BitmapFactory.decodeFile(bwtb.getPath(), options);
+				BitmapFactory.decodeFile(mBwtb.getPath(), options);
 				int height = options.outHeight;
 				int width = options.outWidth;
 
 				// reduce the amount of data allocated in memory with higher inSampleSize
 				options = new BitmapFactory.Options();
 				options.inSampleSize = 1;
-				if (height > bwtb.getTargetHeight() && width > bwtb.getTargetWidth()) {
-					final int heightRatio = Math.round((float) height / (float) bwtb.getTargetHeight());
-					final int widthRatio = Math.round((float) width / (float) bwtb.getTargetWidth());
+				if (height > mBwtb.getTargetHeight() && width > mBwtb.getTargetWidth()) {
+					final int heightRatio = Math.round((float) height / (float) mBwtb.getTargetHeight());
+					final int widthRatio = Math.round((float) width / (float) mBwtb.getTargetWidth());
 					options.inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
 				}
 
-				bmp = BitmapFactory.decodeFile(bwtb.getPath(), options);
+				bmp = BitmapFactory.decodeFile(mBwtb.getPath(), options);
 			} else {
-				bmp = BitmapFactory.decodeFile(bwtb.getPath());
+				bmp = BitmapFactory.decodeFile(mBwtb.getPath());
 			}
 
-			if (bwtb.isCenterCrop()) {
+			if (mBwtb.isCenterCrop()) {
 				// center crop so it's square and pretty
 				// credits to http://stackoverflow.com/a/6909144/644504
 				// for the solution to "center crop" resize
@@ -374,12 +374,12 @@ public class BitmapWorker extends Fragment {
 				}
 			}
 
-			if (bwtb.getTargetWidth() != 0 && bwtb.isHighQuality()) {
-				bmp = Bitmap.createScaledBitmap(bmp, bwtb.getTargetWidth(), bwtb.getTargetHeight(), true);
+			if (mBwtb.getTargetWidth() != 0 && mBwtb.isHighQuality()) {
+				bmp = Bitmap.createScaledBitmap(bmp, mBwtb.getTargetWidth(), mBwtb.getTargetHeight(), true);
 			}
 
-			if (bwtb.getRoundedCorner() != 0) {
-				bmp = getRoundedCornerBitmap(bmp, bwtb.getRoundedCorner());
+			if (mBwtb.getRoundedCorner() != 0) {
+				bmp = getRoundedCornerBitmap(bmp, mBwtb.getRoundedCorner());
 			}
 
             return bmp;
@@ -421,9 +421,9 @@ public class BitmapWorker extends Fragment {
 		@Override
 		protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            if (!isCancelled() && isAdded() && imageViewReference != null && bitmap != null) {
-				addBitmapToMemoryCache(bwtb.getPrefix() + bwtb.getPath(), bitmap);
-				final ImageView imageView = imageViewReference.get();
+            if (!isCancelled() && isAdded() && mImageViewReference != null && bitmap != null) {
+				addBitmapToMemoryCache(mBwtb.getPrefix() + mBwtb.getPath(), bitmap);
+				final ImageView imageView = mImageViewReference.get();
 				if (imageView != null) {
 					imageView.setImageDrawable(new AsyncDrawable(getResources(), bitmap, this));
 				}

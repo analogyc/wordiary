@@ -14,7 +14,7 @@ import net.analogyc.wordiary.R;
  */ 
 public class MoodsAdapter extends BaseAdapter {
 	private Context mContext;
-	private final String[] moods;
+	private final String[] mMoods;
  
 	/**
 	 * Create a new mood adapter
@@ -24,8 +24,8 @@ public class MoodsAdapter extends BaseAdapter {
 	 */
 	public MoodsAdapter(Context context, String[] moods) {
 		super();
-		this.mContext = context;
-		this.moods = moods;
+		mContext = context;
+		mMoods = moods;
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class MoodsAdapter extends BaseAdapter {
 			// set image based on selected text
 			ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
 			//get the identifier of the image
-			int identifier = mContext.getResources().getIdentifier(moods[position], "drawable", R.class.getPackage().getName());
+			int identifier = mContext.getResources().getIdentifier(mMoods[position], "drawable", R.class.getPackage().getName());
 			imageView.setImageResource(identifier);
  
 		} else {
@@ -57,12 +57,12 @@ public class MoodsAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return moods.length;
+		return mMoods.length;
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return moods[position];
+		return mMoods[position];
 	}
  
 	@Override

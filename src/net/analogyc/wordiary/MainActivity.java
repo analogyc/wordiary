@@ -212,7 +212,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
         for (Long e : ids){
         	expandedIds[i++] = e.longValue();
         }
-        this.mExpandedIds = expandedIds;
+        mExpandedIds = expandedIds;
 	}
 	
 	/**

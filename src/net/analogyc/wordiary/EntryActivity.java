@@ -89,7 +89,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 				if (resultCode == RESULT_OK) {
 					//If everything ok, update view
-					this.setView();
+					setView();
 				}
 			}
 		}
@@ -173,7 +173,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 			mDateText.setText("??.??.????");
 		}
 
-		this.mDayId = c_entry.getInt(1);
+		mDayId = c_entry.getInt(1);
 
 		// make the image about square
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();

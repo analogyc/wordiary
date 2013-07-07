@@ -204,17 +204,30 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 
         c_entry.close();
 
-
         //check if this entry has a previous and a next
+        updatePrevNextButtons();
+    }
+
+    /**
+     * Updates the clickability and color of the arrows on top of the view
+     */
+    public void updatePrevNextButtons() {
+        Button nextB = (Button) this.findViewById(R.id.nextEntryButton);
         if (!mDataBase.hasNextEntry(mEntryId, false)) {
-            Button nextB = (Button) this.findViewById(R.id.nextEntryButton);
             nextB.setClickable(false);
             nextB.setTextColor(0xFFBBBBBB);
+        } else {
+            nextB.setClickable(true);
+            nextB.setTextColor(0xFF000000);
         }
+
+        Button prevB = (Button) this.findViewById(R.id.prevEntryButton);
         if (!mDataBase.hasNextEntry(mEntryId, true)) {
-            Button prevB = (Button) this.findViewById(R.id.prevEntryButton);
             prevB.setClickable(false);
             prevB.setTextColor(0xFFBBBBBB);
+        } else {
+            prevB.setClickable(true);
+            prevB.setTextColor(0xFF000000);
         }
     }
 
@@ -364,6 +377,18 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 
         Toast toast = Toast.makeText(context, text, TOAST_DURATION_S);
         toast.show();
+    }
+
+    /**
+     * Positive input for the dialog for creating a new Entry
+     *
+     * @param message the entry message
+     */
+    @Override
+    public void onDialogPositiveClick(String message) {
+        super.onDialogPositiveClick(message);
+        // must refresh the left-right buttons on top
+        updatePrevNextButtons();
     }
 
     /**

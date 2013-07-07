@@ -154,6 +154,7 @@ public class ImageActivity extends BaseActivity implements ConfirmDialogListener
     public void onShareImageButtonClicked(View view) {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("image/*");
+        share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
         share.putExtra(Intent.EXTRA_STREAM, Uri.parse(mCurrentImage));
         startActivity(Intent.createChooser(share, getString(R.string.share_via)));
     }

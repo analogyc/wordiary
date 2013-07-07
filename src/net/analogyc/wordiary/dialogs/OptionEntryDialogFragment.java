@@ -16,8 +16,22 @@ public class OptionEntryDialogFragment extends DialogFragment {
 	
 	private int mEntryId;
 	
+	/**
+	 * The interface for a option entry dialog listener
+	 *
+	 */
 	public interface OptionEntryDialogListener {
+		/**
+		 * Manages a delete entry request 
+		 * 
+		 * @param id the entry id
+		 */
 		public void deleteSelectedEntry(int id);
+		/**
+		 * Manages a new entry addition request 
+		 * 
+		 * @param id the entry id
+		 */
 		public void shareSelectedEntry(int id);
 	}
 

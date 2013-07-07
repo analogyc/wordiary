@@ -11,7 +11,18 @@ import net.analogyc.wordiary.R;
 
 public class ConfirmDialogFragment extends DialogFragment {
 
+	/**
+	 * 
+	 * The interface for a confirm dialog listener
+	 *
+	 */
 	public interface ConfirmDialogListener {
+		/**
+		 *  Manages a positive answer
+		 * 
+		 * @param dialog the dialog instance
+		 * @param id the dialog id
+		 */
 		public void onConfirmedClick(DialogFragment dialog, int id);
 	}
 

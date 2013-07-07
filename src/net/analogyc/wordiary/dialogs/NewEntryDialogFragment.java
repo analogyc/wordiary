@@ -18,7 +18,16 @@ import net.analogyc.wordiary.R;
  */
 public class NewEntryDialogFragment extends DialogFragment {
 
+	/**
+	 * The interface for a entry dialog listener
+	 *
+	 */
 	public interface NewEntryDialogListener {
+		/**
+		 * Manages a new entry addition request 
+		 * 
+		 * @param dialog the dialog instance
+		 */
 		public void onDialogPositiveClick(DialogFragment dialog);
 	}
 

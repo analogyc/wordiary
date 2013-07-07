@@ -29,12 +29,39 @@ import java.util.Locale;
  */
 public class EntryListAdapter extends BaseExpandableListAdapter {
 	
+	/**
+	 * The interface for a day listener
+	 * 
+	 *
+	 */
 	public interface OptionDayListener {
+		
+		/**
+		 * Manages a long click on a day
+		 * 
+		 * @param id the day id
+		 */
 		public void onDayLongClicked(int id);
 	}
 	
+	/**
+	 * The interface for a entry listener
+	 *
+	 */
 	public interface OptionEntryListener {
+		
+		/**
+		 * Manages a click on a entry
+		 * 
+		 * @param id the entry id 
+		 */
 		public void onEntryLongClicked(int id);
+		
+		/**
+		 * Manages a long click on a entry
+		 * 
+		 * @param id the entry id
+		 */
 		public void onEntryClicked(int id);
 	}
 

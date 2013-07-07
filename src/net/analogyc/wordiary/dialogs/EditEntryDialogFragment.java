@@ -18,7 +18,16 @@ import net.analogyc.wordiary.R;
  */
 public class EditEntryDialogFragment extends DialogFragment{
 
+	/**
+	 * The interface for a edit entry dialog listener
+	 *
+	 */
 	public interface EditEntryDialogListener {
+		/**
+		 *  Manages a change request 
+		 * 
+		 * @param dialog the dialog instance
+		 */
 		public void onDialogModifyClick(DialogFragment dialog);
 	}
 

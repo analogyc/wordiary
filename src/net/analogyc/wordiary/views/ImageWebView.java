@@ -25,21 +25,21 @@ public class ImageWebView extends WebView {
 
 	public ImageWebView(Context context) {
 		super(context);
-		this.mContext = context;
+		mContext = context;
 
 		setup();
 	}
 
 	public ImageWebView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		this.mContext = context;
+		mContext = context;
 
 		setup();
 	}
 
 	public ImageWebView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.mContext = context;
+		mContext = context;
 
 		setup();
 	}

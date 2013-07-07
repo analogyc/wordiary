@@ -30,8 +30,8 @@ public class PhotoAdapter extends BaseAdapter {
 	 * @param bitmapWorker a bitmapWorker to manage image loading
 	 */
 	public PhotoAdapter(Context context, BitmapWorker bitmapWorker) {
-		this.mContext = context;
-		this.mBitmapWorker = bitmapWorker;
+		mContext = context;
+		mBitmapWorker = bitmapWorker;
 
 		DBAdapter database = new DBAdapter(context);
 		Cursor photos_db = database.getAllPhotos();

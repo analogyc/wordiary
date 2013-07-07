@@ -24,7 +24,7 @@ public class ConfirmDialogFragment extends DialogFragment {
 	 * @param id the id of the dialog
 	 */
 	public void setId (int id){
-		this.mId = id;
+		mId = id;
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class ConfirmDialogFragment extends DialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		
-		final int callId = this.mId;
+		final int callId = mId;
 		
 		builder.setTitle(R.string.title_confirm)
 				// Add action buttons

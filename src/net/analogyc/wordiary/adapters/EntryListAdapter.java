@@ -45,8 +45,8 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	private Typeface mChildTypeface;
 
 	public EntryListAdapter(Context context, BitmapWorker bitmapWorker) {
-		this.mContext = context;
-		this.mBitmapWorker = bitmapWorker;
+		mContext = context;
+		mBitmapWorker = bitmapWorker;
 		
 		//these explicit assignments make clear how setView(...) works with these variables
 		mChildTypeface =  null;
@@ -237,7 +237,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		
 		public EntryGDetector(int id){
 			super();
-			this.mId = id;		
+			mId = id;		
 			try {
 				mActivity =(OptionEntryListener)mContext;
 			} catch (ClassCastException e) {
@@ -267,8 +267,8 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		
 		public DayGDetector(int id, boolean longClickEnabled){
 			super();
-			this.mId = id;
-			this.mLongClickEnabled = longClickEnabled;
+			mId = id;
+			mLongClickEnabled = longClickEnabled;
 			try {
 				mActivity =(OptionDayListener)mContext;
 			} catch (ClassCastException e) {

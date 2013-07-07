@@ -7,15 +7,15 @@ import android.widget.Button;
 
 public class AwesomeButtonView extends Button {
 
-	private static Typeface sFontAwesome;
+    private static Typeface sFontAwesome;
 
-	public AwesomeButtonView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+    public AwesomeButtonView(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
-		if (sFontAwesome == null) {
-			sFontAwesome = Typeface.createFromAsset(context.getAssets(), "fonts/fontawesome-webfont.ttf");
-		}
+        if (sFontAwesome == null) {
+            sFontAwesome = Typeface.createFromAsset(context.getAssets(), "fonts/fontawesome-webfont.ttf");
+        }
 
-		setTypeface(sFontAwesome);
-	}
+        setTypeface(sFontAwesome);
+    }
 }

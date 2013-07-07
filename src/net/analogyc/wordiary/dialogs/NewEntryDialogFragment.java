@@ -19,70 +19,69 @@ import net.analogyc.wordiary.R;
  */
 public class NewEntryDialogFragment extends DialogFragment {
 
-	/**
-	 * The interface for a entry dialog listener
-	 *
-	 */
-	public interface NewEntryDialogListener {
-		/**
-		 * Manages a new entry addition request 
-		 * 
-		 * @param message the entry message
-		 */
-		public void onDialogPositiveClick(String message);
-	}
+    /**
+     * The interface for a entry dialog listener
+     */
+    public interface NewEntryDialogListener {
+        /**
+         * Manages a new entry addition request
+         *
+         * @param message the entry message
+         */
+        public void onDialogPositiveClick(String message);
+    }
 
-	protected NewEntryDialogListener mListener;
+    protected NewEntryDialogListener mListener;
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		// Verify that the host activity implements the callback interface
-		try {
-			// Instantiate the NoticeDialogListener so we can send events to the host
-			mListener = (NewEntryDialogListener) activity;
-		} catch (ClassCastException e) {
-			// The activity doesn't implement the interface, throw exception
-			throw new ClassCastException(activity.toString() + " must implement NewEntryDialogListener");
-		}
-	}
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // Verify that the host activity implements the callback interface
+        try {
+            // Instantiate the NoticeDialogListener so we can send events to the host
+            mListener = (NewEntryDialogListener) activity;
+        } catch (ClassCastException e) {
+            // The activity doesn't implement the interface, throw exception
+            throw new ClassCastException(activity.toString() + " must implement NewEntryDialogListener");
+        }
+    }
 
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		// Get the layout inflater
-		LayoutInflater inflater = getActivity().getLayoutInflater();
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        // Get the layout inflater
+        LayoutInflater inflater = getActivity().getLayoutInflater();
 
-		// Inflate and set the layout for the dialog
-		// Pass null as the parent view because its going in the dialog layout
-		View view = inflater.inflate(R.layout.dialog_custom, null);
-		builder.setView(view)
-				.setTitle(R.string.dialog_new_entry)
-				// Add action buttons
-				.setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						EditText edit=(EditText)( (NewEntryDialogFragment.this).getDialog().findViewById(R.id.newMessage));
-						mListener.onDialogPositiveClick(edit.getText().toString());
-					}
-				})
-				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						NewEntryDialogFragment.this.getDialog().cancel();
-					}
-				});
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        View view = inflater.inflate(R.layout.dialog_custom, null);
+        builder.setView(view)
+                .setTitle(R.string.dialog_new_entry)
+                        // Add action buttons
+                .setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        EditText edit = (EditText) ((NewEntryDialogFragment.this).getDialog().findViewById(R.id.newMessage));
+                        mListener.onDialogPositiveClick(edit.getText().toString());
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        NewEntryDialogFragment.this.getDialog().cancel();
+                    }
+                });
 
-		final AlertDialog dialog = builder.create();
+        final AlertDialog dialog = builder.create();
 
-		view.findViewById(R.id.newMessage).setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (hasFocus) {
-					dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-				}
-			}
-		});
+        view.findViewById(R.id.newMessage).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
 
-		return dialog;
-	}
+        return dialog;
+    }
 }

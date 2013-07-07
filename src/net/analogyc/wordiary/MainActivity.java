@@ -24,8 +24,8 @@ import java.util.ArrayList;
  */
 public class MainActivity extends BaseActivity implements OptionEntryDialogListener,OptionEntryListener,OptionDayListener{
 
-	private ExpandableListView entryList;
-	protected long[] expandedIds;
+	private ExpandableListView mEntryList;
+	protected long[] mExpandedIds;
 
 	
 	@Override
@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		super.onSaveInstanceState(outState);
 		//store expanded days
 		setExpandedIds();
-		outState.putLongArray("ExpandedIds", expandedIds);
+		outState.putLongArray("ExpandedIds", mExpandedIds);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		super.onRestoreInstanceState(savedState);
 		
 		if (savedState.containsKey("ExpandedIds")) {
-			expandedIds = savedState.getLongArray("ExpandedIds");
+			mExpandedIds = savedState.getLongArray("ExpandedIds");
 		}
 	}
 
@@ -64,8 +64,8 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		//set a new content view
 		setContentView(R.layout.activity_main);
 		
-        entryList = (ExpandableListView) findViewById(R.id.entries);
-		EntryListAdapter entryAdapter = new EntryListAdapter(this, getSupportFragmentManager());
+        mEntryList = (ExpandableListView) findViewById(R.id.entries);
+		EntryListAdapter entryAdapter = new EntryListAdapter(this, mBitmapWorker);
 		
 		//set the typeface and font size
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -97,10 +97,10 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 
 		entryAdapter.setChildFont(typeface, textSize);
 
-		entryList.setAdapter(entryAdapter);
+		mEntryList.setAdapter(entryAdapter);
 		
 		//restore previous list state
-		if (expandedIds != null) {
+		if (mExpandedIds != null) {
         	restoreListState();
         }
 		
@@ -197,12 +197,12 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	 * 
 	 */
 	protected void setExpandedIds() {
-		EntryListAdapter adapter = (EntryListAdapter)(entryList.getExpandableListAdapter());
+		EntryListAdapter adapter = (EntryListAdapter)(mEntryList.getExpandableListAdapter());
 		int length = adapter.getGroupCount();
 		ArrayList<Long> ids = new ArrayList<Long>();
 		//get expandable ids
 		for(int i=0; i < length; i++) {
-			if(entryList.isGroupExpanded(i)) {
+			if(mEntryList.isGroupExpanded(i)) {
 				ids.add(adapter.getGroupId(i));
 			}
 		}
@@ -212,7 +212,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
         for (Long e : ids){
         	expandedIds[i++] = e.longValue();
         }
-        this.expandedIds = expandedIds;
+        this.mExpandedIds = expandedIds;
 	}
 	
 	/**
@@ -220,14 +220,14 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 	 * 
 	 */
 	private void restoreListState() {
-		EntryListAdapter adapter = (EntryListAdapter)(entryList.getExpandableListAdapter());
+		EntryListAdapter adapter = (EntryListAdapter)(mEntryList.getExpandableListAdapter());
 		long id;
-		if (expandedIds != null && adapter != null) {
-			for (long l : expandedIds) {
+		if (mExpandedIds != null && adapter != null) {
+			for (long l : mExpandedIds) {
 				for (int i=0; i<adapter.getGroupCount(); i++) {
 					id = adapter.getGroupId(i);
 					if (l == id) {
-						entryList.expandGroup(i);
+						mEntryList.expandGroup(i);
 						break;
 					}
 				}
@@ -265,7 +265,7 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		super.onDialogPositiveClick(dialog);
 		//refresh screen and expand the last day on the list
 		showEntries();
-		entryList.expandGroup(0);
+		mEntryList.expandGroup(0);
 	}
 	
 }

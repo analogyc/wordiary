@@ -19,9 +19,9 @@ import java.util.ArrayList;
  * Adapter to show each entry in the gallery
  */
 public class PhotoAdapter extends BaseAdapter {
-	private Context context;
-	private ArrayList<String[]> photos = new ArrayList<String[]>();
-	private BitmapWorker bitmapWorker;
+	private Context mContext;
+	private ArrayList<String[]> mPhotos = new ArrayList<String[]>();
+	private BitmapWorker mBitmapWorker;
 
 	/**
 	 * Create a new photoAdapter
@@ -30,8 +30,8 @@ public class PhotoAdapter extends BaseAdapter {
 	 * @param bitmapWorker a bitmapWorker to manage image loading
 	 */
 	public PhotoAdapter(Context context, BitmapWorker bitmapWorker) {
-		this.context = context;
-		this.bitmapWorker = bitmapWorker;
+		this.mContext = context;
+		this.mBitmapWorker = bitmapWorker;
 
 		DBAdapter database = new DBAdapter(context);
 		Cursor photos_db = database.getAllPhotos();
@@ -41,7 +41,7 @@ public class PhotoAdapter extends BaseAdapter {
 			info = new String[2];
 			info[0] = photos_db.getString(0);
 			info[1] = photos_db.getString(1);
-			photos.add(info);
+			mPhotos.add(info);
 		}
 
 		database.close();
@@ -50,13 +50,13 @@ public class PhotoAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View gridView = inflater.inflate(R.layout.image_style, null);
 
 		// set image based on selected text
 		final ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_gallery);
-		String photoPath = photos.get(position)[1];
-		int dayId = Integer.parseInt(photos.get(position)[0]);
+		String photoPath = mPhotos.get(position)[1];
+		int dayId = Integer.parseInt(mPhotos.get(position)[0]);
 		int size = 192;
 
 		imageView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -66,7 +66,7 @@ public class PhotoAdapter extends BaseAdapter {
 			}
 		});
 
-		bitmapWorker.createTask(imageView, photoPath)
+		mBitmapWorker.createTask(imageView, photoPath)
 			.setShowDefault(dayId)
 			.setTargetHeight(size)
 			.setTargetWidth(size)
@@ -81,17 +81,17 @@ public class PhotoAdapter extends BaseAdapter {
  
 	@Override
 	public int getCount() {
-		return photos.size();
+		return mPhotos.size();
 	}
  
 	@Override
 	public Object getItem(int position) {
-		return photos.get(position);
+		return mPhotos.get(position);
 	}
  
 	@Override
 	public long getItemId(int position) {
-		return Long.parseLong(photos.get(position)[0]);
+		return Long.parseLong(mPhotos.get(position)[0]);
 	}
  
 }

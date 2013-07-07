@@ -3,7 +3,6 @@ package net.analogyc.wordiary.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Typeface;
-import android.support.v4.app.FragmentManager;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
@@ -39,19 +38,19 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		public void onEntryClicked(int id);
 	}
 
-	private final Context context;
-	private ArrayList<String[]> days = new ArrayList<String[]>();
-	private FragmentManager fragmentManager;
-	private int childTextSize;
-	private Typeface childTypeface;
+	private final Context mContext;
+	private ArrayList<String[]> mDays = new ArrayList<String[]>();
+	private BitmapWorker mBitmapWorker;
+	private int mChildTextSize;
+	private Typeface mChildTypeface;
 
-	public EntryListAdapter(Context context, FragmentManager fm) {
-		this.context = context;
-        this.fragmentManager = fm;
-
+	public EntryListAdapter(Context context, BitmapWorker bitmapWorker) {
+		this.mContext = context;
+		this.mBitmapWorker = bitmapWorker;
+		
 		//these explicit assignments make clear how setView(...) works with these variables
-		childTypeface =  null;
-		childTextSize = 0;
+		mChildTypeface =  null;
+		mChildTextSize = 0;
 
 		DBAdapter database = new DBAdapter(context);
 		Cursor day = database.getAllDays();
@@ -61,7 +60,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			info[0] = day.getString(0);		//id
 			info[1] = day.getString(1);		//filename
 			info[2] = day.getString(2);		//data
-			days.add(info);
+			mDays.add(info);
 		}
 		database.close();
 		day.close();
@@ -70,7 +69,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		DBAdapter database = new DBAdapter(context);
+		DBAdapter database = new DBAdapter(mContext);
 		
 		//get all entries associated to the day given
 		Cursor entries = database.getEntriesByDay((int)getGroupId(groupPosition));
@@ -97,21 +96,21 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) {
 		String[] info = (String[]) getChild(groupPosition, childPosition);
 		if (view == null) {
-			LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater infalInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = infalInflater.inflate(R.layout.entry_style, null);
 		}
 		TextView  message = ((TextView) view.findViewById(R.id.entryMessage));
 		message.setText(info[1]);
 		
 		//set a custom look for message if asked
-		if(childTextSize != 0)	{
-			message.setTextSize(childTextSize);
+		if(mChildTextSize != 0)	{
+			message.setTextSize(mChildTextSize);
 		}
-		if(childTypeface != null) {
-			message.setTypeface(childTypeface);
+		if(mChildTypeface != null) {
+			message.setTypeface(mChildTypeface);
 		}
 		
-		final GestureDetector gestureDetector = new GestureDetector(context,new EntryGDetector(Integer.parseInt(info[0])));
+		final GestureDetector gestureDetector = new GestureDetector(mContext,new EntryGDetector(Integer.parseInt(info[0])));
 		view.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -119,8 +118,8 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 				if(event.getAction() == MotionEvent.ACTION_DOWN){
 					v.setBackgroundColor(0xFFFFFFFF);
 				}
-				else {
-					v.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+				else{
+					v.setBackgroundColor(mContext.getResources().getColor(android.R.color.transparent));
 				}
 				 
 				gestureDetector.onTouchEvent(event);
@@ -132,7 +131,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		DBAdapter database = new DBAdapter(context);
+		DBAdapter database = new DBAdapter(mContext);
 		Cursor entries = database.getEntriesByDay((int)getGroupId(groupPosition));
 		int size = entries.getCount();
 		database.close();
@@ -143,17 +142,17 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public Object getGroup(int groupPosition) {	
-		return days.get(groupPosition);
+		return mDays.get(groupPosition);
 	}
 
 	@Override
 	public int getGroupCount() {
-		return days.size();
+		return mDays.size();
 	}
 
 	@Override
 	public long getGroupId(int groupPosition) {
-		return Long.parseLong(days.get(groupPosition)[0]);
+		return Long.parseLong(mDays.get(groupPosition)[0]);
 	}
 
 	@Override
@@ -161,7 +160,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		String[] info = (String[]) getGroup(groupPosition);
 		Boolean hasImage = true;
 		if (view == null) {
-			LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inf = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = inf.inflate(R.layout.day_style, null);
 		}
 		
@@ -200,7 +199,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 		
 		
 		
-		final GestureDetector gestureDetector = new GestureDetector(context,new DayGDetector(Integer.parseInt(info[0]),hasImage));
+		final GestureDetector gestureDetector = new GestureDetector(mContext,new DayGDetector(Integer.parseInt(info[0]),hasImage));
 		
 		imageView.setOnTouchListener(new OnTouchListener() {
 			 @Override
@@ -225,8 +224,8 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 	}
 	
 	public void setChildFont (Typeface typeface, int textSize){
-		childTypeface = typeface;
-		childTextSize = textSize;
+		mChildTypeface = typeface;
+		mChildTextSize = textSize;
 	}
 	
 
@@ -240,10 +239,10 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			super();
 			this.id = id;		
 			try {
-				activity =(OptionEntryListener)context;
+				activity =(OptionEntryListener)mContext;
 			} catch (ClassCastException e) {
 				// The activity doesn't implement the interface, throw exception
-				throw new ClassCastException(context.toString() + " must implement OptionEntryListener");
+				throw new ClassCastException(mContext.toString() + " must implement OptionEntryListener");
 			}
 		}
 
@@ -271,10 +270,10 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			this.id = id;
 			this.longClickEnabled = longClickEnabled;
 			try {
-				activity =(OptionDayListener)context;
+				activity =(OptionDayListener)mContext;
 			} catch (ClassCastException e) {
 				// The activity doesn't implement the interface, throw exception
-				throw new ClassCastException(context.toString() + " must implement OptionDayListener");
+				throw new ClassCastException(mContext.toString() + " must implement OptionDayListener");
 			}
 		}
 

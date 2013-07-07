@@ -19,27 +19,27 @@ import java.lang.reflect.Field;
  */
 public class ImageWebView extends WebView {
 
-	private Context context;
-	private GestureDetector gestureDetector;
-	private OnFlingListener flingListener;
+	private Context mContext;
+	private GestureDetector mGestureDetector;
+	private OnFlingListener mFlingListener;
 
 	public ImageWebView(Context context) {
 		super(context);
-		this.context = context;
+		this.mContext = context;
 
 		setup();
 	}
 
 	public ImageWebView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		this.context = context;
+		this.mContext = context;
 
 		setup();
 	}
 
 	public ImageWebView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.context = context;
+		this.mContext = context;
 
 		setup();
 	}
@@ -57,7 +57,7 @@ public class ImageWebView extends WebView {
 		setScrollbarFadingEnabled(true);
 		setBackgroundColor(Color.BLACK);
 
-		gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+		mGestureDetector = new GestureDetector(mContext, new GestureDetector.SimpleOnGestureListener() {
 			@Override
 			public boolean onSingleTapUp(MotionEvent e) {
 				ImageWebView.this.zoomIn();
@@ -66,7 +66,7 @@ public class ImageWebView extends WebView {
 
 			@Override
 			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-				ImageWebView.this.flingListener.onFling(ImageWebView.this, e1, e2, velocityX, velocityY);
+				ImageWebView.this.mFlingListener.onFling(ImageWebView.this, e1, e2, velocityX, velocityY);
 				return true;
 			}
 		});
@@ -142,7 +142,7 @@ public class ImageWebView extends WebView {
 	}
 
 	public float getWebDensity() {
-		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		Display display = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		DisplayMetrics dm = new DisplayMetrics();
 		display.getMetrics(dm);
 		return dm.density < 1.0f ? 1.0f : (Math.round(dm.density * 100f)) / 100f;
@@ -154,7 +154,7 @@ public class ImageWebView extends WebView {
 	 * @param location Uri to the image on the device
 	 */
 	public void setImage(String location) {
-		Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		Display display = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		DisplayMetrics dm = new DisplayMetrics();
 		display.getMetrics(dm);
 
@@ -191,7 +191,7 @@ public class ImageWebView extends WebView {
 	 * @return
 	 */
 	public boolean onTouchEvent(MotionEvent event) {
-		return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
+		return mGestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class ImageWebView extends WebView {
 	 * @param fl
 	 */
 	public void setOnFlingListener(OnFlingListener fl) {
-		flingListener = fl;
+		mFlingListener = fl;
 	}
 
 	/**

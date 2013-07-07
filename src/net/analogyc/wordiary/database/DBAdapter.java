@@ -17,16 +17,16 @@ import java.util.Locale;
  */
 public class DBAdapter {
 
-	private DataBaseHelper dbHelper;
-	private SQLiteDatabase database;
-	private SharedPreferences preferences;
+	private DataBaseHelper mDbHelper;
+	private SQLiteDatabase mDatabase;
+	private SharedPreferences mPreferences;
 
 	/**
 	 * You must call open() on this object to use other methods
 	 */
 	public DBAdapter(Context context) {
-		dbHelper = new DataBaseHelper(context);
-		preferences = PreferenceManager.getDefaultSharedPreferences(context);
+		mDbHelper = new DataBaseHelper(context);
+		mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
 
@@ -34,20 +34,20 @@ public class DBAdapter {
 	 * Returns an open, writable database, or creates a new instance
 	 */
 	private SQLiteDatabase getConnection() {
-		if (database == null) {
-			database = dbHelper.getWritableDatabase();
+		if (mDatabase == null) {
+			mDatabase = mDbHelper.getWritableDatabase();
 		}
 
-		return database;
+		return mDatabase;
 	}
 
 	/**
 	 * Close databaseHelper, any class that use DBAdapter must call this method when it don't use it anymore
 	 */
 	public void close() {
-		if (database != null) {
-			database.close();
-			database = null;
+		if (mDatabase != null) {
+			mDatabase.close();
+			mDatabase = null;
 		}
 	}
 
@@ -213,7 +213,7 @@ public class DBAdapter {
 	 * @return boolean true if is editable, false otherwise
 	 */
 	public boolean isEditableEntry(int entryId){
-		 int grace_period = Integer.parseInt(preferences.getString("grace_period", "1"));
+		 int grace_period = Integer.parseInt(mPreferences.getString("grace_period", "1"));
 		//create the current timestamp
 		Date now = new Date(System.currentTimeMillis());
 		String DATE_FORMAT = "yyyyMMddHHmmss";

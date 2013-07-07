@@ -211,7 +211,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
     /**
      * Updates the clickability and color of the arrows on top of the view
      */
-    public void updatePrevNextButtons() {
+    protected void updatePrevNextButtons() {
         Button nextB = (Button) this.findViewById(R.id.nextEntryButton);
         if (!mDataBase.hasNextEntry(mEntryId, false)) {
             nextB.setClickable(false);

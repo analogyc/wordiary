@@ -170,7 +170,7 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 		CharSequence text;
 
 		EditText edit=(EditText)dialog.getDialog().findViewById(R.id.newMessage);
-		String message = edit.getText().toString();
+		String message = edit.getText().toString().trim();
 
 		if(!message.equals("")){
 			text = getString(R.string.message_saved);

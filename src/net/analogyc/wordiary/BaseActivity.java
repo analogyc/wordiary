@@ -152,9 +152,9 @@ public class BaseActivity extends FragmentActivity implements NewEntryDialogFrag
 				mDataBase.addPhoto(mImageUri.getPath());
 				// Image captured and saved to fileUri specified in the Intent
 				Toast.makeText(this, getString(R.string.image_saved), TOAST_DURATION_L).show();
-				mBitmapWorker.clearBitmapFromMemCache(mImageUri.getPath());
+				mBitmapWorker.clearBitmapFromMemCache("", mImageUri.getPath());
                 // clear also the thumbnails for the gallery
-				mBitmapWorker.clearBitmapFromMemCache("gallery_" + mImageUri.getPath());
+				mBitmapWorker.clearBitmapFromMemCache("gallery_", mImageUri.getPath());
 			}
 		}
 	}

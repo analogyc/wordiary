@@ -134,8 +134,8 @@ public class BitmapWorker extends Fragment {
 	 *
 	 * @param path The mPath of the bitmap
 	 */
-	public void clearBitmapFromMemCache(String path) {
-		mMemoryCache.remove(path);
+	public void clearBitmapFromMemCache(String prefix, String path) {
+		mMemoryCache.remove(prefix + path);
 	}
 
 	/**

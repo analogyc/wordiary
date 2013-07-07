@@ -231,15 +231,15 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	private class EntryGDetector extends SimpleOnGestureListener {
 
-		private int id;
-		private OptionEntryListener activity;
+		private int mId;
+		private OptionEntryListener mActivity;
 		
 		
 		public EntryGDetector(int id){
 			super();
-			this.id = id;		
+			this.mId = id;		
 			try {
-				activity =(OptionEntryListener)mContext;
+				mActivity =(OptionEntryListener)mContext;
 			} catch (ClassCastException e) {
 				// The activity doesn't implement the interface, throw exception
 				throw new ClassCastException(mContext.toString() + " must implement OptionEntryListener");
@@ -248,29 +248,29 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	    @Override
 	    public void onLongPress(MotionEvent event) {
-	    	activity.onEntryLongClicked(id);
+	    	mActivity.onEntryLongClicked(mId);
 	    }
 
 	    @Override
 	    public boolean onSingleTapConfirmed(MotionEvent event) {
-	    	activity.onEntryClicked(id);
+	    	mActivity.onEntryClicked(mId);
 	        return true;
 	    }
 	}
 	
 	private class DayGDetector extends SimpleOnGestureListener {
 
-		private int id;
-		private OptionDayListener activity;
-		private boolean longClickEnabled;
+		private int mId;
+		private OptionDayListener mActivity;
+		private boolean mLongClickEnabled;
 		
 		
 		public DayGDetector(int id, boolean longClickEnabled){
 			super();
-			this.id = id;
-			this.longClickEnabled = longClickEnabled;
+			this.mId = id;
+			this.mLongClickEnabled = longClickEnabled;
 			try {
-				activity =(OptionDayListener)mContext;
+				mActivity =(OptionDayListener)mContext;
 			} catch (ClassCastException e) {
 				// The activity doesn't implement the interface, throw exception
 				throw new ClassCastException(mContext.toString() + " must implement OptionDayListener");
@@ -279,8 +279,8 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 
 	    @Override
 	    public void onLongPress(MotionEvent event) {
-	    	if(longClickEnabled){
-	    		activity.onDayLongClicked(id);
+	    	if(mLongClickEnabled){
+	    		mActivity.onDayLongClicked(mId);
 	    	}
 	    }    
 	    

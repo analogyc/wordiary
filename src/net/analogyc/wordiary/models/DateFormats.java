@@ -1,7 +1,7 @@
 package net.analogyc.wordiary.models;
 
 /**
- * Created by woxxy on 07/07/13.
+ * Date formats for parsing to view strings or to database strings
  */
 public class DateFormats {
 

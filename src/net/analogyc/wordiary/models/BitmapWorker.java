@@ -31,6 +31,8 @@ public class BitmapWorker extends Fragment {
 	private static final String TAG = "BitmapWorker";
 	private LruCache<String, Bitmap> mMemoryCache;
 
+    private static final int FULL_SIZE_AVATAR = 512;
+    private static final int HALF_SIZE_AVATAR = 256;
 	private Bitmap[] mAvatars;
 	private float mDensity;
 
@@ -93,9 +95,9 @@ public class BitmapWorker extends Fragment {
 				mAvatars[i] = BitmapFactory
 					.decodeStream(getActivity().getAssets().open("avatars/" + avatar_paths[i]));
 
-				// reduce ram usage on devices with ldpi
+				// reduce ram usage on devices with ldpi by using half size avatars
 				if (dm.density < 1.5f) {
-					mAvatars[i] = Bitmap.createScaledBitmap(mAvatars[i], 256, 256, false);
+					mAvatars[i] = Bitmap.createScaledBitmap(mAvatars[i], HALF_SIZE_AVATAR, HALF_SIZE_AVATAR, false);
 				}
 			}
 		} catch (IOException e) {
@@ -170,7 +172,7 @@ public class BitmapWorker extends Fragment {
 		/**
 		 * Clones the builder so it can't be modified further
 		 *
-		 * @param b
+		 * @param b The task builder to duplicate
 		 */
 		protected BitmapWorkerTaskBuilder(BitmapWorkerTaskBuilder b) {
 			mPath = b.getPath();
@@ -183,74 +185,158 @@ public class BitmapWorker extends Fragment {
 			mPrefix = b.getPrefix();
 		}
 
+        /**
+         * Returns the path for the image file
+         *
+         * @return The path
+         */
 		public String getPath() {
 			return mPath;
 		}
 
+        /**
+         * Gets an int that is used to determine which default image to display
+         *
+         * @return An integer that allows defining which default image to display
+         */
 		public int getShowDefault() {
 			return mShowDefault;
 		}
 
+        /**
+         * Set a number to know
+         *
+         * @param showDefault
+         * @return The current object
+         */
 		public BitmapWorkerTaskBuilder setShowDefault(int showDefault) {
 			mShowDefault = showDefault;
 			return this;
 		}
 
+        /**
+         * Get the target width for the resize
+         *
+         * @return The target width
+         */
 		public int getTargetWidth() {
 			return mTargetWidth;
 		}
 
+        /**
+         * Set the target width for the resized image
+         *
+         * @param targetWidth The target width
+         * @return The current object
+         */
 		public BitmapWorkerTaskBuilder setTargetWidth(int targetWidth) {
 			mTargetWidth = Math.round(targetWidth * mDensity);
 			return this;
 		}
 
+        /**
+         * Get the target height for the resize
+         *
+         * @return The target height
+         */
 		public int getTargetHeight() {
 			return mTargetHeight;
 		}
 
+        /**
+         * Set the target width for the resized image
+         *
+         * @param targetHeight The target height
+         * @return The current object
+         */
 		public BitmapWorkerTaskBuilder setTargetHeight(int targetHeight) {
 			mTargetHeight = Math.round(targetHeight * mDensity);
 			return this;
 		}
 
+        /**
+         * Whether the image will be cropped in a square block
+         *
+         * @return True if the image will be cropped in a square block, false otherwise
+         */
 		public boolean isCenterCrop() {
 			return mCenterCrop;
 		}
 
+        /**
+         * Whether the image should be cropped in a square block
+         *
+         * @param centerCrop True if it should be cropped in a square block
+         * @return The current object
+         */
 		public BitmapWorkerTaskBuilder setCenterCrop(boolean centerCrop) {
 			mCenterCrop = centerCrop;
 			return this;
 		}
 
+        /**
+         * Whether we're going to resize in high quality or not
+         *
+         * @return True if high quality, false if low quality
+         */
 		public boolean isHighQuality() {
 			return mHighQuality;
 		}
 
+        /**
+         * Set whether the image should be resized with fine quality but slower
+         *
+         * @param highQuality True for high quality, false for low quality
+         * @return The current object
+         */
 		public BitmapWorkerTaskBuilder setHighQuality(boolean highQuality) {
 			mHighQuality = highQuality;
 			return this;
 		}
 
+        /**
+         * Gets the radius of the rounded corner
+         *
+         * @return The radius
+         */
 		public int getRoundedCorner() {
 			return mRoundedCorner;
 		}
 
+        /**
+         * Sets the radius of the rounded corner
+         *
+         * @param roundedCorner
+         * @return The current object
+         */
 		public BitmapWorkerTaskBuilder setRoundedCorner(int roundedCorner) {
 			mRoundedCorner = roundedCorner;
 			return this;
 		}
 
+        /**
+         * Set the prefix to use for distinguishing cache
+         *
+         * @param prefix
+         * @return The current object
+         */
 		public BitmapWorkerTaskBuilder setPrefix(String prefix) {
 			mPrefix = prefix;
 			return this;
 		}
 
-
+        /**
+         * Gets the prefix to use for distinguishing cache
+         *
+         * @return The prefix
+         */
 		public String getPrefix() {
 			return mPrefix;
 		}
 
+        /**
+         * Runs the worker and inserts a default image in the imageView. Inserts the resized bitmap in the ImageView when done.
+         */
 		public void execute() {
 			// stop the previous task if we're going to use this drawable with another Bitmap
 			if (mImageView.getDrawable() instanceof AsyncDrawable) {
@@ -350,6 +436,12 @@ public class BitmapWorker extends Fragment {
 			} else {
 				bmp = BitmapFactory.decodeFile(mBwtb.getPath());
 			}
+
+            // if the image isn't found, don't set anything, cancel the thread and return null
+            if (bmp == null) {
+                cancel(true);
+                return null;
+            }
 
 			if (mBwtb.isCenterCrop()) {
 				// center crop so it's square and pretty

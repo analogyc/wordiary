@@ -178,7 +178,7 @@ public class EntryListAdapter extends BaseExpandableListAdapter {
 			hasImage = false;
 		}
 
-        BitmapWorker.findOrCreateBitmapWorker(fragmentManager).createTask(imageView, path)
+        mBitmapWorker.createTask(imageView, path)
 			.setShowDefault(Integer.parseInt(info[0]))
 			.setTargetHeight(128)
 			.setTargetWidth(128)

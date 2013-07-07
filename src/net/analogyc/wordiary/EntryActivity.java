@@ -22,6 +22,7 @@ import net.analogyc.wordiary.dialogs.ConfirmDialogFragment;
 import net.analogyc.wordiary.dialogs.ConfirmDialogFragment.ConfirmDialogListener;
 import net.analogyc.wordiary.dialogs.EditEntryDialogFragment;
 import net.analogyc.wordiary.dialogs.EditEntryDialogFragment.EditEntryDialogListener;
+import net.analogyc.wordiary.models.EntryFont;
 
 import java.io.File;
 import java.text.ParseException;
@@ -123,11 +124,11 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		int typefaceInt = Integer.parseInt(preferences.getString("typeface", "1"));
 		switch (typefaceInt) {
 			case 2:
-				Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
+				Typeface typeface = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_ANIMEACE);
 				mMessageText.setTypeface(typeface);
 				break;
 			case 3:
-				Typeface typeface3 = Typeface.createFromAsset(getAssets(), "fonts/stanhand.ttf");
+				Typeface typeface3 = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_STANHAND);
 				mMessageText.setTypeface(typeface3);
 				break;
 			default:
@@ -137,13 +138,13 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 		int fontSize = Integer.parseInt(preferences.getString("font_size", "2"));
 		switch (fontSize) {
 			case 1:
-				mMessageText.setTextSize(14);
+				mMessageText.setTextSize(EntryFont.SIZE_SMALL);
 				break;
 			case 3:
-				mMessageText.setTextSize(24);
+				mMessageText.setTextSize(EntryFont.SIZE_BIG);
 				break;
 			default:
-				mMessageText.setTextSize(18);
+				mMessageText.setTextSize(EntryFont.SIZE_MEDIUM);
 		}
 
 		//get entry's informations from db
@@ -163,8 +164,8 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
   		}
   		//set date
   		String d_tmp = c_entry.getString(4);
-  		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss",Locale.ITALY);
-  		SimpleDateFormat format_out = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy",Locale.ITALY);
+  		SimpleDateFormat format_in = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ITALY);
+  		SimpleDateFormat format_out = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy", Locale.ITALY);
 		try {
 			Date date = format_in.parse(d_tmp);
 			mDateText.setText(format_out.format(date)); //probably a better method to do this exists
@@ -384,7 +385,7 @@ public class EntryActivity extends BaseActivity implements EditEntryDialogListen
 	}
 	
 	/**
-	 * Provides and shows the informations of previous/next entry
+	 * Provides and shows the information of the previous/next entry
 	 * 
 	 * @param backwards true to go back, false otherwise
 	 */

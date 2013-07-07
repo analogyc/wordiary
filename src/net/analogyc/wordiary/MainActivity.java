@@ -16,6 +16,7 @@ import net.analogyc.wordiary.adapters.EntryListAdapter.OptionDayListener;
 import net.analogyc.wordiary.adapters.EntryListAdapter.OptionEntryListener;
 import net.analogyc.wordiary.dialogs.OptionEntryDialogFragment;
 import net.analogyc.wordiary.dialogs.OptionEntryDialogFragment.OptionEntryDialogListener;
+import net.analogyc.wordiary.models.EntryFont;
 
 import java.util.ArrayList;
 
@@ -73,10 +74,10 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		Typeface typeface;
 		switch (typefaceInt) {
 			case 2:
-				typeface = Typeface.createFromAsset(getAssets(), "fonts/animeace2.ttf");
+				typeface = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_ANIMEACE);
 				break;
 			case 3:
-				typeface = Typeface.createFromAsset(getAssets(), "fonts/stanhand.ttf");
+				typeface = Typeface.createFromAsset(getAssets(), EntryFont.TYPEFACE_STANHAND);
 				break;
 			default:
 				typeface = Typeface.SANS_SERIF;
@@ -86,13 +87,13 @@ public class MainActivity extends BaseActivity implements OptionEntryDialogListe
 		int textSize;
 		switch (fontSize) {
 			case 1:
-				textSize = 14;
+				textSize = EntryFont.SIZE_SMALL;
 				break;
 			case 3:
-				textSize = 24;
+				textSize = EntryFont.SIZE_BIG;
 				break;
 			default:
-				textSize = 18;
+				textSize = EntryFont.SIZE_MEDIUM;
 		}
 
 		entryAdapter.setChildFont(typeface, textSize);

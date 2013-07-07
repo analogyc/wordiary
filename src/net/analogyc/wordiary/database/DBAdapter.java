@@ -29,7 +29,6 @@ public class DBAdapter {
 		mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
-
 	/**
 	 * Returns an open, writable database, or creates a new instance
 	 */
@@ -53,34 +52,6 @@ public class DBAdapter {
 
 
 	/**** ENTRIES OPERATIONS ****/
-
-	/**
-	 * Get all the entries
-	 *
-	 * @return Cursor that contains all entries ordered by date
-	 */
-	public Cursor getAllEntries() {
-		String query = "SELECT * FROM " + Entry.TABLE_NAME + " ORDER BY " + Entry.COLUMN_NAME_CREATED + " DESC";
-		return getConnection().rawQuery(query, null);
-	}
-
-	/**
-	 * Get all the entries associated to a day with an image
-	 *
-	 * @return Cursor that contains all entries ordered by date
-	 */
-	public Cursor getAllEntriesWithImage() {
-		String query = "SELECT " + Day.TABLE_NAME + "." + Day.COLUMN_NAME_FILENAME + ", " +
-				Entry.TABLE_NAME + "." + Entry.COLUMN_NAME_MESSAGE + ", " +
-				Entry.TABLE_NAME + "." + Entry._ID + ", " +
-				Entry.TABLE_NAME + "." + Entry.COLUMN_NAME_CREATED +
-				" FROM " + Entry.TABLE_NAME + " LEFT OUTER JOIN " + Day.TABLE_NAME +
-				" ON " + Entry.TABLE_NAME + "." + Entry.COLUMN_NAME_DAY_ID +
-				" = " +
-				Day.TABLE_NAME + "." + Day._ID +
-				" ORDER BY " + Entry.TABLE_NAME + "." + Entry.COLUMN_NAME_CREATED + " DESC";
-		return getConnection().rawQuery(query, null);
-	}
 
 	/**
 	 * Get the entry with the given id
